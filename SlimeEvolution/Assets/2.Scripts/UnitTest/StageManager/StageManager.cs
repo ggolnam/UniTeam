@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 namespace SlimeEvolution.GameSystem
 {
     public class StageManager : Singleton<StageManager>
@@ -17,6 +18,9 @@ namespace SlimeEvolution.GameSystem
         {
 
         }
+
+
+
 
     }
 }

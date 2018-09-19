@@ -74,8 +74,8 @@ namespace SlimeEvolution.UI
         {
             if (Text.Equals("성공"))
             {
-                loginPanel.SetActive(false);
-                loginSuccessPanel.SetActive(true);
+                loginPanel.SetActive(!loginPanel.activeSelf);
+                loginSuccessPanel.SetActive(!loginSuccessPanel.activeSelf);
             }
             else
                 loginAlert.text = Text;
@@ -85,7 +85,7 @@ namespace SlimeEvolution.UI
         {
             if (Text.Equals("성공"))
             {
-                signUpSuccessPanel.SetActive(true);
+                signUpSuccessPanel.SetActive(!signUpSuccessPanel.activeSelf);
                 signUpAlert.text = "";
             }
             else
