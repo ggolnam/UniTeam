@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "611321454861",
+    "firebase_url": "https://slimeevolution-18581.firebaseio.com",
+    "project_id": "slimeevolution-18581",
+    "storage_bucket": "slimeevolution-18581.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611321454861:android:b80392a0745a4ec0",
+        "android_client_info": {
+          "package_name": "com.Company.SlimeEvolution"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "611321454861-g2f1fm8m7n8nekidvqm7mp4had7b2cg6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpxp34JLszDEeHvK2beMKuqgNdM3QqHxI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
