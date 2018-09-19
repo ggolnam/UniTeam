@@ -6,6 +6,7 @@ namespace SlimeEvolution.GameSystem
 {
     public class TitleStage : StageState
     {
+
         public override void Enter()
         {
                 
