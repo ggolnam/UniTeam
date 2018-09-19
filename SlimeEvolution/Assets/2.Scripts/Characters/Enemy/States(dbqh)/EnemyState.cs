@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class EnemyState
 {
-    protected Enemy state;
+   // protected Enemy state;
 
     protected abstract void StartBehavior();
 

@@ -1,21 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public abstract class Enemy : MonoBehaviour
+namespace SlimeEvolution.Character.Enemy
 {
-    public int HP;
-    protected int attackPoint;
-    protected float movingSpeed;
-    protected EnemyState state;
-    public EnemySkill skill;
-    
-    //protected Rigidbody rigidbody;
-    
-
-    private void Start()
+    public abstract class Enemy : MonoBehaviour
     {
-        //rigidbody = GetComponent<Rigidbody>();
-    }
+        public int HP;
+        public int attackPoint;
+        public float movingSpeed;
+        //protected EnemyState state;
+        public EnemySkill skill;
+        public EnemySkill skill2;
 
+        //protected Rigidbody rigidbody;
+
+
+        private void Start()
+        {
+            //rigidbody = GetComponent<Rigidbody>();
+        }
+
+    }
 }

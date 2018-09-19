@@ -2,24 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Goblin : Enemy
+namespace SlimeEvolution.Character.Enemy
 {
-    private Goblin(EnemySkill skill)
+    public class Goblin : Enemy
     {
-       HP = 10;
-       movingSpeed = 5.9f;
-       skill = new RecoverHP(10);
-    }
-
-    private void Awake()
-    {
-        //HP = 10;
-        //movingSpeed = 5.0f;
+        public Goblin(EnemySkill skill, EnemySkill skill2)
+        {
+            this.skill = skill;
+            this.skill2 = skill2;
+        }
         
-    }
-
-    private void Update()
-    {
-        skill.UseSkill();
+        public void UseSkill()
+        {
+            skill.UseSkill();
+        }
     }
 }
