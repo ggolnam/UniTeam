@@ -9,6 +9,7 @@ public class InventorySlot : ItemSlot
     public BackPack storage;
     public int SlotNum;
     public bool isEmpty;
+    public Stack<Item> Quatity;
 
 
     override protected Item observedItem

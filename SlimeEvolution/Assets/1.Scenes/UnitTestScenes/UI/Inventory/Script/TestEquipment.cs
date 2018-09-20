@@ -17,7 +17,7 @@ public class TestEquipment : Item
     {
         base.Use(slotNum);
         RemoveFromInventory(slotNum);
-        TestEquipmentManager.instance.Equip(this, slotNum);
+        //TestEquipmentManager.instance.Equip(this, slotNum);
         Debug.Log("eqiped");
         //아이템 제거//
 
