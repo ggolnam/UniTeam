@@ -13,6 +13,7 @@ namespace SlimeEvolution.GameSystem
 
         public override void Progress()
         {
+
         }
     }
 }

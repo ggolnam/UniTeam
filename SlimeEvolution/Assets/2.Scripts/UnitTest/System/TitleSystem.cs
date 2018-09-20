@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TitleSystem : StageSystem
+namespace SlimeEvolution.GameSystem
 {
-    
+    public class TitleSystem : MonoBehaviour
+    {
+
+    }
 }

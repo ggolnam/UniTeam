@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DungeonSystem : StageSystem
+namespace SlimeEvolution.GameSystem
 {
-    
-	
+    public class DungeonSystem : MonoBehaviour
+    {
+
+
+    }
 }

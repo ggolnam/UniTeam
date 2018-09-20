@@ -19,7 +19,7 @@ public class Item : ScriptableObject
     }
     public void RemoveFromInventory(int slotNum)
     {
-        TestInventory.instance.Remove(slotNum, this);
+       // TestInventory.instance.Remove(slotNum, this);
     }
 }
 
