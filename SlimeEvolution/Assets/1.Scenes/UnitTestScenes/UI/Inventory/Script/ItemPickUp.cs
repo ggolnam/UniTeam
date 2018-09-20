@@ -9,10 +9,10 @@ public class ItemPickUp : MonoBehaviour {
     public void PickUp()
     {
         Debug.Log("Picking Up " + item.name);
-        bool wasPickedUp = TestInventory.instance.Add(item);
-        if (wasPickedUp)
-        {
-            Debug.Log("pick");
-        }
+        BackPack.instance.AddItemToSlot(item);
+        //if (wasPickedUp)
+        //{
+        //    Debug.Log("pick");
+        //}
     }
 }
