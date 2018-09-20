@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TestMoveUnit : MonoBehaviour
 {
-    public Rigidbody rigidbody;
+    public new Rigidbody rigidbody;
     public float MoveSpeed;
     private void Start()
     {
