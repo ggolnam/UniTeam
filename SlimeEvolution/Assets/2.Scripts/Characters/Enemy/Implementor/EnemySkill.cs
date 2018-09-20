@@ -4,47 +4,56 @@ using UnityEngine;
 
 namespace SlimeEvolution.Character.Enemy
 {
-    public abstract class EnemySkill : MonoBehaviour
+    public abstract class EnemySkill
     {
         public GameObject enemy;
-        public abstract void UseSkill();
+        public abstract void ActivateSkill();
     }
-
+    
 
 
     public class RecoverHP : EnemySkill
     {
-        public int recoveryAmount;
+        int recoveryAmount;
 
-        public RecoverHP(int hp)
+        public RecoverHP()
         {
-            recoveryAmount = hp;
+            recoveryAmount = 10;
         }
-
-
-        public override void UseSkill()
+        
+        public override void ActivateSkill()
         {
-            Debug.Log(recoveryAmount.ToString());
+            //스킬 구현부
         }
     }
 
-
-
-
-
-    public class Defend : EnemySkill
+    
+    public class Defence : EnemySkill
     {
-        public override void UseSkill()
+        public Defence()
         {
-            throw new System.NotImplementedException();
+
+        }
+
+        public override void ActivateSkill()
+        {
+            //스킬 구현부
+            //일정 확률로 해당 콜라이더를 무효화한다
         }
     }
+
+
 
     public class Throw : EnemySkill
     {
-        public override void UseSkill()
+        public Throw()
         {
 
+        }
+
+        public override void ActivateSkill()
+        {
+            //실제 스킬 구현부
         }
     }
 }
