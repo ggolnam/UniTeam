@@ -15,9 +15,8 @@ namespace SlimeEvolution.Character.Enemy
 
     public class NormalAttack : EnemyAttack
     {
-        public NormalAttack(int Damage)
+        public NormalAttack()
         {
-            base.Damage = Damage;
             AttackPointMagnification = 1;
             
         }
@@ -32,7 +31,7 @@ namespace SlimeEvolution.Character.Enemy
 
     public class SmeshAttack : EnemyAttack  
     {
-        public SmeshAttack(int Damage)
+        public SmeshAttack()
         {
             AttackPointMagnification = 3;
         }
