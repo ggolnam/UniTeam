@@ -7,19 +7,26 @@ using UnityEngine.UI;
 public class Item : ScriptableObject
 {
 
-    new public string name = null;
+    public int ID;
+    public string Name = null;
     public string SpriteName;
     public UIAtlas iconAtlas;
     public bool isDefalutItem = false;
+    public ItemType Type;
 
     public virtual void Use(int slotNum)
     {
-        Debug.Log("Using" + name);
+        Debug.Log("Using" + Name);
 
     }
     public void RemoveFromInventory(int slotNum)
     {
        // TestInventory.instance.Remove(slotNum, this);
     }
+}
+public enum ItemType
+{
+    Equipment,
+    Disposable,
 }
 

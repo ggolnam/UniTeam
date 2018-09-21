@@ -25,7 +25,7 @@ public class BackPack : MonoBehaviour {
     public int InvSlotCol;
     int InvSlotRow;
 
-
+    public int MaxQuatityNum;
 
     public List<Item> mItems = new List<Item>();
 
@@ -44,6 +44,22 @@ public class BackPack : MonoBehaviour {
         {
             Item prev = items[slot];
             mItems[slot] = item;
+            //if (item == null)
+            //{
+            //    prevQuantity = InvSlot[slot].Quantity;
+            //    InvSlot[slot].Quantity = 1;
+            //    InvSlot[slot].label.text ="";
+
+
+            //}
+            //else
+            //{
+            //    InvSlot[slot].Quantity = prevQuantity;
+            //    InvSlot[slot].UpdateText();
+
+            //}
+
+
             return prev;
         }
         return item;
@@ -64,6 +80,9 @@ public class BackPack : MonoBehaviour {
                 slot.SlotNum = x;
                 slot.isEmpty = true;
                 slot.name = "Slot [ " + x + " ]";
+                slot.label.text = "";
+                slot.Quantity = 1;
+                slot.MaxQuantity = MaxQuatityNum;
                 InvSlot.Add(slot);
             }
 
@@ -74,21 +93,37 @@ public class BackPack : MonoBehaviour {
     {
         for (int i = 0; i < InvSlot.Count; i++)
         {
-            Debug.Log(InvSlot[i].isEmpty);
-            if (InvSlot[i].isEmpty)
-            {
-                mItems[i] = item;
+            if (CheckSameItem(item))
                 return;
+            else
+            {
+                if (InvSlot[i].isEmpty)
+                {
+                    mItems[i] = item;
+                    InvSlot[i].UpdateText();
+                    return;
+                }
             }
-
         }
     }
-
-
-
-
+    bool CheckSameItem(Item item)
+    {
+        bool isbool = false;
+        for (int i = 0; i < InvSlot.Count; i++)
+        {
+            if (mItems[i] != null && item.ID == mItems[i].ID && item.Type == ItemType.Disposable && InvSlot[i].Quantity < MaxQuatityNum)
+            {
+                InvSlot[i].Quantity++;
+                InvSlot[i].UpdateText();
+                isbool = true;
+                break;
+            }
+        }      
+        return isbool;
+    }
 
     //아이템먹을때 어느슬랏에 넣을지 
+    //Equipment , Disposable
 
 
 }

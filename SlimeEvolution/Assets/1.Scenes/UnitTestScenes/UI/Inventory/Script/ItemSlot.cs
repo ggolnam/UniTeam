@@ -6,7 +6,7 @@ public abstract class ItemSlot : MonoBehaviour {
 
     public UISprite icon;
     [SerializeField]
-    Item mItem;
+    protected Item mItem;
     public bool isEmpty;
 
     static Item mDraggedItem;
@@ -65,8 +65,11 @@ public abstract class ItemSlot : MonoBehaviour {
         }
         else if (mItem != null)
         {
+            //원래자리에 있던 아이템을 든다//
             mDraggedItem = Replace(null);
+
             UpdateCursor();
+
         }
 
         Debug.Log("OnClick");
@@ -83,8 +86,9 @@ public abstract class ItemSlot : MonoBehaviour {
     void OnDrop(GameObject go)
     {
         Item item = Replace(mDraggedItem);
-
+        //바꾼아이템을 든다//
         mDraggedItem = item;
+
         UpdateCursor();
     }
     void UpdateCursor()
