@@ -20,8 +20,6 @@ public class TestEquipment : Item
         //TestEquipmentManager.instance.Equip(this, slotNum);
         Debug.Log("eqiped");
         //아이템 제거//
-
-
     }
 
 }

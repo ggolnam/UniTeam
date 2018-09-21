@@ -7,9 +7,12 @@ public class InventorySlot : ItemSlot
 {
 
     public BackPack storage;
+    public UILabel label;
     public int SlotNum;
-    public Stack<Item> Quatity;
-
+    public int Quantity;
+    public int MaxQuantity;
+    
+    
 
     override protected Item observedItem
     {
@@ -22,9 +25,20 @@ public class InventorySlot : ItemSlot
 
     override protected Item Replace(Item item)
     {
+        
         return (storage != null) ? storage.Replace(SlotNum, item) : item;
+
+
+    }
+    public void UpdateText()
+    {
+        label.text = Quantity.ToString();
     }
 
+    public void ClearSlot()
+    {
+
+    }
 
 
 }
