@@ -20,12 +20,9 @@ public class BackPack : MonoBehaviour {
     }
     #endregion
 
-
-
     public GameObject inventroySlotPrefab;
     public List<InventorySlot> InvSlot;
     public int InvSlotCol;
-
     int InvSlotRow;
 
 
@@ -77,12 +74,13 @@ public class BackPack : MonoBehaviour {
     {
         for (int i = 0; i < InvSlot.Count; i++)
         {
+            Debug.Log(InvSlot[i].isEmpty);
             if (InvSlot[i].isEmpty)
             {
                 mItems[i] = item;
-                InvSlot[i].isEmpty = false;
                 return;
             }
+
         }
     }
 

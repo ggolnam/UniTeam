@@ -7,6 +7,7 @@ public abstract class ItemSlot : MonoBehaviour {
     public UISprite icon;
     [SerializeField]
     Item mItem;
+    public bool isEmpty;
 
     static Item mDraggedItem;
 
@@ -48,7 +49,7 @@ public abstract class ItemSlot : MonoBehaviour {
             //}
 
             //if (!string.IsNullOrEmpty(bi.description)) t += "\n[FF9900]" + bi.description;
-            UITooltip.Show("gogogogogogogogogogogo");
+            UITooltip.Show("gogogogogogogogogogogo ");
             return;
         }
 
@@ -110,16 +111,19 @@ public abstract class ItemSlot : MonoBehaviour {
                 if (mItem == null || mItem.iconAtlas == null)
                 {
                     icon.enabled = false;
+                    isEmpty = true;
                 }
                 else
                 {
                     icon.atlas = mItem.iconAtlas;
                     icon.spriteName = mItem.SpriteName;
                     icon.enabled = true;
+                    isEmpty = false;
+
                     icon.MakePixelPerfect();
                 }
             }
-
         }
+
     }
 }
