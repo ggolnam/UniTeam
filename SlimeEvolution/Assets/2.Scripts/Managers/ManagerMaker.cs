@@ -10,7 +10,7 @@ namespace SlimeEvolution.GameSystem
         {
             DataManager.Instance.MakeSingleTon();
             StageManager.Instance.MakeSingleTon();
-            
+            ObjectPoolManager.Instance.MakeSingleTon();
         }
 
     }

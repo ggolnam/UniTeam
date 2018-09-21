@@ -10,9 +10,13 @@ namespace SlimeEvolution.GameSystem
     {
         abstract public void Enter();
         abstract public void Progress();
-        virtual public void Exit()
+        virtual public IEnumerator Exit()
         {
             SceneManager.LoadScene("TestLoadingScene");
+            ObjectPoolManager.Instance.testPool.ResetObject();
+            Debug.Log("Title Exit");
+            yield return null;
+            
         }
 
     }

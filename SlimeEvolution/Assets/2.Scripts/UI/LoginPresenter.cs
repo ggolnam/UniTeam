@@ -46,6 +46,7 @@ namespace SlimeEvolution.UI
 
         public void OnClickedLoginButton()
         {
+            ObjectPoolManager.Instance.testPool.CreateObject();
             if (loginID.text.Length == 0)
                 loginAlert.text = "아이디를 입력해주세요.";
             else if (loginPW.text.Length == 0)

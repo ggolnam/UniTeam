@@ -18,18 +18,24 @@ namespace SlimeEvolution.GameSystem
             currentStage = Stage.TestTitleScene;
         }
 
-        public void ChangeStage(Stage stage)
+        public void LoadStage(Stage stage)
         {
-            stageState.Exit();
-            if(currentStage != Stage.TestLoadingScene)
+            StartCoroutine(ChangeStage(stage));
+        }
+
+        IEnumerator ChangeStage(Stage stage)
+        {
+            yield return stageState.Exit();
+
+            if (currentStage != Stage.TestLoadingScene)
             {
                 stageState = new LoadingStage(stage);
                 currentStage = Stage.TestLoadingScene;
-                
+
             }
             else
             {
-                switch(stage)
+                switch (stage)
                 {
                     case Stage.TestTitleScene:
                         stageState = new TitleStage();
@@ -40,6 +46,13 @@ namespace SlimeEvolution.GameSystem
                 }
                 currentStage = stage;
             }
+            stageState.Enter();
+
+            yield return null;
+        }
+
+        public void StateEnter()
+        {
             stageState.Enter();
         }
 

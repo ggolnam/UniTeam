@@ -9,6 +9,7 @@ namespace SlimeEvolution.GameSystem
         public override void Enter()
         {
             
+            Debug.Log("VillageStage");
         }
 
         public override void Progress()
