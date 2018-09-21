@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace SlimeEvolution.Character.Enemy
 {
@@ -36,7 +37,7 @@ namespace SlimeEvolution.Character.Enemy
 
         public abstract void UseSkill();
         public abstract void Attack();
-        public abstract void Move();
-        public abstract void Chase();
+        public abstract void Move(NavMeshAgent navMeshAgent, GameObject gameObject);
+        public abstract void Chase(NavMeshAgent navMeshAgent, GameObject gameObject, GameObject player);
     }
 }

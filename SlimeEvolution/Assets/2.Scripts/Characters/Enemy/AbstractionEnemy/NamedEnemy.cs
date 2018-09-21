@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace SlimeEvolution.Character.Enemy
 {
@@ -27,14 +28,14 @@ namespace SlimeEvolution.Character.Enemy
             skill2.ActivateSkill();
         }
 
-        public override void Move()
+        public override void Move(NavMeshAgent meshAgent, GameObject gameObject)
         {
-            movement.Move();
+            movement.Move(meshAgent, gameObject);
         }
 
-        public override void Chase()
+        public override void Chase(NavMeshAgent meshAgent, GameObject gameObject, GameObject player)
         {
-            movement.Move();
+            movement.Chase(meshAgent, gameObject, player);
         }
     }
 }

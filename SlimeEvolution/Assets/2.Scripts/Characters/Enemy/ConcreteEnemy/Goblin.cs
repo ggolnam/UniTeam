@@ -2,57 +2,98 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SlimeEvolution.Character;
+using UnityEngine.AI;
 
 namespace SlimeEvolution.Character.Enemy
 {
     public enum EnemyState
     {
         Idle,
+        Chase,
         Combat,
-        Death,
+        Death
     }
+
+    //코루틴이나 기타 이벤트함수를 기준으로 몬스터를 움직인다.
+    //매개변수를 Awake쪽의 생성부분에서 넣어준다.
 
     public class Goblin : Character
     {
         AbstractionEnemy goblin;
+        public NavMeshAgent navMeshAgent;
+
+        public float Timer;
+        public int newtarget;
+        public Vector3 target;
+
+        EnemyState enemyState;
+        
 
         private void Awake()
         {
-            //임시 수치
+            navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
             hp = 10;
-            speed = 5.0f;
+            speed = 1.5f;
             damage = 1;
+            enemyState = EnemyState.Idle;
 
             goblin = new NormalEnemy(
-                new NormalAttack(), new IdleMovement(speed), new Chase()
-                );
+                new NormalAttack(), new IdleMovement(speed), new Chasing(speed));
         }
+
 
         private void Start()
         {
-            StartCoroutine(randomMove());
+            StartCoroutine(moveToRandomPosition());
         }
 
-        private void Update()
+        private void OnTriggerEnter(Collider other)
         {
-            //goblin.Chase();
+            if (other.CompareTag("Player"))
+            {
+                enemyState = EnemyState.Chase;
+                StopCoroutine(moveToRandomPosition());
+            }
         }
 
+        private void OnTriggerStay(Collider other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                enemyState = EnemyState.Chase;
+                Chase(other.gameObject);
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                enemyState = EnemyState.Idle;
+                StartCoroutine(moveToRandomPosition());
+            }
+        }
+
+        
+        private void Chase(GameObject player)
+        {
+            goblin.Chase(navMeshAgent, gameObject, player);
+        }
+        
         private void Move()
         {
-            goblin.Move();
+            goblin.Move(navMeshAgent, gameObject);
         }
 
-        IEnumerator randomMove()
+
+        IEnumerator moveToRandomPosition()
         {
-            while(true)
+            //지금 상황에서 조건을 꼭 넣을필요는 없을듯 
+            while(enemyState == EnemyState.Idle)
             {
                 Move();
                 yield return new WaitForSeconds(0.1f);
             }
         }
-
-        //코루틴이나 기타 이벤트함수를 기준으로 몬스터를 움직인다.
-        //매개변수를 Awake쪽의 생성부분에서 넣어준다.
     }
 }
