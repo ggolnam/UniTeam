@@ -12,33 +12,32 @@ namespace SlimeEvolution.Character.Enemy
        
     }
 
-    public class NormalMovement : EnemyMovement
+    public class IdleMovement : EnemyMovement
     {
-        public NormalMovement(float speed)
+        public IdleMovement(float speed)
         {
             this.speed = speed;
         }
 
         public override void Move()
         {
-            //Move구현
+            
         }
-
-        
     }
 
     public class Chase : EnemyMovement
     {
 
-        public Chase(float speed)
+        public Chase()
         {
-            this.speed = speed;
+           
         }
 
         public override void Move()
         {
             //Move구현
             Debug.Log(speed.ToString() + "의 속도로 쫒아감");
+
         }
     }
 }

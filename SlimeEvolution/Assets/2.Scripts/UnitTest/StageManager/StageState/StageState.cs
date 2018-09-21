@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace SlimeEvolution.GameSystem
 {
@@ -9,9 +10,10 @@ namespace SlimeEvolution.GameSystem
     {
         abstract public void Enter();
         abstract public void Progress();
-        public void Exit(Stage stage)
+        virtual public void Exit()
         {
-
+            SceneManager.LoadScene("TestLoadingScene");
         }
+
     }
 }

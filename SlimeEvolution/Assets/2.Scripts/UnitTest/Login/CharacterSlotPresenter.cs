@@ -1,4 +1,5 @@
 ﻿using SlimeEvolution.GameSystem;
+using SlimeEvolution.GlobalVariable;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -62,6 +63,7 @@ namespace SlimeEvolution.UI
         public void OnClickedPlayButton()
         {
             DataManager.Instance.ChoicePlayer(slotNumber, false);
+            StageManager.Instance.ChangeStage(Stage.TestVillageScene);
             //StageManager.Instance 로 스테이지 변경 요청.
         }
 
