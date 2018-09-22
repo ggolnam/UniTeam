@@ -8,7 +8,7 @@ public class TestEquipment : Item
 {
 
 
-    public EquipmentSlot equipSlot;
+    public EquipmentSlotType equipSlot;
     public int armorModifier;
     public int damageModifier;
 
@@ -23,5 +23,5 @@ public class TestEquipment : Item
     }
 
 }
-    public enum EquipmentSlot { Head, Weapon, Shield }
+    public enum EquipmentSlotType { Head, Weapon, Shield }
 

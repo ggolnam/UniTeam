@@ -10,9 +10,10 @@ public class InventorySlot : ItemSlot
     public UILabel label;
     public int SlotNum;
     static bool isClicked;
+    public int Quantity;
+    public int MaxQuantity;
 
-    
-    
+
 
     override protected Item observedItem
     {
@@ -26,8 +27,12 @@ public class InventorySlot : ItemSlot
 
     public void UpdateText()
     {
-        if (Quantity == 0)
+        if (mItem.Type == ItemType.Equipment)
         {
+            label.text = "";
+        }
+        else if (Quantity == 0)
+        {                                                              
             label.text = "";
         }
         else
@@ -54,7 +59,6 @@ public class InventorySlot : ItemSlot
             storage.Replace(SlotNum);
             mDraggedItem = null;
             isClicked = false;
-            Debug.Log("REPLACE");
             UpdateCursor();
         }
 
@@ -73,5 +77,40 @@ public class InventorySlot : ItemSlot
         }
     }
 
+
+    void Update()
+    {
+        Item i = observedItem;
+
+        if(mItem != null)
+        {
+            UpdateText();
+
+        }
+
+        if (mItem != i)
+        {
+            mItem = i;
+
+            if (icon != null)
+            {
+                if (mItem == null || mItem.iconAtlas == null)
+                {
+                    icon.enabled = false;
+                    isEmpty = true;
+                }
+                else
+                {
+                    icon.atlas = mItem.iconAtlas;
+                    icon.spriteName = mItem.SpriteName;
+                    icon.enabled = true;
+                    isEmpty = false;
+
+                    icon.MakePixelPerfect();
+                }
+            }
+        }
+
+    }
 
 }

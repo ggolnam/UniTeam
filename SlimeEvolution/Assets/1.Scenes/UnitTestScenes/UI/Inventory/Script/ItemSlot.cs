@@ -12,8 +12,7 @@ public abstract class ItemSlot : MonoBehaviour {
     protected static Item mDraggedItem;
 
     abstract protected Item observedItem { get; }
-    public int Quantity;
-    public int MaxQuantity;
+
 
 
     void OnTooltip(bool show)
@@ -58,32 +57,5 @@ public abstract class ItemSlot : MonoBehaviour {
 
 
 
-    void Update()
-    {
-        Item i = observedItem;
 
-        if (mItem != i)
-        {
-            mItem = i;
-
-            if (icon != null)
-            {
-                if (mItem == null || mItem.iconAtlas == null)
-                {
-                    icon.enabled = false;
-                    isEmpty = true;
-                }
-                else
-                {
-                    icon.atlas = mItem.iconAtlas;
-                    icon.spriteName = mItem.SpriteName;
-                    icon.enabled = true;
-                    isEmpty = false;
-
-                    icon.MakePixelPerfect();
-                }
-            }
-        }
-
-    }
 }

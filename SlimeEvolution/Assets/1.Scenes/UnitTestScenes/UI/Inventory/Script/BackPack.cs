@@ -52,13 +52,12 @@ public class BackPack : MonoBehaviour {
             mItems[preslot] = mItems[slot];
             mItems[slot] = previtem;
 
-            InvSlot[slot].UpdateText();
-            InvSlot[preslot].UpdateText();
-
-            InvSlot[slot].Quantity = prevQuan;
-
         }
 
+    }
+    public void QuickSort()
+    {
+        
     }
 
     void MakeInventorySlot()
@@ -97,7 +96,6 @@ public class BackPack : MonoBehaviour {
                 {
                     mItems[i] = item;
                     InvSlot[i].Quantity++;
-                    InvSlot[i].UpdateText();
                     return;
                 }
             }
@@ -111,7 +109,6 @@ public class BackPack : MonoBehaviour {
             if (mItems[i] != null && item.ID == mItems[i].ID && item.Type == ItemType.Disposable && InvSlot[i].Quantity < MaxQuatityNum)
             {
                 InvSlot[i].Quantity++;
-                InvSlot[i].UpdateText();
                 isbool = true;
                 break;
             }
