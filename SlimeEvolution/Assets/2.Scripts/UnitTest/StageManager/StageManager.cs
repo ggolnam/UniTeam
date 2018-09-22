@@ -11,6 +11,7 @@ namespace SlimeEvolution.GameSystem
     {
         private StageState stageState;
         private Stage currentStage;
+       
         private void Start()
         {
             stageState = new TitleStage();
@@ -51,10 +52,7 @@ namespace SlimeEvolution.GameSystem
             yield return null;
         }
 
-        public void StateEnter()
-        {
-            stageState.Enter();
-        }
+      
 
 
 
