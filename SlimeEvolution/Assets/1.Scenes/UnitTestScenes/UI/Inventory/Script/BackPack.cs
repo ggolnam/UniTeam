@@ -25,6 +25,8 @@ public class BackPack : MonoBehaviour {
     public int InvSlotCol;
     int InvSlotRow;
 
+    public int preslot;
+
     public int MaxQuatityNum;
 
     public List<Item> mItems = new List<Item>();
@@ -38,31 +40,25 @@ public class BackPack : MonoBehaviour {
     {
         return (slot < items.Count) ? mItems[slot] : null;
     }
-    public Item Replace(int slot, Item item)
+    public void Replace(int slot)
     {
         if (slot < InvSlotCol)
         {
-            Item prev = items[slot];
-            mItems[slot] = item;
-            //if (item == null)
-            //{
-            //    prevQuantity = InvSlot[slot].Quantity;
-            //    InvSlot[slot].Quantity = 1;
-            //    InvSlot[slot].label.text ="";
+            int prevQuan = InvSlot[preslot].Quantity;
+            InvSlot[preslot].Quantity = InvSlot[slot].Quantity;
+            InvSlot[slot].Quantity = prevQuan;
 
+            Item previtem = mItems[preslot];
+            mItems[preslot] = mItems[slot];
+            mItems[slot] = previtem;
 
-            //}
-            //else
-            //{
-            //    InvSlot[slot].Quantity = prevQuantity;
-            //    InvSlot[slot].UpdateText();
+            InvSlot[slot].UpdateText();
+            InvSlot[preslot].UpdateText();
 
-            //}
+            InvSlot[slot].Quantity = prevQuan;
 
-
-            return prev;
         }
-        return item;
+
     }
 
     void MakeInventorySlot()
@@ -81,7 +77,7 @@ public class BackPack : MonoBehaviour {
                 slot.isEmpty = true;
                 slot.name = "Slot [ " + x + " ]";
                 slot.label.text = "";
-                slot.Quantity = 1;
+                slot.Quantity = 0;
                 slot.MaxQuantity = MaxQuatityNum;
                 InvSlot.Add(slot);
             }
@@ -100,6 +96,7 @@ public class BackPack : MonoBehaviour {
                 if (InvSlot[i].isEmpty)
                 {
                     mItems[i] = item;
+                    InvSlot[i].Quantity++;
                     InvSlot[i].UpdateText();
                     return;
                 }

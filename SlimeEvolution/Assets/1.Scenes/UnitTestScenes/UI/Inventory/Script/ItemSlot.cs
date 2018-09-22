@@ -6,14 +6,14 @@ public abstract class ItemSlot : MonoBehaviour {
 
     public UISprite icon;
     [SerializeField]
-    protected Item mItem;
+    public Item mItem;
     public bool isEmpty;
 
-    static Item mDraggedItem;
+    protected static Item mDraggedItem;
 
     abstract protected Item observedItem { get; }
-    abstract protected Item Replace(Item item);
-
+    public int Quantity;
+    public int MaxQuantity;
 
 
     void OnTooltip(bool show)
@@ -57,51 +57,7 @@ public abstract class ItemSlot : MonoBehaviour {
     }
 
 
-    void OnClick()
-    {
-        if (mDraggedItem != null)
-        {
-            OnDrop(null);
-        }
-        else if (mItem != null)
-        {
-            //원래자리에 있던 아이템을 든다//
-            mDraggedItem = Replace(null);
 
-            UpdateCursor();
-
-        }
-
-        Debug.Log("OnClick");
-    }
-    void OnDrag(Vector2 delta)
-    {
-        if (mDraggedItem == null && mItem != null)
-        {
-            UICamera.currentTouch.clickNotification = UICamera.ClickNotification.BasedOnDelta;
-            mDraggedItem = Replace(null);
-            UpdateCursor();
-        }
-    }
-    void OnDrop(GameObject go)
-    {
-        Item item = Replace(mDraggedItem);
-        //바꾼아이템을 든다//
-        mDraggedItem = item;
-
-        UpdateCursor();
-    }
-    void UpdateCursor()
-    {
-        if (mDraggedItem != null && mItem != null) 
-        {
-            UICursor.Set(mDraggedItem.iconAtlas, mDraggedItem.SpriteName);
-        }
-        else
-        {
-            UICursor.Clear();
-        }
-    }
     void Update()
     {
         Item i = observedItem;

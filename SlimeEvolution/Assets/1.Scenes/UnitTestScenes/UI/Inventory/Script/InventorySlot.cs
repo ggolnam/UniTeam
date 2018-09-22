@@ -9,8 +9,8 @@ public class InventorySlot : ItemSlot
     public BackPack storage;
     public UILabel label;
     public int SlotNum;
-    public int Quantity;
-    public int MaxQuantity;
+    static bool isClicked;
+
     
     
 
@@ -23,21 +23,54 @@ public class InventorySlot : ItemSlot
         }
     }
 
-    override protected Item Replace(Item item)
-    {
-        
-        return (storage != null) ? storage.Replace(SlotNum, item) : item;
 
-
-    }
     public void UpdateText()
     {
-        label.text = Quantity.ToString();
+        if (Quantity == 0)
+        {
+            label.text = "";
+        }
+        else
+        {
+            label.text = Quantity.ToString();
+        }
     }
 
-    public void ClearSlot()
+    void OnClick()
     {
 
+        if (mItem != null && isClicked == false) 
+        {
+            //원래자리에 있던 아이템을 든다//
+            //mDraggedItem을 mitem으로 설정
+            storage.preslot = SlotNum;
+            mDraggedItem = mItem;
+
+            isClicked = true;
+            UpdateCursor();
+        }
+        else
+        {
+            storage.Replace(SlotNum);
+            mDraggedItem = null;
+            isClicked = false;
+            Debug.Log("REPLACE");
+            UpdateCursor();
+        }
+
+        Debug.Log("OnClick");
+    }
+   
+    void UpdateCursor()
+    {
+        if (mDraggedItem != null && mItem != null)
+        {
+            UICursor.Set(mDraggedItem.iconAtlas, mDraggedItem.SpriteName);
+        }
+        else
+        {
+            UICursor.Clear();
+        }
     }
 
 
