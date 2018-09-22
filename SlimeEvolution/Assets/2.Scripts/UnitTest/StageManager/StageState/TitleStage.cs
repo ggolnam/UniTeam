@@ -10,7 +10,6 @@ namespace SlimeEvolution.GameSystem
     {
         public override void Enter()
         {
-            UnityEngine.Object.Instantiate(Resources.Load("UI/TitleUI") as GameObject);
             Debug.Log("Title Enter");
         }
 

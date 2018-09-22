@@ -2,21 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPoolManager : Singleton<ObjectPoolManager>
+namespace SlimeEvolution.GameSystem
 {
-    public TestPool testPool;
-
-    void Start()
+    public class ObjectPoolManager : Singleton<ObjectPoolManager>
     {
-        GameObject singleton = new GameObject();
-        singleton.AddComponent<TestPool>();
-        singleton.name = typeof(TestPool).ToString();
-        testPool = singleton.GetComponent<TestPool>();
-        singleton.transform.parent = gameObject.transform;
+        public TestPool testPool;
+
+        void Start()
+        {
+            GameObject singleton = new GameObject();
+            singleton.AddComponent<TestPool>();
+            singleton.name = typeof(TestPool).ToString();
+            testPool = singleton.GetComponent<TestPool>();
+            singleton.transform.parent = gameObject.transform;
+        }
+
     }
-
-
-
-
-
 }
