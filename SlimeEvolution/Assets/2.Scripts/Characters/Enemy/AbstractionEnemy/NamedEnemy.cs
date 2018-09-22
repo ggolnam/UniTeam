@@ -35,7 +35,7 @@ namespace SlimeEvolution.Character.Enemy
 
         public override void Chase(NavMeshAgent meshAgent, GameObject gameObject, GameObject player)
         {
-            movement.Chase(meshAgent, gameObject, player);
+            chase.Chase(meshAgent, gameObject, player);
         }
     }
 }

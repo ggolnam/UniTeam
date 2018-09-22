@@ -20,11 +20,12 @@ namespace SlimeEvolution.Character.Enemy
     public class Goblin : Character
     {
         AbstractionEnemy goblin;
-        public NavMeshAgent navMeshAgent;
+        NavMeshAgent navMeshAgent;
+        Animator goblinAnimator;
 
-        public float Timer;
-        public int newtarget;
-        public Vector3 target;
+        float Timer;
+        int newtarget;
+        Vector3 target;
 
         EnemyState enemyState;
         
@@ -38,7 +39,7 @@ namespace SlimeEvolution.Character.Enemy
             enemyState = EnemyState.Idle;
 
             goblin = new NormalEnemy(
-                new NormalAttack(), new IdleMovement(speed), new Chasing(speed));
+                new NormalAttack(damage), new IdleMovement(speed), new Chasing(speed));
         }
 
 
@@ -83,6 +84,11 @@ namespace SlimeEvolution.Character.Enemy
         private void Move()
         {
             goblin.Move(navMeshAgent, gameObject);
+        }
+
+        private void Attack()
+        {
+            goblin.Attack();
         }
 
 

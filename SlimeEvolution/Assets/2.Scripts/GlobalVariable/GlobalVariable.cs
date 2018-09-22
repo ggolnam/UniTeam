@@ -7,11 +7,11 @@ namespace SlimeEvolution.GlobalVariable
 {
     public enum Stage
     {
-        TestTitleScene = 0,
-        TestLoadingScene,
-        TestVillageScene,
+        TitleScene = 0,
+        LoadingScene,
         VillageScene,
-        BattleFieldScene,
+        DungeonScene,
+        
     
     }
 
