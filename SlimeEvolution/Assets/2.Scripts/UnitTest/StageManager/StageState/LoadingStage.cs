@@ -16,7 +16,8 @@ namespace SlimeEvolution.GameSystem
         }
         public override void Enter()
         {
-            UnityEngine.Object.Instantiate(Resources.Load("UI/LoadingUI") as GameObject);
+            GameObject gameObject = UnityEngine.Object.Instantiate(Resources.Load("UI/LoadingUI") as GameObject);
+            gameObject.transform.parent = GameObject.FindGameObjectWithTag("Canvas").transform;
             Debug.Log("Loding Enter");
             StageManager.Instance.LoadStage(nextStage);
         }
