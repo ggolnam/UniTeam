@@ -6,8 +6,8 @@ namespace SlimeEvolution.Character.Enemy
 {
     public abstract class EnemyAttack
     {
-        protected int AttackPointMagnification;
-        protected int Damage;
+        protected int damageMagnification;
+        protected int damage;
         
         public abstract void Attack();
 
@@ -15,16 +15,15 @@ namespace SlimeEvolution.Character.Enemy
 
     public class NormalAttack : EnemyAttack
     {
-        public NormalAttack()
+        public NormalAttack(float damage)
         {
-            AttackPointMagnification = 1;
-            
+            //damageMagnification = 1;
         }
 
         public override void Attack()
         {
             //실제 Attack구현부
-            Debug.Log("Attack대미지" + AttackPointMagnification.ToString());
+            Debug.Log("Attack대미지" + damageMagnification.ToString());
         }
 
     }
@@ -33,13 +32,13 @@ namespace SlimeEvolution.Character.Enemy
     {
         public SmeshAttack()
         {
-            AttackPointMagnification = 3;
+            damageMagnification = 3;
         }
 
         public override void Attack()
         {
             //실제 Attack 구현부
-            Debug.Log("Attack대미지:" + AttackPointMagnification.ToString());
+            Debug.Log("Attack대미지:" + damageMagnification.ToString());
         }
     }
 
