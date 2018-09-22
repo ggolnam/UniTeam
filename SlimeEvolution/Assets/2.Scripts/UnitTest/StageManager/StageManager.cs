@@ -16,7 +16,7 @@ namespace SlimeEvolution.GameSystem
         {
             stageState = new TitleStage();
             stageState.Enter();
-            currentStage = Stage.TestTitleScene;
+            currentStage = Stage.TitleScene;
         }
 
         public void LoadStage(Stage stage)
@@ -28,20 +28,20 @@ namespace SlimeEvolution.GameSystem
         {
             yield return stageState.Exit();
 
-            if (currentStage != Stage.TestLoadingScene)
+            if (currentStage != Stage.LoadingScene)
             {
                 stageState = new LoadingStage(stage);
-                currentStage = Stage.TestLoadingScene;
+                currentStage = Stage.LoadingScene;
 
             }
             else
             {
                 switch (stage)
                 {
-                    case Stage.TestTitleScene:
+                    case Stage.TitleScene:
                         stageState = new TitleStage();
                         break;
-                    case Stage.TestVillageScene:
+                    case Stage.VillageScene:
                         stageState = new VillageStage();
                         break;
                 }
