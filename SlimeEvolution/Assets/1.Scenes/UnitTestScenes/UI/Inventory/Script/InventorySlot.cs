@@ -9,7 +9,6 @@ public class InventorySlot : ItemSlot
     public BackPack storage;
     public UILabel label;
     public int SlotNum;
-    static bool isClicked;
     public int Quantity;
     public int MaxQuantity;
 
@@ -43,41 +42,44 @@ public class InventorySlot : ItemSlot
 
     void OnClick()
     {
+        //UIDragDropContainer container = surface ? NGUITools.FindInParents<UIDragDropContainer>(surface) : null;
 
-        if (mItem != null && isClicked == false) 
+
+        //if (mItem != null && BackPack.isInvClicked == false) 
+        if (!BackPack.isInvClicked && mDraggedItem == null) 
         {
             //원래자리에 있던 아이템을 든다//
             //mDraggedItem을 mitem으로 설정
             storage.preslot = SlotNum;
             mDraggedItem = mItem;
 
-            isClicked = true;
+            BackPack.isInvClicked = true;
             UpdateCursor();
+
+            Debug.Log("INVEN");
         }
-        else
+        else if (BackPack.isInvClicked && !BackPack.isEquipClicked) 
         {
             storage.Replace(SlotNum);
             mDraggedItem = null;
-            isClicked = false;
+            BackPack.isInvClicked = false;
+            BackPack.isEquipClicked = false;
             UpdateCursor();
-        }
+            Debug.Log("INVEN1");
 
-        Debug.Log("OnClick");
-    }
-   
-    void UpdateCursor()
-    {
-        if (mDraggedItem != null && mItem != null)
-        {
-            UICursor.Set(mDraggedItem.iconAtlas, mDraggedItem.SpriteName);
         }
         else
         {
-            UICursor.Clear();
+            storage.UnEquip(SlotNum);
+            mDraggedItem = null;
+            BackPack.isEquipClicked = false;
+            UpdateCursor();
+            Debug.Log("INVEN2");
+
         }
+
     }
-
-
+   
     void Update()
     {
         Item i = observedItem;
@@ -85,8 +87,8 @@ public class InventorySlot : ItemSlot
         if(mItem != null)
         {
             UpdateText();
-
         }
+
 
         if (mItem != i)
         {

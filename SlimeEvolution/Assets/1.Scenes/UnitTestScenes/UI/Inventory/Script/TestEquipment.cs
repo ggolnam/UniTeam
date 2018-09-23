@@ -23,5 +23,5 @@ public class TestEquipment : Item
     }
 
 }
-    public enum EquipmentSlotType { Head, Weapon, Shield }
+    public enum EquipmentSlotType { Weapon, Shield }
 

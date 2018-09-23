@@ -19,9 +19,12 @@ public class BackPack : MonoBehaviour {
 
     }
     #endregion
+    public static bool isInvClicked;
+    public static bool isEquipClicked;
 
     public GameObject inventroySlotPrefab;
     public List<InventorySlot> InvSlot;
+    public EquipmentSlot[] EquipSlots;
     public int InvSlotCol;
     int InvSlotRow;
 
@@ -29,16 +32,24 @@ public class BackPack : MonoBehaviour {
 
     public int MaxQuatityNum;
 
-    public List<Item> mItems = new List<Item>();
+    public List<Item> InvItems = new List<Item>();
 
-    public List<Item> items
+    public List<Item> Invitems
     {
-        get { while (mItems.Count < InvSlotCol) mItems.Add(null); return mItems; }
+        get { while (InvItems.Count < InvSlotCol) InvItems.Add(null); return InvItems; }
     }
 
     public Item GetItem(int slot)
     {
-        return (slot < items.Count) ? mItems[slot] : null;
+        return (slot < Invitems.Count) ? InvItems[slot] : null;
+    }
+    public Item[] EquipItems = new Item[2];
+
+
+    public Item GetEquip(EquipmentSlotType type)
+    {
+        return ((int)type < EquipSlots.Length) ? EquipItems[(int)type] : null;
+
     }
     public void Replace(int slot)
     {
@@ -47,18 +58,54 @@ public class BackPack : MonoBehaviour {
             int prevQuan = InvSlot[preslot].Quantity;
             InvSlot[preslot].Quantity = InvSlot[slot].Quantity;
             InvSlot[slot].Quantity = prevQuan;
-
-            Item previtem = mItems[preslot];
-            mItems[preslot] = mItems[slot];
-            mItems[slot] = previtem;
+            
+            Item previtem = InvItems[preslot];
+            InvItems[preslot] = InvItems[slot];
+            InvItems[slot] = previtem;
 
         }
 
     }
-    public void QuickSort()
+    public void Equip(EquipmentSlotType type)
     {
-        
+
+
+        Item previtem = InvItems[preslot];
+
+        if (previtem.Type == ItemType.Equipment)
+        {
+            if (previtem is TestEquipment)
+            {
+                TestEquipment Equip = (TestEquipment)previtem;
+
+                if (Equip.equipSlot == type)
+                {
+                    InvItems[preslot] = EquipItems[(int)type];
+                    EquipItems[(int)type] = previtem;
+                    InvSlot[preslot].Quantity = 0;
+                }
+            }
+        }
     }
+    public void UnEquip(int slot)
+    {
+        Item previtem = EquipItems[preslot];
+        if (InvItems[slot]!= null)
+        {
+            if (InvItems[slot].Type == ItemType.Equipment)
+            {
+                EquipItems[preslot] = InvItems[slot];
+                InvItems[slot] = previtem;
+            }
+        }
+        else
+        {
+            EquipItems[preslot] = InvItems[slot];
+            InvItems[slot] = previtem;
+        }
+
+    }
+
 
     void MakeInventorySlot()
     {
@@ -94,7 +141,7 @@ public class BackPack : MonoBehaviour {
             {
                 if (InvSlot[i].isEmpty)
                 {
-                    mItems[i] = item;
+                    InvItems[i] = item;
                     InvSlot[i].Quantity++;
                     return;
                 }
@@ -106,7 +153,7 @@ public class BackPack : MonoBehaviour {
         bool isbool = false;
         for (int i = 0; i < InvSlot.Count; i++)
         {
-            if (mItems[i] != null && item.ID == mItems[i].ID && item.Type == ItemType.Disposable && InvSlot[i].Quantity < MaxQuatityNum)
+            if (InvItems[i] != null && item.ID == InvItems[i].ID && item.Type == ItemType.Disposable && InvSlot[i].Quantity < MaxQuatityNum)
             {
                 InvSlot[i].Quantity++;
                 isbool = true;

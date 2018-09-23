@@ -13,7 +13,17 @@ public abstract class ItemSlot : MonoBehaviour {
 
     abstract protected Item observedItem { get; }
 
-
+    protected void UpdateCursor()
+    {
+        if (mDraggedItem != null && mItem != null)
+        {
+            UICursor.Set(mDraggedItem.iconAtlas, mDraggedItem.SpriteName);
+        }
+        else
+        {
+            UICursor.Clear();
+        }
+    }
 
     void OnTooltip(bool show)
     {
