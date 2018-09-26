@@ -52,8 +52,25 @@ namespace SlimeEvolution.Character.Enemy
             navMeshAgent.SetDestination(target);
         }
 
+      
         public override void Chase(NavMeshAgent navMeshAgent, GameObject gameObject, GameObject player) { }
+    }
 
+    public class StopMovement: EnemyMovement
+    {
+        public StopMovement()
+        {
+            this.speed = 0.0f;
+        }
+
+       
+
+        public override void Move(NavMeshAgent navMeshAgent, GameObject gameObject)
+        {
+            navMeshAgent.speed = 0.0f;
+        }
+
+        public override void Chase(NavMeshAgent navMeshAgent, GameObject gameObject, GameObject player) { }
     }
 
     public class Chasing : EnemyMovement
@@ -62,7 +79,7 @@ namespace SlimeEvolution.Character.Enemy
         public Chasing(float speed)
         {
             this.speed = speed;
-            magnification = 10.0f;
+            magnification = 5.0f;
         }
         
         public override void Chase(NavMeshAgent navMeshAgent, GameObject gameObject, GameObject player)

@@ -9,8 +9,8 @@ namespace SlimeEvolution.Character.Enemy
     {
         
         public NamedEnemy(EnemyAttack attack, EnemySkill skill,
-            EnemySkill skill2, EnemyMovement movement, EnemyMovement chase)
-            : base(attack, skill, movement, chase)
+            EnemySkill skill2, EnemyMovement movement, EnemyMovement chase, EnemyMovement stop)
+            : base(attack, skill, movement, chase, stop)
         { }
 
         public override void Attack()
@@ -36,6 +36,11 @@ namespace SlimeEvolution.Character.Enemy
         public override void Chase(NavMeshAgent meshAgent, GameObject gameObject, GameObject player)
         {
             chase.Chase(meshAgent, gameObject, player);
+        }
+
+        public override void Stop(NavMeshAgent navMeshAgent, GameObject gameObject)
+        {
+            stopMovement.Move(navMeshAgent, gameObject);
         }
     }
 }

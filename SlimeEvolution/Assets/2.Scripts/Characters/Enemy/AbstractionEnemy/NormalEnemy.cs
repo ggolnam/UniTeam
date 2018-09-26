@@ -8,8 +8,8 @@ namespace SlimeEvolution.Character.Enemy
     public class NormalEnemy : AbstractionEnemy
     {
         public NormalEnemy(EnemyAttack attack, EnemyMovement movement, 
-            EnemyMovement chase)
-            : base(attack, movement, chase)
+            EnemyMovement chase, StopMovement stopMovement)
+            : base(attack, movement, chase, stopMovement)
         { }
 
         public override void UseSkill()
@@ -29,6 +29,11 @@ namespace SlimeEvolution.Character.Enemy
         public override void Chase(NavMeshAgent meshAgent, GameObject gameObject, GameObject player)
         {
             chase.Chase(meshAgent, gameObject, player);
+        }
+
+        public override void Stop(NavMeshAgent navMeshAgent, GameObject gameObject)
+        {
+            stopMovement.Move(navMeshAgent,gameObject);
         }
     }
 }

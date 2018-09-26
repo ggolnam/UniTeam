@@ -12,26 +12,29 @@ namespace SlimeEvolution.Character.Enemy
         protected EnemyAttack attack;
         protected EnemyMovement movement;
         protected EnemyMovement chase;
+        protected EnemyMovement stopMovement;
         
         protected int AttackPoint;
 
         //Normal Enemy
         public AbstractionEnemy(EnemyAttack attack, EnemyMovement movement, 
-            EnemyMovement chase)
+            EnemyMovement chase, EnemyMovement stopMovement)
         {
             this.attack = attack;
             this.movement = movement;
             this.chase = chase;
+            this.stopMovement = stopMovement;
         }
 
         //Named Enemy
         public AbstractionEnemy(EnemyAttack attack, EnemySkill skill,
-            EnemyMovement movement, EnemyMovement chase)
+            EnemyMovement movement, EnemyMovement chase, EnemyMovement stopMovement)
         {
             this.attack = attack;
             this.skill1 = skill;
             this.movement = movement;
             this.chase = chase;
+            this.stopMovement = stopMovement;
         }
         
 
@@ -39,5 +42,6 @@ namespace SlimeEvolution.Character.Enemy
         public abstract void Attack();
         public abstract void Move(NavMeshAgent navMeshAgent, GameObject gameObject);
         public abstract void Chase(NavMeshAgent navMeshAgent, GameObject gameObject, GameObject player);
+        public abstract void Stop(NavMeshAgent navMeshAgent, GameObject gameObject);
     }
 }
