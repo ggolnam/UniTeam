@@ -25,11 +25,18 @@ namespace SlimeEvolution.Character.Enemy
         {
             if (Vector3.Distance(playerObject.transform.position, EnemyObject.transform.position) < 2)
             {
+                navMeshAgent.speed = 0f;
+                animator.SetFloat("speed", navMeshAgent.speed);
                 Vector3 direction = playerObject.transform.position - EnemyObject.transform.position;
                 direction.y = 0;
+                //movement쪽의 LookAt으로 수정할것
                 EnemyObject.transform.rotation = Quaternion.Slerp(EnemyObject.transform.rotation,
                     Quaternion.LookRotation(direction), 1.0f);
                 animator.SetBool("isAttacking", true);
+            }
+            else
+            {
+                animator.SetBool("isAttacking", false);
             }
         }
 
