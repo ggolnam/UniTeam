@@ -50,6 +50,12 @@ public class EquipmentSlot : ItemSlot{
 
         }
     }
+    //public void EquipItems(EquipmentSlotType equipmentSlotType)
+    //{
+    //    Debug.Log(equipmentSlotType);
+    //    storage.Equip(equipmentSlotType);
+
+    //}
 
     // Use this for initialization
     void Start () {
