@@ -8,7 +8,7 @@ namespace SlimeEvolution.Character.Enemy
     public abstract class EnemyMovement
     {
         protected Vector3 target;
-        //protected Animator animator; //심사숙고좀 ....
+       
 
         protected float speed;
         protected float timer;
@@ -26,7 +26,6 @@ namespace SlimeEvolution.Character.Enemy
     public class RandomMovement : EnemyMovement
     {
         public RandomMovement(float speed)
-           
         {
             this.speed = speed;
         }
@@ -47,10 +46,13 @@ namespace SlimeEvolution.Character.Enemy
             float myX = gameObject.transform.position.x;
             float myZ = gameObject.transform.position.z;
 
-            float xPosition = myX + Random.Range(myX - 100, myX + 100);
-            float zPosition = myZ + Random.Range(myZ - 100, myZ + 100);
+            float xPosition = myX + Random.Range(myX - 50, myX + 100);
+            float zPosition = myZ + Random.Range(myZ - 50, myZ + 100);
 
             target = new Vector3(xPosition, gameObject.transform.position.y, zPosition);
+            gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation,
+                Quaternion.LookRotation(target), 1.0f);
+            
             navMeshAgent.speed = speed;
             navMeshAgent.SetDestination(target);
             animator.SetFloat("speed", speed);
@@ -89,21 +91,35 @@ namespace SlimeEvolution.Character.Enemy
 
         public Chasing(float speed)
         {
-            
-            magnification = 2.0f;
+            magnification = 1.5f;
             this.speed = speed * magnification;
         }
         
-        public override void Chase(NavMeshAgent navMeshAgent, GameObject gameObject,
-            GameObject player, Animator animator)
+        public override void Chase(NavMeshAgent navMeshAgent, GameObject EnemyObject,
+            GameObject playerObject, Animator animator)
         {
-            float xPosition =player.transform.position.x;
-            float zPosition =player.transform.position.z;
+            float xPosition =playerObject.transform.position.x;
+            float zPosition =playerObject.transform.position.z;
 
-            target = new Vector3(xPosition, gameObject.transform.position.y, zPosition);
+            target = new Vector3(xPosition, EnemyObject.transform.position.y, zPosition);
+            EnemyObject.transform.rotation = Quaternion.Slerp(EnemyObject.transform.rotation,
+                Quaternion.LookRotation(target), 1.0f);
+
             navMeshAgent.speed = speed;
             animator.SetFloat("speed", speed);
             navMeshAgent.SetDestination(target);
+
+            if (Vector3.Distance(playerObject.transform.position, EnemyObject.transform.position) < 2.5f)
+            {
+                navMeshAgent.speed = 0.0f;
+                animator.SetFloat("speed", 0.0f);
+
+                Vector3 direction = playerObject.transform.position - EnemyObject.transform.position;
+                direction.y = 0;
+                EnemyObject.transform.rotation = Quaternion.Slerp(EnemyObject.transform.rotation,
+                    Quaternion.LookRotation(direction), 1.0f);
+                
+            }
         }
 
         public override void Move(NavMeshAgent navMeshAgent, GameObject gameObject, 

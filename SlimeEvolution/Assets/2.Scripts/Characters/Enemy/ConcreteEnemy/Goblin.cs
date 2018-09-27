@@ -22,11 +22,7 @@ namespace SlimeEvolution.Character.Enemy
         AbstractionEnemy goblin;
         NavMeshAgent navMeshAgent;
         Animator goblinAnimator;
-
-        float Timer;
-        int newtarget;
-        Vector3 target;
-
+        
         EnemyState enemyState;
         
 
@@ -67,6 +63,18 @@ namespace SlimeEvolution.Character.Enemy
             {
                 enemyState = EnemyState.Chase;
                 Chase(other.gameObject);
+
+                Attack(other.gameObject, gameObject);
+                ///EnemyAttack
+                //if (Vector3.Distance(other.gameObject.transform.position, this.transform.position) < 10)
+                //{
+                //    Vector3 direction = other.gameObject.transform.position - this.transform.position;
+                //    direction.y = 0;
+                //    this.transform.rotation = Quaternion.Slerp(this.transform.rotation,
+                //        Quaternion.LookRotation(direction), 1.0f);
+                //    goblinAnimator.SetBool("isAttcking", true);
+                //}
+                ///
             }
         }
 
@@ -95,9 +103,9 @@ namespace SlimeEvolution.Character.Enemy
             goblin.Stop(navMeshAgent, gameObject, goblinAnimator);
         }
 
-        private void Attack()
+        private void Attack(GameObject gameObject, GameObject EnemyObject)
         {
-            goblin.Attack();
+            goblin.Attack(gameObject, EnemyObject, goblinAnimator, navMeshAgent);
         }
 
 
@@ -106,9 +114,10 @@ namespace SlimeEvolution.Character.Enemy
             //지금 상황에서 조건을 꼭 넣을필요는 없을듯 
             while(enemyState == EnemyState.Idle)
             {
-                Move();
-                yield return new WaitForSeconds(2.0f);
                 stopMove();
+                yield return new WaitForSeconds(1.0f);
+                
+                Move();
                 yield return new WaitForSeconds(1.0f);
             }
         }

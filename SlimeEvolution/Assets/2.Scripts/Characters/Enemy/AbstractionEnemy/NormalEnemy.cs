@@ -16,9 +16,9 @@ namespace SlimeEvolution.Character.Enemy
         {
         }
 
-        public override void Attack()
+        public override void Attack(GameObject gameObject, GameObject EnemyObject, Animator animator, NavMeshAgent navMeshAgent)
         {
-            attack.Attack();
+            attack.Attack(gameObject, EnemyObject, animator, navMeshAgent);
         }
 
         public override void Move(NavMeshAgent meshAgent, GameObject gameObject, Animator animator)

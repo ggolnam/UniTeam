@@ -1,15 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace SlimeEvolution.Character.Enemy
 {
     public abstract class EnemyAttack
     {
-        protected int damageMagnification;
+        protected int magnification;
         protected int damage;
         
-        public abstract void Attack();
+        public abstract void Attack(GameObject gameObject, GameObject EnemyObject, Animator animator, NavMeshAgent navMeshAgent);
 
     }
 
@@ -17,13 +18,19 @@ namespace SlimeEvolution.Character.Enemy
     {
         public NormalAttack(float damage)
         {
-            //damageMagnification = 1;
+            magnification = 1;
         }
 
-        public override void Attack()
+        public override void Attack(GameObject playerObject, GameObject EnemyObject, Animator animator, NavMeshAgent navMeshAgent)
         {
-            //실제 Attack구현부
-            Debug.Log("Attack대미지" + damageMagnification.ToString());
+            if (Vector3.Distance(playerObject.transform.position, EnemyObject.transform.position) < 2)
+            {
+                Vector3 direction = playerObject.transform.position - EnemyObject.transform.position;
+                direction.y = 0;
+                EnemyObject.transform.rotation = Quaternion.Slerp(EnemyObject.transform.rotation,
+                    Quaternion.LookRotation(direction), 1.0f);
+                animator.SetBool("isAttacking", true);
+            }
         }
 
     }
@@ -32,13 +39,12 @@ namespace SlimeEvolution.Character.Enemy
     {
         public SmeshAttack()
         {
-            damageMagnification = 3;
+            magnification = 3;
         }
 
-        public override void Attack()
+        public override void Attack(GameObject gameObject, GameObject EnemyObject, Animator animator, NavMeshAgent navMeshAgent)
         {
             //실제 Attack 구현부
-            Debug.Log("Attack대미지:" + damageMagnification.ToString());
         }
     }
 

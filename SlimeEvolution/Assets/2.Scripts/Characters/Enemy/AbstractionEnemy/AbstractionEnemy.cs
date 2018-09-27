@@ -39,7 +39,7 @@ namespace SlimeEvolution.Character.Enemy
         
 
         public abstract void UseSkill();
-        public abstract void Attack();
+        public abstract void Attack(GameObject gameObject, GameObject EnemyObject, Animator animator, NavMeshAgent navMeshAgent);
         public abstract void Move(NavMeshAgent navMeshAgent, GameObject gameObject, Animator animator);
         public abstract void Chase(NavMeshAgent navMeshAgent, GameObject gameObject, GameObject player, Animator animator);
         public abstract void Stop(NavMeshAgent navMeshAgent, GameObject gameObject, Animator animator);
