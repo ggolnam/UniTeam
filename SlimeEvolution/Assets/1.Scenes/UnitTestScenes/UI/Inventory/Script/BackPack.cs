@@ -68,8 +68,6 @@ public class BackPack : MonoBehaviour {
     }
     public void Equip(EquipmentSlotType type)
     {
-
-
         Item previtem = InvItems[preslot];
 
         if (previtem.Type == ItemType.Equipment)
@@ -105,7 +103,6 @@ public class BackPack : MonoBehaviour {
         }
 
     }
-
 
     void MakeInventorySlot()
     {
@@ -162,9 +159,4 @@ public class BackPack : MonoBehaviour {
         }      
         return isbool;
     }
-
-    //아이템먹을때 어느슬랏에 넣을지 
-    //Equipment , Disposable
-
-
 }

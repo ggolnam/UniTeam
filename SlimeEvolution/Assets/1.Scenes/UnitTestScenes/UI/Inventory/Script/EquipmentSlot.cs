@@ -50,11 +50,19 @@ public class EquipmentSlot : ItemSlot{
 
         }
     }
+    //public void EquipItems(EquipmentSlotType equipmentSlotType)
+    //{
+    //    Debug.Log(equipmentSlotType);
+    //    storage.Equip(equipmentSlotType);
+
+    //}
 
     // Use this for initialization
     void Start () {
-		
-	}
+        storage = GameObject.FindWithTag("BACKPACK").GetComponent<BackPack>();
+
+
+    }
 
     void Update()
     {
