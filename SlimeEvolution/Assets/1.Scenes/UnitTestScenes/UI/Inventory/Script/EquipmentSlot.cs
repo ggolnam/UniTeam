@@ -53,8 +53,10 @@ public class EquipmentSlot : ItemSlot{
 
     // Use this for initialization
     void Start () {
-		
-	}
+        storage = GameObject.FindWithTag("BACKPACK").GetComponent<BackPack>();
+
+
+    }
 
     void Update()
     {
