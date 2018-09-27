@@ -35,12 +35,13 @@ namespace SlimeEvolution.Character.Enemy
             navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
             goblinAnimator = gameObject.GetComponent<Animator>();
             hp = 10;
-            speed = 1.5f;
+            speed = 3.0f;
             damage = 1;
             enemyState = EnemyState.Idle;
 
             goblin = new NormalEnemy(
-                new NormalAttack(damage), new IdleMovement(speed), new Chasing(speed), new StopMovement());
+                new NormalAttack(damage), new RandomMovement(speed), 
+                new Chasing(speed), new StopMovement());
         }
 
 
@@ -48,6 +49,7 @@ namespace SlimeEvolution.Character.Enemy
         {
 
             StartCoroutine(moveToRandomPosition());
+            
         }
 
         private void OnTriggerEnter(Collider other)
@@ -80,17 +82,17 @@ namespace SlimeEvolution.Character.Enemy
         
         private void Chase(GameObject player)
         {
-            goblin.Chase(navMeshAgent, gameObject, player);
+            goblin.Chase(navMeshAgent, gameObject, player, goblinAnimator);
         }
         
         private void Move()
         {
-            goblin.Move(navMeshAgent, gameObject);
+            goblin.Move(navMeshAgent, gameObject, goblinAnimator);
         }
 
         private void stopMove()
         {
-            goblin.Stop(navMeshAgent, gameObject);
+            goblin.Stop(navMeshAgent, gameObject, goblinAnimator);
         }
 
         private void Attack()
@@ -105,7 +107,7 @@ namespace SlimeEvolution.Character.Enemy
             while(enemyState == EnemyState.Idle)
             {
                 Move();
-                yield return new WaitForSeconds(1.0f);
+                yield return new WaitForSeconds(2.0f);
                 stopMove();
                 yield return new WaitForSeconds(1.0f);
             }

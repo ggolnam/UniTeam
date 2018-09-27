@@ -28,19 +28,19 @@ namespace SlimeEvolution.Character.Enemy
             skill2.ActivateSkill();
         }
 
-        public override void Move(NavMeshAgent meshAgent, GameObject gameObject)
+        public override void Move(NavMeshAgent meshAgent, GameObject gameObject, Animator animator)
         {
-            movement.Move(meshAgent, gameObject);
+            movement.Move(meshAgent, gameObject, animator);
         }
 
-        public override void Chase(NavMeshAgent meshAgent, GameObject gameObject, GameObject player)
+        public override void Chase(NavMeshAgent meshAgent, GameObject gameObject, GameObject player, Animator animator)
         {
-            chase.Chase(meshAgent, gameObject, player);
+            chase.Chase(meshAgent, gameObject, player, animator);
         }
 
-        public override void Stop(NavMeshAgent navMeshAgent, GameObject gameObject)
+        public override void Stop(NavMeshAgent navMeshAgent, GameObject gameObject, Animator animator)
         {
-            stopMovement.Move(navMeshAgent, gameObject);
+            stopMovement.Move(navMeshAgent, gameObject, animator);
         }
     }
 }
