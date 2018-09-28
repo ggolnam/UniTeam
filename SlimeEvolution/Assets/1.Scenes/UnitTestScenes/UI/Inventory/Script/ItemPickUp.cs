@@ -9,9 +9,6 @@ public class ItemPickUp : MonoBehaviour {
     public void PickUp()
     {
         BackPack.instance.AddItemToSlot(item);
-        //if (wasPickedUp)
-        //{
-        //    Debug.Log("pick");
-        //}
+
     }
 }
