@@ -23,9 +23,9 @@ namespace SlimeEvolution.Character.Enemy
 
 
 
-    public class RandomMovement : EnemyMovement
+    public class Patrol : EnemyMovement
     {
-        public RandomMovement(float speed)
+        public Patrol(float speed)
         {
             this.speed = speed;
         }
@@ -46,8 +46,8 @@ namespace SlimeEvolution.Character.Enemy
             float myX = gameObject.transform.position.x;
             float myZ = gameObject.transform.position.z;
 
-            float xPosition = myX + Random.Range(myX - 50, myX + 100);
-            float zPosition = myZ + Random.Range(myZ - 50, myZ + 100);
+            float xPosition = myX + Random.Range(myX - 50, myX + 50);
+            float zPosition = myZ + Random.Range(myZ - 50, myZ + 50);
 
             target = new Vector3(xPosition, gameObject.transform.position.y, zPosition);
             gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation,
@@ -91,7 +91,7 @@ namespace SlimeEvolution.Character.Enemy
 
         public Chasing(float speed)
         {
-            magnification = 1.5f;
+            magnification = 3f;
             this.speed = speed * magnification;
         }
         
@@ -110,9 +110,7 @@ namespace SlimeEvolution.Character.Enemy
                 float zPosition = playerObject.transform.position.z;
 
                 target = new Vector3(xPosition, EnemyObject.transform.position.y, zPosition);
-                //이부분도 마찬가지.... 코드정규화좀 합시다 
-                //EnemyObject.transform.rotation = Quaternion.Slerp(EnemyObject.transform.rotation,
-                //    Quaternion.LookRotation(playerObject.transform.position), 10.0f);
+                
                 EnemyObject.transform.LookAt(playerObject.transform.position);
                 navMeshAgent.speed = speed;
                 animator.SetFloat("speed", speed);
@@ -126,11 +124,7 @@ namespace SlimeEvolution.Character.Enemy
         {
             navMeshAgent.speed = 0.0f;
             animator.SetFloat("speed", 0.0f);
-            //이부분 코드가 똥인듯 수정요망...
-            Vector3 direction = playerObject.transform.position - EnemyObject.transform.position;
-            direction.y = 0;
-            //EnemyObject.transform.rotation = Quaternion.Slerp(EnemyObject.transform.rotation,
-            //    Quaternion.LookRotation(direction), 10.0f);
+            
             EnemyObject.transform.LookAt(playerObject.transform.position);
         }
 
