@@ -19,6 +19,8 @@ namespace SlimeEvolution.Character.Enemy
 
     public class Goblin : Character
     {
+        [SerializeField]
+        //Transform player; //플레이어의 위치를 Trigger로 받아오느냐.....Collider로 받아오느냐 그것이 문제로다...
         AbstractionEnemy goblin;
         NavMeshAgent navMeshAgent;
         Animator goblinAnimator;
@@ -30,24 +32,21 @@ namespace SlimeEvolution.Character.Enemy
         {
             navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
             goblinAnimator = gameObject.GetComponent<Animator>();
-            hp = 10;
-            speed = 3.0f;
+            maxHP = 10;
+            currentHP = maxHP;
+            speed = 1f;
             damage = 1;
             enemyState = EnemyState.Idle;
 
             goblin = new NormalEnemy(
-                new NormalAttack(damage), new RandomMovement(speed), 
+                new NormalAttack(damage), new Patrol(speed),
                 new Chasing(speed), new StopMovement());
         }
-
-
+       
         private void Start()
         {
-
             StartCoroutine(moveToRandomPosition());
-            
         }
-
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
@@ -56,69 +55,51 @@ namespace SlimeEvolution.Character.Enemy
                 StopCoroutine(moveToRandomPosition());
             }
         }
-
         private void OnTriggerStay(Collider other)
         {
             if (other.CompareTag("Player"))
             {
-                enemyState = EnemyState.Chase;
-                Chase(other.gameObject);
-
-                Attack(other.gameObject, gameObject);
-                ///EnemyAttack
-                //if (Vector3.Distance(other.gameObject.transform.position, this.transform.position) < 10)
-                //{
-                //    Vector3 direction = other.gameObject.transform.position - this.transform.position;
-                //    direction.y = 0;
-                //    this.transform.rotation = Quaternion.Slerp(this.transform.rotation,
-                //        Quaternion.LookRotation(direction), 1.0f);
-                //    goblinAnimator.SetBool("isAttcking", true);
-                //}
-                ///
+                if (enemyState != EnemyState.Combat)
+                {
+                    goblin.Chase(navMeshAgent, gameObject, other.gameObject, goblinAnimator);
+                }
+                if (Vector3.Distance(other.gameObject.transform.position, gameObject.transform.position) <= 3)
+                {
+                    Attack(other.gameObject);
+                    enemyState = EnemyState.Combat;
+                }
+                else
+                {
+                    goblinAnimator.SetBool("isAttacking", false);
+                    enemyState = EnemyState.Chase;
+                }
+                
             }
         }
-
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if (other.CompareTag("Player"))    
             {
                 enemyState = EnemyState.Idle;
                 StartCoroutine(moveToRandomPosition());
             }
+           
         }
-
-        
-        private void Chase(GameObject player)
+        void Attack(GameObject playerObject)
         {
-            goblin.Chase(navMeshAgent, gameObject, player, goblinAnimator);
+            goblin.Attack(playerObject, gameObject, goblinAnimator, navMeshAgent);
+            Debug.Log(navMeshAgent.speed);
+            enemyState = EnemyState.Combat;
         }
-        
-        private void Move()
-        {
-            goblin.Move(navMeshAgent, gameObject, goblinAnimator);
-        }
-
-        private void stopMove()
-        {
-            goblin.Stop(navMeshAgent, gameObject, goblinAnimator);
-        }
-
-        private void Attack(GameObject gameObject, GameObject EnemyObject)
-        {
-            goblin.Attack(gameObject, EnemyObject, goblinAnimator, navMeshAgent);
-        }
-
-
         IEnumerator moveToRandomPosition()
-        {
-            //지금 상황에서 조건을 꼭 넣을필요는 없을듯 
+        { 
             while(enemyState == EnemyState.Idle)
             {
-                stopMove();
-                yield return new WaitForSeconds(1.0f);
-                
-                Move();
-                yield return new WaitForSeconds(1.0f);
+                goblin.Stop(navMeshAgent, gameObject, goblinAnimator);
+                yield return new WaitForSeconds(2.0f);
+
+                goblin.Move(navMeshAgent, gameObject, goblinAnimator);
+                yield return new WaitForSeconds(2.0f);
             }
         }
     }
