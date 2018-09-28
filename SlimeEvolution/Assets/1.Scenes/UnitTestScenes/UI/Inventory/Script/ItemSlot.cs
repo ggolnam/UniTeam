@@ -25,45 +25,23 @@ public abstract class ItemSlot : MonoBehaviour {
         }
     }
 
-    void OnTooltip(bool show)
-    {
-        Item item = show ? mItem : null;
+    //void OnTooltip(bool show)
+    //{
+    //    Item item = show ? mItem : null;
 
-        if (item != null)
-        {
+    //    if (item != null)
+    //    {
 
-            //string t = "[" + NGUIText.EncodeColor(item.color) + "]" + item.name + "[-]\n";
+    //        string t = item.name + "[-]\n";
 
-            //t += "[AFAFAF]Level " + item.itemLevel + " " + bi.slot;
+    //        t += "[AFAFAF]Level " + item.ID;
 
-            //List<InvStat> stats = item.CalculateStats();
+    //        UITooltip.Show(t);
+    //        return;
+    //    }
 
-            //for (int i = 0, imax = stats.Count; i < imax; ++i)
-            //{
-            //    InvStat stat = stats[i];
-            //    if (stat.amount == 0) continue;
-
-            //    if (stat.amount < 0)
-            //    {
-            //        t += "\n[FF0000]" + stat.amount;
-            //    }
-            //    else
-            //    {
-            //        t += "\n[00FF00]+" + stat.amount;
-            //    }
-
-            //    if (stat.modifier == InvStat.Modifier.Percent) t += "%";
-            //    t += " " + stat.id;
-            //    t += "[-]";
-            //}
-
-            //if (!string.IsNullOrEmpty(bi.description)) t += "\n[FF9900]" + bi.description;
-            UITooltip.Show("gogogogogogogogogogogo ");
-            return;
-        }
-
-        UITooltip.Hide();
-    }
+    //    UITooltip.Hide();
+    //}
 
 
 

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class InventorySlot : ItemSlot
 {
-
     public BackPack storage;
     public UILabel label;
     public int SlotNum;
@@ -26,7 +25,7 @@ public class InventorySlot : ItemSlot
 
     public void UpdateText()
     {
-        if (mItem.Type == ItemType.Equipment)
+        if (mItem.ItemKind == Item.Kind.Equipment)
         {
             label.text = "";
         }
@@ -42,10 +41,6 @@ public class InventorySlot : ItemSlot
 
     void OnClick()
     {
-        //UIDragDropContainer container = surface ? NGUITools.FindInParents<UIDragDropContainer>(surface) : null;
-
-
-        //if (mItem != null && BackPack.isInvClicked == false) 
         if (!BackPack.isInvClicked && mDraggedItem == null) 
         {
             //원래자리에 있던 아이템을 든다//
@@ -55,6 +50,10 @@ public class InventorySlot : ItemSlot
 
             BackPack.isInvClicked = true;
             UpdateCursor();
+            ////////////
+            Vector3 pos = UICamera.mainCamera.ScreenToWorldPoint(Input.mousePosition);
+                storage.ShowToolTip(mItem, pos);
+            ////////////
 
             Debug.Log("INVEN");
         }

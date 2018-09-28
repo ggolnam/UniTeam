@@ -7,7 +7,7 @@ public class EquipmentSlot : ItemSlot{
 
     public BackPack storage;
 
-    public EquipmentSlotType equipmentSlotType;
+    public Item.EquipmentSlotKind equipmentSlotType;
 
 
     protected override Item observedItem
@@ -50,17 +50,11 @@ public class EquipmentSlot : ItemSlot{
 
         }
     }
-    //public void EquipItems(EquipmentSlotType equipmentSlotType)
-    //{
-    //    Debug.Log(equipmentSlotType);
-    //    storage.Equip(equipmentSlotType);
 
-    //}
 
-    // Use this for initialization
-    void Start () {
+    void Start()
+    {
         storage = GameObject.FindWithTag("BACKPACK").GetComponent<BackPack>();
-
 
     }
 
