@@ -21,6 +21,7 @@ namespace SlimeEvolution.Character.Enemy
     {
         [SerializeField]
         //Transform player; //플레이어의 위치를 Trigger로 받아오느냐.....Collider로 받아오느냐 그것이 문제로다...
+        //return movement에 관해서는 던전시스템자체를 만들어두고 그곳에서 베이스캠프포지션을 받아와서 세팅하는걸로 하자
         AbstractionEnemy goblin;
         NavMeshAgent navMeshAgent;
         Animator goblinAnimator;
@@ -45,14 +46,14 @@ namespace SlimeEvolution.Character.Enemy
        
         private void Start()
         {
-            StartCoroutine(moveToRandomPosition());
+            StartCoroutine(patrolAround());
         }
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
             {
                 enemyState = EnemyState.Chase;
-                StopCoroutine(moveToRandomPosition());
+                StopCoroutine(patrolAround());
             }
         }
         private void OnTriggerStay(Collider other)
@@ -65,6 +66,7 @@ namespace SlimeEvolution.Character.Enemy
                 }
                 if (Vector3.Distance(other.gameObject.transform.position, gameObject.transform.position) <= 3)
                 {
+                    goblin.Stop(navMeshAgent, gameObject, goblinAnimator);
                     Attack(other.gameObject);
                     enemyState = EnemyState.Combat;
                 }
@@ -72,8 +74,7 @@ namespace SlimeEvolution.Character.Enemy
                 {
                     goblinAnimator.SetBool("isAttacking", false);
                     enemyState = EnemyState.Chase;
-                }
-                
+                } 
             }
         }
         private void OnTriggerExit(Collider other)
@@ -81,9 +82,8 @@ namespace SlimeEvolution.Character.Enemy
             if (other.CompareTag("Player"))    
             {
                 enemyState = EnemyState.Idle;
-                StartCoroutine(moveToRandomPosition());
+                StartCoroutine(patrolAround());
             }
-           
         }
         void Attack(GameObject playerObject)
         {
@@ -91,7 +91,7 @@ namespace SlimeEvolution.Character.Enemy
             Debug.Log(navMeshAgent.speed);
             enemyState = EnemyState.Combat;
         }
-        IEnumerator moveToRandomPosition()
+        IEnumerator patrolAround()
         { 
             while(enemyState == EnemyState.Idle)
             {
@@ -102,5 +102,9 @@ namespace SlimeEvolution.Character.Enemy
                 yield return new WaitForSeconds(2.0f);
             }
         }
+        //IEnumerator moveToOriginPosition()
+        //{
+        //    yield return new WaitForSeconds(8.0f);
+        //}
     }
 }

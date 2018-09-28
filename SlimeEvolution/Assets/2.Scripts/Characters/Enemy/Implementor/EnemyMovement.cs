@@ -9,7 +9,6 @@ namespace SlimeEvolution.Character.Enemy
     {
         protected Vector3 target;
        
-
         protected float speed;
         protected float timer;
         protected float magnification;
@@ -62,10 +61,6 @@ namespace SlimeEvolution.Character.Enemy
         public override void Chase(NavMeshAgent navMeshAgent, GameObject gameObject,
             GameObject player, Animator animator) { }
     }
-
-
-
-
     public class StopMovement: EnemyMovement
     {
         public StopMovement()
@@ -82,27 +77,19 @@ namespace SlimeEvolution.Character.Enemy
         public override void Chase(NavMeshAgent navMeshAgent, GameObject gameObject,
             GameObject player, Animator animator) { }
     }
-
-
-
-
     public class Chasing : EnemyMovement
     {
-
         public Chasing(float speed)
         {
             magnification = 3f;
             this.speed = speed * magnification;
         }
-        
         public override void Chase(NavMeshAgent navMeshAgent, GameObject EnemyObject,
             GameObject playerObject, Animator animator)
         {
-            
             if (Vector3.Distance(playerObject.transform.position, EnemyObject.transform.position) < 2f)
             {
                 StopChase(navMeshAgent, EnemyObject, playerObject, animator);
-                
             }
             else
             {
@@ -116,18 +103,14 @@ namespace SlimeEvolution.Character.Enemy
                 animator.SetFloat("speed", speed);
                 navMeshAgent.SetDestination(target);
             }
-            
         }
-
         void StopChase(NavMeshAgent navMeshAgent, GameObject EnemyObject,
             GameObject playerObject, Animator animator)
         {
             navMeshAgent.speed = 0.0f;
-            animator.SetFloat("speed", 0.0f);
-            
+            animator.SetFloat("speed", navMeshAgent.speed);
             EnemyObject.transform.LookAt(playerObject.transform.position);
         }
-
         public override void Move(NavMeshAgent navMeshAgent, GameObject gameObject, 
             Animator animator) { }
     }

@@ -43,5 +43,6 @@ namespace SlimeEvolution.Character.Enemy
         public abstract void Move(NavMeshAgent navMeshAgent, GameObject gameObject, Animator animator);
         public abstract void Chase(NavMeshAgent navMeshAgent, GameObject gameObject, GameObject player, Animator animator);
         public abstract void Stop(NavMeshAgent navMeshAgent, GameObject gameObject, Animator animator);
+       
     }
 }

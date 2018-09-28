@@ -14,6 +14,9 @@ namespace SlimeEvolution.Character.Enemy
             Animator animator, NavMeshAgent navMeshAgent);
 
     }
+
+
+
     public class NormalAttack : EnemyAttack
     {
         public NormalAttack(float damage)
@@ -24,10 +27,8 @@ namespace SlimeEvolution.Character.Enemy
         public override void Attack(GameObject playerObject, GameObject EnemyObject,
             Animator animator, NavMeshAgent navMeshAgent)
         {
-                navMeshAgent.speed = 0f;
                 EnemyObject.transform.LookAt(playerObject.transform.position);
                 animator.SetBool("isAttacking", true);
-                animator.SetFloat("speed", navMeshAgent.speed);
         }
     }
     public class SmeshAttack : EnemyAttack  
@@ -36,10 +37,13 @@ namespace SlimeEvolution.Character.Enemy
         {
             magnification = 3;
         }
-        public override void Attack(GameObject gameObject, GameObject EnemyObject,
+        public override void Attack(GameObject playerObject, GameObject EnemyObject,
             Animator animator, NavMeshAgent navMeshAgent)
         {
-            //실제 Attack 구현부
+            //navMeshAgent.speed = 0f;
+            EnemyObject.transform.LookAt(playerObject.transform.position);
+            animator.SetBool("isSmeshAttacking", true);
+           // animator.SetFloat("speed", navMeshAgent.speed);
         }
     }
 }

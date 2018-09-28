@@ -26,8 +26,6 @@ namespace SlimeEvolution.Character.Enemy
             //스킬 구현부
         }
     }
-
-    
     public class Defence : EnemySkill
     {
         public Defence()
@@ -41,9 +39,6 @@ namespace SlimeEvolution.Character.Enemy
             //일정 확률로 해당 콜라이더를 무효화한다
         }
     }
-
-
-
     public class Throw : EnemySkill
     {
         public Throw()

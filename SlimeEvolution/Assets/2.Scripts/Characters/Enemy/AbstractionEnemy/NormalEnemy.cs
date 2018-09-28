@@ -8,7 +8,7 @@ namespace SlimeEvolution.Character.Enemy
     public class NormalEnemy : AbstractionEnemy
     {
         public NormalEnemy(EnemyAttack attack, EnemyMovement movement, 
-            EnemyMovement chase, StopMovement stopMovement)
+            EnemyMovement chase, EnemyMovement stopMovement)
             : base(attack, movement, chase, stopMovement)
         { }
 
@@ -35,5 +35,7 @@ namespace SlimeEvolution.Character.Enemy
         {
             stopMovement.Move(navMeshAgent,gameObject, animator);
         }
+
+       
     }
 }

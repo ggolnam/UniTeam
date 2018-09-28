@@ -42,5 +42,7 @@ namespace SlimeEvolution.Character.Enemy
         {
             stopMovement.Move(navMeshAgent, gameObject, animator);
         }
+
+        
     }
 }
