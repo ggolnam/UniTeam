@@ -52,7 +52,9 @@ public class InventorySlot : ItemSlot
             UpdateCursor();
             ////////////
             Vector3 pos = UICamera.mainCamera.ScreenToWorldPoint(Input.mousePosition);
-                storage.ShowToolTip(mItem, pos);
+                storage.itemToolTip.ShowToolTip(storage.EquipItems,mItem,pos);
+            storage.ResetSortButton();
+            //storage.ShowToolTip(mItem, pos);
             ////////////
 
             Debug.Log("INVEN");
@@ -66,6 +68,13 @@ public class InventorySlot : ItemSlot
             UpdateCursor();
             Debug.Log("INVEN1");
 
+            storage.itemToolTip.HideToolTip();
+            storage.ResetSortButton();
+
+            //storage.HideToolTip();
+
+
+
         }
         else
         {
@@ -74,6 +83,8 @@ public class InventorySlot : ItemSlot
             BackPack.isEquipClicked = false;
             UpdateCursor();
             Debug.Log("INVEN2");
+
+            storage.ResetSortButton();
 
         }
 

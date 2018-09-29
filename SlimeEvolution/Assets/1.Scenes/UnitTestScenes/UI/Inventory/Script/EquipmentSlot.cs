@@ -25,11 +25,10 @@ public class EquipmentSlot : ItemSlot{
             //mDraggedItem을 mitem으로 설정
             mDraggedItem = mItem;
             storage.preslot = (int)equipmentSlotType;
-
-            //BackPack.isInvClicked = true;
             BackPack.isEquipClicked = true;
             UpdateCursor();
             Debug.Log("EQUIP");
+
         }
         else if (BackPack.isEquipClicked && !BackPack.isInvClicked) 
         {
@@ -47,6 +46,12 @@ public class EquipmentSlot : ItemSlot{
             BackPack.isInvClicked = false;
             UpdateCursor();
             Debug.Log("EQUIP2");
+
+
+            storage.itemToolTip.HideToolTip();
+
+            //storage.HideToolTip();
+
 
         }
     }

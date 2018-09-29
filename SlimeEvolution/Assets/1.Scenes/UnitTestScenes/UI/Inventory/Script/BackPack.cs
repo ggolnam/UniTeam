@@ -26,7 +26,10 @@ public class BackPack : MonoBehaviour {
     public int MaxQuatityNum;
     public int preslot;
 
+    public GameObject SortItemButton;
+    public GameObject FillItemButton;
     public ItemToolTip itemToolTip;
+
     [Header("Inventory")]
     public GameObject inventroySlotPrefab;
     public List<Item> InvItems = new List<Item>();
@@ -92,10 +95,93 @@ public class BackPack : MonoBehaviour {
 
         return true;
     }
-    public void ShowToolTip(Item inv,Vector3 pos)
+
+
+    public void OnClickFillItem()
     {
-        itemToolTip.ShowToolTip(EquipItems, inv, pos);
+        FillBlank();
+        FillItemButton.SetActive(false);
+        SortItemButton.SetActive(true);
     }
+    public void OnClickSortItem()
+    {
+        SortItem();
+        FillItemButton.SetActive(true);
+        SortItemButton.SetActive(false);
+    }
+    public void ResetSortButton()
+    {
+        FillItemButton.SetActive(true);
+        SortItemButton.SetActive(false);
+    }
+
+     void SortItem()
+    {
+        int i = 0, j = 0, min = 0;
+        int prevQuan = 0;
+        Item temp = null;
+
+        for ( i = 0; i < InvItems.Count - 1; i++)
+        {
+            if (Invitems[i] != null)
+            {
+                temp = Invitems[i];
+                prevQuan = InvSlot[i].Quantity;
+                min = i;
+
+                for ( j = i + 1; j < InvItems.Count; j++)
+                {
+                    if (Invitems[j] != null)
+                    {
+                        if (InvItems[j].ID < InvItems[min].ID)
+                        {
+                            min = j;
+                        }
+                    }
+                }
+                Invitems[i] = Invitems[min];
+                Invitems[min] = temp;
+
+                InvSlot[i].Quantity = InvSlot[min].Quantity;
+                InvSlot[min].Quantity = prevQuan;
+            }
+        }
+    }
+     void FillBlank()
+    {
+        int prevQuan =0;
+        Item temp =null;
+        for (int i = 0; i < InvItems.Count-1; i++)
+        {
+            if (Invitems[i] == null)
+            {
+                temp = Invitems[i];
+                prevQuan = InvSlot[i].Quantity;
+
+                for (int j = i + 1; j < InvItems.Count; j++) 
+                {
+                    if (Invitems[j] != null)
+                    {
+                        Invitems[i] = Invitems[j];
+                        Invitems[j] = temp;
+                        InvSlot[i].Quantity = InvSlot[j].Quantity;
+                        InvSlot[j].Quantity = prevQuan;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+
+    //public void ShowToolTip(Item inv,Vector3 pos)
+    //{
+    //    itemToolTip.ShowToolTip(EquipItems, inv, pos);
+    //}
+    //public void HideToolTip()
+    //{
+    //    itemToolTip.HideToolTip();
+    //}
 
     void MakeInventorySlot()
     {
