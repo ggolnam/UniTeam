@@ -14,7 +14,7 @@ namespace SlimeEvolution.Character.Enemy
             Animator animator, NavMeshAgent navMeshAgent);
 
     }
-
+    
 
 
     public class NormalAttack : EnemyAttack
