@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 namespace SlimeEvolution.Character.Enemy
 {
-    public enum EnemyState
+    public enum EnemyStateType
     {
         Idle,
         Chase,
@@ -24,20 +24,20 @@ namespace SlimeEvolution.Character.Enemy
         //return movement에 관해서는 던전시스템자체를 만들어두고 그곳에서 베이스캠프포지션을 받아와서 세팅하는걸로 하자
         AbstractionEnemy goblin;
         NavMeshAgent navMeshAgent;
-        Animator goblinAnimator;
+        Animator animator;
         
-        EnemyState enemyState;
+        EnemyStateType enemyState;
         
 
         private void Awake()
         {
             navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
-            goblinAnimator = gameObject.GetComponent<Animator>();
+            animator = gameObject.GetComponent<Animator>();
             maxHP = 10;
             currentHP = maxHP;
             speed = 1f;
             damage = 1;
-            enemyState = EnemyState.Idle;
+            enemyState = EnemyStateType.Idle;
 
             goblin = new NormalEnemy(
                 new NormalAttack(damage), new Patrol(speed),
@@ -52,7 +52,7 @@ namespace SlimeEvolution.Character.Enemy
         {
             if (other.CompareTag("Player"))
             {
-                enemyState = EnemyState.Chase;
+                enemyState = EnemyStateType.Chase;
                 StopCoroutine(patrolAround());
             }
         }
@@ -60,20 +60,20 @@ namespace SlimeEvolution.Character.Enemy
         {
             if (other.CompareTag("Player"))
             {
-                if (enemyState != EnemyState.Combat)
+                if (enemyState != EnemyStateType.Combat)
                 {
-                    goblin.Chase(navMeshAgent, gameObject, other.gameObject, goblinAnimator);
+                    goblin.Chase(navMeshAgent, gameObject, other.gameObject, animator);
                 }
                 if (Vector3.Distance(other.gameObject.transform.position, gameObject.transform.position) <= 3)
                 {
-                    goblin.Stop(navMeshAgent, gameObject, goblinAnimator);
+                    goblin.Stop(navMeshAgent, gameObject, animator);
                     Attack(other.gameObject);
-                    enemyState = EnemyState.Combat;
+                    enemyState = EnemyStateType.Combat;
                 }
                 else
                 {
-                    goblinAnimator.SetBool("isAttacking", false);
-                    enemyState = EnemyState.Chase;
+                    animator.SetBool("isAttacking", false);
+                    enemyState = EnemyStateType.Chase;
                 } 
             }
         }
@@ -81,24 +81,24 @@ namespace SlimeEvolution.Character.Enemy
         {
             if (other.CompareTag("Player"))    
             {
-                enemyState = EnemyState.Idle;
+                enemyState = EnemyStateType.Idle;
                 StartCoroutine(patrolAround());
             }
         }
         void Attack(GameObject playerObject)
         {
-            goblin.Attack(playerObject, gameObject, goblinAnimator, navMeshAgent);
+            goblin.Attack(playerObject, gameObject, animator, navMeshAgent);
             Debug.Log(navMeshAgent.speed);
-            enemyState = EnemyState.Combat;
+            enemyState = EnemyStateType.Combat;
         }
         IEnumerator patrolAround()
         { 
-            while(enemyState == EnemyState.Idle)
+            while(enemyState == EnemyStateType.Idle)
             {
-                goblin.Stop(navMeshAgent, gameObject, goblinAnimator);
+                goblin.Stop(navMeshAgent, gameObject, animator);
                 yield return new WaitForSeconds(2.0f);
 
-                goblin.Move(navMeshAgent, gameObject, goblinAnimator);
+                goblin.Move(navMeshAgent, gameObject, animator);
                 yield return new WaitForSeconds(2.0f);
             }
         }
