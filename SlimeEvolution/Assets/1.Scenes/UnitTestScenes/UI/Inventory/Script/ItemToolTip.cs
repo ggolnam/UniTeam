@@ -20,17 +20,14 @@ public class ItemToolTip : MonoBehaviour
 
     public bool ShowToolTip(Item[] Equip, Item Inv, Vector3 pos)
     {
-        if (Inv.ItemKind != Item.Kind.Equipment)
+        if (Inv == null)
             return false;
 
         transform.position = pos;
-        SetEquipedItemToolTip(Equip[(int)Inv.EquipSlotKind]);
-        if(!EquipedItemPanel.activeSelf)
-        EquipedItemPanel.SetActive(true);
-
+        if (Inv.ItemKind == Item.Kind.Equipment)
+            SetEquipedItemToolTip(Equip[(int)Inv.EquipSlotKind]);
         SetInvItemToolTip(Inv);
-        if (!InvItemPanel.activeSelf)
-            InvItemPanel.SetActive(true);
+        Debug.Log("equip1");
 
         return true;
     }
@@ -42,6 +39,11 @@ public class ItemToolTip : MonoBehaviour
 
     void SetEquipedItemToolTip(Item item)
     {
+        if (item == null)
+            return;
+
+
+        EquipedItemPanel.SetActive(true);
         EquipedItem.atlas = item.iconAtlas;
         EquipedItem.spriteName = item.SpriteName;
         EquipName.text = item.Name.ToString();
@@ -49,11 +51,13 @@ public class ItemToolTip : MonoBehaviour
     }
     void SetInvItemToolTip(Item item)
     {
+        if (item == null)
+            return;
+
+        InvItemPanel.SetActive(true);
         InvItem.atlas = item.iconAtlas;
         InvItem.spriteName = item.SpriteName;
         InvName.text = item.Name.ToString();
         InvDesc.text = item.ItemKind.ToString();
     }
-
-
 }
