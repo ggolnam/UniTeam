@@ -87,23 +87,15 @@ namespace SlimeEvolution.Character.Enemy
         public override void Chase(NavMeshAgent navMeshAgent, GameObject EnemyObject,
             GameObject playerObject, Animator animator)
         {
-            //if (Vector3.Distance(playerObject.transform.position, EnemyObject.transform.position) < 2)
-            //{
-            //    //이부분 수정요망 Chase에 스탑이 왠말이냐
-            //    StopChase(navMeshAgent, EnemyObject, playerObject, animator);
-            //}
-            //else
-            //{
-                float xPosition = playerObject.transform.position.x;
-                float zPosition = playerObject.transform.position.z;
+            float xPosition = playerObject.transform.position.x + 0.5f;
+            float zPosition = playerObject.transform.position.z + 0.5f;
 
-                target = new Vector3(xPosition, EnemyObject.transform.position.y, zPosition);
-                
-                EnemyObject.transform.LookAt(playerObject.transform.position);
-                navMeshAgent.speed = speed;
-                animator.SetFloat("speed", speed);
-                navMeshAgent.SetDestination(target);
-            //}
+            target = new Vector3(xPosition, EnemyObject.transform.position.y, zPosition);
+
+            EnemyObject.transform.LookAt(playerObject.transform.position);
+            navMeshAgent.speed = speed;
+            animator.SetFloat("speed", speed);
+            navMeshAgent.SetDestination(target);
         }
         void StopChase(NavMeshAgent navMeshAgent, GameObject EnemyObject,
             GameObject playerObject, Animator animator)

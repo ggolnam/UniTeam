@@ -16,9 +16,9 @@ namespace SlimeEvolution.Character.Enemy
     {
         int recoveryAmount;
 
-        public RecoverHP()
+        public RecoverHP(int recoveryAmount)
         {
-            recoveryAmount = 10;
+            this.recoveryAmount = recoveryAmount;
         }
         
         public override void ActivateSkill()
