@@ -138,7 +138,7 @@ namespace SlimeEvolution.Character.Enemy
                     //break;
                 }
                 chase();
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.5f);
             //}
         }
         IEnumerator EnemyAttack()
@@ -154,7 +154,7 @@ namespace SlimeEvolution.Character.Enemy
                     //break;
                 }
                 attack();
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.5f);
             //}
         }
 
