@@ -8,9 +8,9 @@ namespace SlimeEvolution.Character.Enemy
     public class NamedEnemy:AbstractionEnemy
     {
         
-        public NamedEnemy(EnemyAttack attack, EnemySkill skill,
+        public NamedEnemy(EnemyAttack attack, EnemySkill skill1,
             EnemySkill skill2, EnemyMovement movement, EnemyMovement chase, EnemyMovement stop)
-            : base(attack, skill, movement, chase, stop)
+            : base(attack, skill1,skill2, movement, chase, stop)
         { }
 
         public override void Attack(GameObject gameObject, GameObject EnemyObject, Animator animator, NavMeshAgent navMeshAgent)
@@ -18,12 +18,12 @@ namespace SlimeEvolution.Character.Enemy
             attack.Attack(gameObject, EnemyObject, animator, navMeshAgent);
         }
 
-        public override void UseSkill()
+        public override void RecoveryHP()
         {
             skill1.ActivateSkill();
         }
 
-        public void UseSkill2()
+        public override void Throw()
         {
             skill2.ActivateSkill();
         }

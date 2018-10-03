@@ -27,18 +27,20 @@ namespace SlimeEvolution.Character.Enemy
         }
 
         //Named Enemy
-        public AbstractionEnemy(EnemyAttack attack, EnemySkill skill,
+        public AbstractionEnemy(EnemyAttack attack, EnemySkill skill1, EnemySkill skill2,
             EnemyMovement movement, EnemyMovement chase, EnemyMovement stopMovement)
         {
             this.attack = attack;
-            this.skill1 = skill;
+            this.skill1 = skill1;
+            this.skill2 = skill2;
             this.movement = movement;
             this.chase = chase;
             this.stopMovement = stopMovement;
         }
         
 
-        public abstract void UseSkill();
+        public abstract void RecoveryHP();
+        public abstract void Throw();
         public abstract void Attack(GameObject gameObject, GameObject EnemyObject, Animator animator, NavMeshAgent navMeshAgent);
         public abstract void Move(NavMeshAgent navMeshAgent, GameObject gameObject, Animator animator);
         public abstract void Chase(NavMeshAgent navMeshAgent, GameObject gameObject, GameObject player, Animator animator);

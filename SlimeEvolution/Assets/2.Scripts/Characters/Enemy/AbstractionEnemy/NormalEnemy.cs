@@ -12,10 +12,14 @@ namespace SlimeEvolution.Character.Enemy
             : base(attack, movement, chase, stopMovement)
         { }
 
-        public override void UseSkill()
+        public override void RecoveryHP()
         {
+            Debug.LogError("<color=red> Error: </color>Not implement RecoveryHP() method in NormalEnemy Class!");
         }
-
+        public override void Throw()
+        {
+            Debug.LogError("<color=red> Error: </color>Not implement RecoveryHP() method in NormalEnemy Class!");
+        }
         public override void Attack(GameObject gameObject, GameObject EnemyObject, Animator animator, NavMeshAgent navMeshAgent)
         {
             attack.Attack(gameObject, EnemyObject, animator, navMeshAgent);

@@ -21,7 +21,7 @@ namespace SlimeEvolution.Character.Enemy
             //patrolCo = StartCoroutine("EnemyChase", 0.5f);
             enemy = new NamedEnemy(
                 new NormalAttack(damage), new RecoverHP(recoveryAmount), 
-                new Defence(), new Patrol(speed),new Chasing(speed), new StopMovement());
+                new Throwing(), new Patrol(speed),new Chasing(speed), new StopMovement());
         }
         private void Start()
         {
@@ -64,15 +64,22 @@ namespace SlimeEvolution.Character.Enemy
             enemy.Attack(playerObject, gameObject, animator, navMesh);
         }
 
+        void useSkill()
+        {
+            enemy.RecoveryHP();
+        }
+        
+        void Defence()
+        {
+            enemy.Throw();
+        }
+
         void stop()
         {
             enemy.Stop(navMesh, gameObject, animator);
         }
-        //코루틴에 enum형식의 조건문이 적용이 되는가 안되는가? Coroutine안에서의 조건문 사용법에 대해 알아보기
         IEnumerator MonsterBehavior()
         {
-            //Coroutine nextBehavior;
-            
                 if (state == EnemyStateType.Idle)
                 {
                     nextBehavior = StartCoroutine(EnemyIdle());
@@ -93,8 +100,6 @@ namespace SlimeEvolution.Character.Enemy
         }
         IEnumerator EnemyIdle()
         {
-            //Coroutine nextBehavior;
-            
                 if (state != EnemyStateType.Idle)
                 {
                     nextBehavior = StartCoroutine(MonsterBehavior());
@@ -108,8 +113,6 @@ namespace SlimeEvolution.Character.Enemy
         }
         IEnumerator EnemyChase()
         {
-            //Coroutine nextBehavior;
-
             if (state != EnemyStateType.Chase)
             {
                 nextBehavior = StartCoroutine(MonsterBehavior());
@@ -118,11 +121,11 @@ namespace SlimeEvolution.Character.Enemy
             chase();
             Debug.Log("현재 추격 들어옴");
             yield return new WaitForSeconds(0.5f);
+            
 
         }
         IEnumerator EnemyAttack()
         {
-            //Coroutine nextBehavior;
             if (state != EnemyStateType.Combat)
             {
                 nextBehavior = StartCoroutine(MonsterBehavior());
@@ -130,8 +133,11 @@ namespace SlimeEvolution.Character.Enemy
             }
             stop();
             attack();
+            if(currentHP <= (maxHP / 10))
+            {
+                useSkill();
+            }
             //yield return new WaitForSeconds(3.0f);
-
         }
 
         IEnumerator EnemyDie()
