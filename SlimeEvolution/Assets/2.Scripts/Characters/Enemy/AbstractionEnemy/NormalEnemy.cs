@@ -8,17 +8,19 @@ namespace SlimeEvolution.Character.Enemy
     public class NormalEnemy : AbstractionEnemy
     {
         public NormalEnemy(EnemyAttack attack, EnemyMovement movement, 
-            EnemyMovement chase, EnemyMovement stopMovement)
+            EnemyMovement chase, EnemyMovement stopMovement)    
             : base(attack, movement, chase, stopMovement)
         { }
 
-        public override void RecoveryHP()
+        public override int RecoveryHP(int recoverAmount, Animator animator)
         {
             Debug.LogError("<color=red> Error: </color>Not implement RecoveryHP() method in NormalEnemy Class!");
+            throw new System.NotImplementedException();
         }
         public override void Throw()
         {
             Debug.LogError("<color=red> Error: </color>Not implement RecoveryHP() method in NormalEnemy Class!");
+            throw new System.NotImplementedException();
         }
         public override void Attack(GameObject gameObject, GameObject EnemyObject, Animator animator, NavMeshAgent navMeshAgent)
         {

@@ -7,6 +7,7 @@ namespace SlimeEvolution.Character.Enemy
     public abstract class EnemySkill
     {
         public GameObject enemy;
+        public abstract int ActivateSkill(int currentHP, Animator animator);
         public abstract void ActivateSkill();
     }
     
@@ -20,23 +21,17 @@ namespace SlimeEvolution.Character.Enemy
         {
             this.recoveryAmount = recoveryAmount;
         }
-        
+        public override int ActivateSkill(int currentHP, Animator animator)
+        {
+            animator.SetBool("isRecovering", true);
+            currentHP = currentHP + recoveryAmount;
+            Debug.Log(recoveryAmount);
+            //animator.SetBool("isRecovering", false);
+            return currentHP;
+        }
         public override void ActivateSkill()
         {
-            //스킬 구현부
-        }
-    }
-    public class Defence : EnemySkill
-    {
-        public Defence()
-        {
-
-        }
-
-        public override void ActivateSkill()
-        {
-            //스킬 구현부
-            //일정 확률로 해당 콜라이더를 무효화한다
+            
         }
     }
     public class Throwing : EnemySkill
@@ -48,7 +43,12 @@ namespace SlimeEvolution.Character.Enemy
 
         public override void ActivateSkill()
         {
-            //실제 스킬 구현부
+            
+        }
+
+        public override int ActivateSkill(int currentHP, Animator animator)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

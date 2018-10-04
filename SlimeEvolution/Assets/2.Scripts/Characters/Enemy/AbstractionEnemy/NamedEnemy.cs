@@ -18,9 +18,11 @@ namespace SlimeEvolution.Character.Enemy
             attack.Attack(gameObject, EnemyObject, animator, navMeshAgent);
         }
 
-        public override void RecoveryHP()
+        public override int RecoveryHP(int currentHP, Animator animator)
         {
-            skill1.ActivateSkill();
+            //currentHP = 0;
+            //currentHP=skill1.ActivateSkill(currentHP, animator);
+            return skill1.ActivateSkill(currentHP, animator);
         }
 
         public override void Throw()

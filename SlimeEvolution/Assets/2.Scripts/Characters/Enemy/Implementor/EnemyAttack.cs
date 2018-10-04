@@ -12,7 +12,6 @@ namespace SlimeEvolution.Character.Enemy
         
         public abstract void Attack(GameObject gameObject, GameObject EnemyObject,
             Animator animator, NavMeshAgent navMeshAgent);
-
     }
     
 
@@ -23,13 +22,12 @@ namespace SlimeEvolution.Character.Enemy
         {
             magnification = 1;
         }
-
         public override void Attack(GameObject playerObject, GameObject EnemyObject,
             Animator animator, NavMeshAgent navMeshAgent)
         {
             Vector3 playerPosition = playerObject.transform.position;
-            navMeshAgent.SetDestination(playerPosition);
-                //EnemyObject.transform.LookAt(playerPosition);
+            //navMeshAgent.SetDestination(playerPosition);
+                EnemyObject.transform.LookAt(playerPosition);
                 animator.SetBool("isAttacking", true);
         }
 

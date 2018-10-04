@@ -11,6 +11,7 @@ namespace SlimeEvolution.Character.Enemy
         Idle,
         Chase,
         Combat,
+        Dying,
         Death
     }
 

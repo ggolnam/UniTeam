@@ -8,12 +8,16 @@ namespace SlimeEvolution.Character.Enemy
     //현재 Vector3.Distance로 Enemy움직임을 조정할 수 있는 법을 생각중
     public class Skeleton : Enemy
     {
+        Random random;
         Coroutine nextBehavior;
+        public new int maxHP;
+        public new int currentHP;
         private void Awake()
         {
             navMesh = gameObject.GetComponent<NavMeshAgent>();
             animator = gameObject.GetComponent<Animator>();
-            maxHP = 15;
+            maxHP = 40;
+            recoveryAmount = 20;
             currentHP = maxHP;
             speed = 1.5f;
             damage = 2;
@@ -43,6 +47,10 @@ namespace SlimeEvolution.Character.Enemy
             {
                 state = EnemyStateType.Combat;
             }
+            if ((currentHP <= (maxHP/10)) /*&& (Random.value == 0.1f)*/) 
+            {
+                state = EnemyStateType.Dying;
+            }
             //if(gameObject.activeInHierarchy == false)
             //{
             //    state = EnemyStateType.Death;
@@ -64,12 +72,12 @@ namespace SlimeEvolution.Character.Enemy
             enemy.Attack(playerObject, gameObject, animator, navMesh);
         }
 
-        void useSkill()
+        void useRecovering()
         {
-            enemy.RecoveryHP();
+            currentHP = enemy.RecoveryHP(currentHP, animator);
         }
         
-        void Defence()
+        void useThrowing()
         {
             enemy.Throw();
         }
@@ -80,36 +88,41 @@ namespace SlimeEvolution.Character.Enemy
         }
         IEnumerator MonsterBehavior()
         {
-                if (state == EnemyStateType.Idle)
-                {
-                    nextBehavior = StartCoroutine(EnemyIdle());
-                    yield return nextBehavior;
-                }
-                if (state == EnemyStateType.Chase)
-                {
-                    nextBehavior = StartCoroutine(EnemyChase());
-                    yield return nextBehavior;
-                }
-                if (state == EnemyStateType.Combat)
-                {
-                    nextBehavior = StartCoroutine(EnemyAttack());
-                    yield return nextBehavior;
-                }
+            if (state == EnemyStateType.Idle)
+            {
+                nextBehavior = StartCoroutine(EnemyIdle());
+                yield return nextBehavior;
+            }
+            if (state == EnemyStateType.Chase)
+            {
+                nextBehavior = StartCoroutine(EnemyChase());
+                yield return nextBehavior;
+            }
+            if (state == EnemyStateType.Combat)
+            {
+                nextBehavior = StartCoroutine(EnemyAttack());
+                yield return nextBehavior;
+            }
+            if(state == EnemyStateType.Dying)
+            {
+                nextBehavior = StartCoroutine(Recovery());
+                yield return nextBehavior;
+            }
+           
             nextBehavior = StartCoroutine(MonsterBehavior());
-            
         }
         IEnumerator EnemyIdle()
         {
-                if (state != EnemyStateType.Idle)
-                {
-                    nextBehavior = StartCoroutine(MonsterBehavior());
-                    yield return nextBehavior;
-                }
-                patrol();
-                yield return new WaitForSeconds(2.0f);
-                stop();
-                yield return new WaitForSeconds(2.0f);
-            
+             if (state != EnemyStateType.Idle)
+             {
+                 nextBehavior = StartCoroutine(MonsterBehavior());
+                 yield return nextBehavior;
+             }
+             
+             patrol();
+             yield return new WaitForSeconds(2.0f);
+             stop();
+             yield return new WaitForSeconds(2.0f);
         }
         IEnumerator EnemyChase()
         {
@@ -119,10 +132,7 @@ namespace SlimeEvolution.Character.Enemy
                 yield return nextBehavior;
             }
             chase();
-            Debug.Log("현재 추격 들어옴");
             yield return new WaitForSeconds(0.5f);
-            
-
         }
         IEnumerator EnemyAttack()
         {
@@ -133,18 +143,23 @@ namespace SlimeEvolution.Character.Enemy
             }
             stop();
             attack();
-            if(currentHP <= (maxHP / 10))
-            {
-                useSkill();
-            }
-            //yield return new WaitForSeconds(3.0f);
+            yield return new WaitForSeconds(2.0f);
         }
-
+        IEnumerator Recovery()
+        {
+            if (state == EnemyStateType.Dying)
+            {
+                useRecovering();
+                yield return new WaitForSeconds(1f);
+                StopCoroutine(Recovery());
+                nextBehavior = StartCoroutine(MonsterBehavior());
+                yield return nextBehavior;
+            }
+        }
         IEnumerator EnemyDie()
         {
             Debug.Log("몬스터 쥬금");
             return null;
         }
-
     }
 }
