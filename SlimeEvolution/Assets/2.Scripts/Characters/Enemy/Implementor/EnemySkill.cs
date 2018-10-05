@@ -19,19 +19,18 @@ namespace SlimeEvolution.Character.Enemy
 
         public RecoverHP(int recoveryAmount)
         {
-            this.recoveryAmount = recoveryAmount;
+            this.recoveryAmount = 20;
         }
         public override int ActivateSkill(int currentHP, Animator animator)
         {
             animator.SetBool("isRecovering", true);
-            currentHP = currentHP + recoveryAmount;
-            Debug.Log(recoveryAmount);
-            //animator.SetBool("isRecovering", false);
+            currentHP += recoveryAmount;
             return currentHP;
         }
+
         public override void ActivateSkill()
         {
-            
+            throw new System.NotImplementedException();
         }
     }
     public class Throwing : EnemySkill

@@ -10,6 +10,7 @@ namespace SlimeEvolution.Character.Enemy
     {
         Random random;
         Coroutine nextBehavior;
+        Coroutine ForStopCoroutine;
         public new int maxHP;
         public new int currentHP;
         private void Awake()
@@ -21,6 +22,8 @@ namespace SlimeEvolution.Character.Enemy
             currentHP = maxHP;
             speed = 1.5f;
             damage = 2;
+            
+            
             state = EnemyStateType.Idle;
             //patrolCo = StartCoroutine("EnemyChase", 0.5f);
             enemy = new NamedEnemy(
@@ -150,8 +153,9 @@ namespace SlimeEvolution.Character.Enemy
             if (state == EnemyStateType.Dying)
             {
                 useRecovering();
-                yield return new WaitForSeconds(1f);
-                StopCoroutine(Recovery());
+                state = EnemyStateType.Idle;
+               
+
                 nextBehavior = StartCoroutine(MonsterBehavior());
                 yield return nextBehavior;
             }
