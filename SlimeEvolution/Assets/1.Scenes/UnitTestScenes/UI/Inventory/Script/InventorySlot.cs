@@ -52,9 +52,8 @@ public class InventorySlot : ItemSlot
             UpdateCursor();
             ////////////
             Vector3 pos = UICamera.mainCamera.ScreenToWorldPoint(Input.mousePosition);
-                storage.itemToolTip.ShowToolTip(storage.EquipItems,mItem,pos);
+            storage.itemToolTip.ShowToolTip(storage.EquipItems, mItem, pos);
             storage.ResetSortButton();
-            //storage.ShowToolTip(mItem, pos);
             ////////////
 
             Debug.Log("INVEN");
