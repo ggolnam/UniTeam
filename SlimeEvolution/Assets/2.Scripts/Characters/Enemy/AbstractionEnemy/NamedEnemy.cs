@@ -20,14 +20,13 @@ namespace SlimeEvolution.Character.Enemy
 
         public override int RecoveryHP(int currentHP, Animator animator)
         {
-            //currentHP = 0;
-            //currentHP=skill1.ActivateSkill(currentHP, animator);
             return skill1.ActivateSkill(currentHP, animator);
         }
 
-        public override void Throw()
+        public override void Throw(GameObject playerObject, GameObject EnemyObject,
+            Animator animator, NavMeshAgent navMeshAgent)
         {
-            skill2.ActivateSkill();
+            skill2.ActivateSkill(playerObject, EnemyObject, animator, navMeshAgent);
         }
 
         public override void Move(NavMeshAgent meshAgent, GameObject gameObject, Animator animator)
@@ -44,7 +43,5 @@ namespace SlimeEvolution.Character.Enemy
         {
             stopMovement.Move(navMeshAgent, gameObject, animator);
         }
-
-        
     }
 }
