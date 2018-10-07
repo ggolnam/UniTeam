@@ -28,7 +28,7 @@ namespace SlimeEvolution.Character.Enemy
             //patrolCo = StartCoroutine("EnemyChase", 0.5f);
             enemy = new NamedEnemy(
                 new NormalAttack(damage), new RecoverHP(recoveryAmount), 
-                new Throwing(), new Patrol(speed),new Chasing(speed), new StopMovement());
+                new Throwing(damage), new Patrol(speed),new Chasing(speed), new StopMovement());
         }
         private void Start()
         {
@@ -128,6 +128,12 @@ namespace SlimeEvolution.Character.Enemy
         }
         IEnumerator EnemyChase()
         {
+            if (Random.Range(0, 9) == 0) 
+            {
+                stop();
+                useThrowing();
+                Debug.Log("useThrowing 메소드 입구 들어옴");
+            }
             if (state != EnemyStateType.Chase)
             {
                 nextBehavior = StartCoroutine(MonsterBehavior());
@@ -137,6 +143,7 @@ namespace SlimeEvolution.Character.Enemy
             //일정 확률로 Throw()를 호출한다.
             //잠깐동안 Stop()해야 한다.
             yield return new WaitForSeconds(0.5f);
+            
         }
         IEnumerator EnemyAttack()
         {
@@ -154,15 +161,13 @@ namespace SlimeEvolution.Character.Enemy
             if (state == EnemyStateType.Dying)
             {
                 useRecovering();
-<<<<<<< HEAD
+
                 yield return new WaitForSeconds(1f);
                 animator.SetBool("isRecovering", false); //왜 이샛기만 들어가면 중첩합 버그나 날까 ... ?
                 StopCoroutine(Recovery());
-=======
+
                 state = EnemyStateType.Idle;
                
-
->>>>>>> d045e8dcbd1a70723234535c490ed9a5279b1c01
                 nextBehavior = StartCoroutine(MonsterBehavior());
                 yield return nextBehavior;
             }

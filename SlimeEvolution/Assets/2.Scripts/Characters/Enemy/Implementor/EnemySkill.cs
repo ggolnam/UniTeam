@@ -18,7 +18,6 @@ namespace SlimeEvolution.Character.Enemy
     public class RecoverHP : EnemySkill
     {
         int recoveryAmount;
-
         public RecoverHP(int recoveryAmount)
         {
             this.recoveryAmount = 20;
@@ -38,9 +37,10 @@ namespace SlimeEvolution.Character.Enemy
     }
     public class Throwing : EnemySkill
     {
-        public Throwing()
+        int damage;
+        public Throwing(int damage)
         {
-           
+            this.damage = damage;
         }
 
         public override void ActivateSkill(GameObject playerObject, GameObject EnemyObject,
@@ -50,6 +50,7 @@ namespace SlimeEvolution.Character.Enemy
             EnemyObject.transform.LookAt(playerPosition);//플레이어를 향해서 발사한다. 
             //이부분에서는 Objectpool Manager에서 장거리 공격용 오브젝트를 활성화하고 불러와야 한다. 
             //일단 Instantiate로 오브젝트를 생성하는것만 해주면 OK!
+            
 
 
             //날아가는 궤도 및 반환조건은 Throwing object의 script에서 구현한다.
