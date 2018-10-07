@@ -19,7 +19,7 @@ namespace SlimeEvolution.Character.Enemy
 
         public RecoverHP(int recoveryAmount)
         {
-            this.recoveryAmount = recoveryAmount;
+            this.recoveryAmount = 20;
         }
         public override int ActivateSkill(int currentHP, Animator animator)
         {

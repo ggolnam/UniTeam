@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 namespace SlimeEvolution.Character.Enemy
 {
+    //메소드들을 인터페이스로 빼는 방안 모색
     public abstract class AbstractionEnemy
     {
         protected EnemySkill skill1;

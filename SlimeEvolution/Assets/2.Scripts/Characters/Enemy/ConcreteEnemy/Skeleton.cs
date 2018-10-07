@@ -151,6 +151,7 @@ namespace SlimeEvolution.Character.Enemy
             {
                 useRecovering();
                 yield return new WaitForSeconds(1f);
+                animator.SetBool("isRecovering", false); //왜 이샛기만 들어가면 중첩합 버그나 날까 ... ?
                 StopCoroutine(Recovery());
                 nextBehavior = StartCoroutine(MonsterBehavior());
                 yield return nextBehavior;
