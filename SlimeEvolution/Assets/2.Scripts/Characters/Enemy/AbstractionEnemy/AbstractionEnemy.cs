@@ -41,11 +41,16 @@ namespace SlimeEvolution.Character.Enemy
         
 
         public abstract int RecoveryHP(int currentHP, Animator animator);
-        public abstract void Throw();
-        public abstract void Attack(GameObject gameObject, GameObject EnemyObject, Animator animator, NavMeshAgent navMeshAgent);
-        public abstract void Move(NavMeshAgent navMeshAgent, GameObject gameObject, Animator animator);
-        public abstract void Chase(NavMeshAgent navMeshAgent, GameObject gameObject, GameObject player, Animator animator);
-        public abstract void Stop(NavMeshAgent navMeshAgent, GameObject gameObject, Animator animator);
+        public abstract void Throw(GameObject playerObject, GameObject EnemyObject,
+            Animator animator, NavMeshAgent navMeshAgent);
+        public abstract void Attack(GameObject gameObject, GameObject EnemyObject, 
+            Animator animator, NavMeshAgent navMeshAgent);
+        public abstract void Move(NavMeshAgent navMeshAgent, GameObject gameObject, 
+            Animator animator);
+        public abstract void Chase(NavMeshAgent navMeshAgent, GameObject gameObject, 
+            GameObject player, Animator animator);
+        public abstract void Stop(NavMeshAgent navMeshAgent, GameObject gameObject, 
+            Animator animator);
        
     }
 }

@@ -10,6 +10,7 @@ namespace SlimeEvolution.Character.Enemy
     {
         Random random;
         Coroutine nextBehavior;
+        Coroutine ForStopCoroutine;
         public new int maxHP;
         public new int currentHP;
         private void Awake()
@@ -21,6 +22,8 @@ namespace SlimeEvolution.Character.Enemy
             currentHP = maxHP;
             speed = 1.5f;
             damage = 2;
+            
+            
             state = EnemyStateType.Idle;
             //patrolCo = StartCoroutine("EnemyChase", 0.5f);
             enemy = new NamedEnemy(
@@ -61,26 +64,25 @@ namespace SlimeEvolution.Character.Enemy
         {
             enemy.Move(navMesh, gameObject, animator);
         }
-
         void chase()
         {
             enemy.Chase(navMesh, gameObject, playerObject, animator);
         }
-
         void attack()
         {
             enemy.Attack(playerObject, gameObject, animator, navMesh);
         }
-
         void useRecovering()
         {
             currentHP = enemy.RecoveryHP(currentHP, animator);
         }
-        
-        void useThrowing()
+        void useThrowing() 
         {
-            enemy.Throw();
+            //이부분은 장거리 공격이므로 추격 중에 일정 확률로 공격해야 한다.
+            enemy.Throw(playerObject, gameObject, animator, navMesh);
         }
+
+        
 
         void stop()
         {
@@ -132,6 +134,8 @@ namespace SlimeEvolution.Character.Enemy
                 yield return nextBehavior;
             }
             chase();
+            //일정 확률로 Throw()를 호출한다.
+            //잠깐동안 Stop()해야 한다.
             yield return new WaitForSeconds(0.5f);
         }
         IEnumerator EnemyAttack()
@@ -150,9 +154,15 @@ namespace SlimeEvolution.Character.Enemy
             if (state == EnemyStateType.Dying)
             {
                 useRecovering();
+<<<<<<< HEAD
                 yield return new WaitForSeconds(1f);
                 animator.SetBool("isRecovering", false); //왜 이샛기만 들어가면 중첩합 버그나 날까 ... ?
                 StopCoroutine(Recovery());
+=======
+                state = EnemyStateType.Idle;
+               
+
+>>>>>>> d045e8dcbd1a70723234535c490ed9a5279b1c01
                 nextBehavior = StartCoroutine(MonsterBehavior());
                 yield return nextBehavior;
             }
