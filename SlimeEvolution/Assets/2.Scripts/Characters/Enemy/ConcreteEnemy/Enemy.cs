@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using SlimeEvolution.GameSystem;
 
 namespace SlimeEvolution.Character.Enemy
 {
@@ -11,7 +12,7 @@ namespace SlimeEvolution.Character.Enemy
         protected GameObject playerObject;
         [SerializeField]
         protected GameObject basePosition;
-
+        
         protected AbstractionEnemy enemy;
         protected NavMeshAgent navMesh;
         protected Animator animator;

@@ -18,7 +18,7 @@ namespace SlimeEvolution.Character.Enemy
     //코루틴이나 기타 이벤트함수를 기준으로 몬스터를 움직인다.
     //매개변수를 Awake쪽의 생성부분에서 넣어준다.
 
-    public class Goblin : Character
+    public class TestGoblin : Character
     {
         [SerializeField]
         //Transform player; //플레이어의 위치를 Trigger로 받아오느냐.....Collider로 받아오느냐 그것이 문제로다...
@@ -26,12 +26,13 @@ namespace SlimeEvolution.Character.Enemy
         AbstractionEnemy goblin;
         NavMeshAgent navMeshAgent;
         Animator animator;
-        
+
         EnemyStateType enemyState;
         
 
         private void Awake()
         {
+            
             navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
             animator = gameObject.GetComponent<Animator>();
             maxHP = 10;
@@ -48,6 +49,7 @@ namespace SlimeEvolution.Character.Enemy
         private void Start()
         {
             StartCoroutine(patrolAround());
+            
         }
         private void OnTriggerEnter(Collider other)
         {

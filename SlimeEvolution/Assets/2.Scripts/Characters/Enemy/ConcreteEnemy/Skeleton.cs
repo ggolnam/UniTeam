@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using SlimeEvolution.GameSystem;
 
 namespace SlimeEvolution.Character.Enemy
 {
-    //현재 Vector3.Distance로 Enemy움직임을 조정할 수 있는 법을 생각중
     public class Skeleton : Enemy
     {
         Random random;
         Coroutine nextBehavior;
-        Coroutine ForStopCoroutine;
-        public new int maxHP;
-        public new int currentHP;
+        DungeonMediator mediator;//DungeonMediator 테스트
         private void Awake()
         {
+            mediator = new DungeonMediator();//DungeonMediator 테스트
             navMesh = gameObject.GetComponent<NavMeshAgent>();
             animator = gameObject.GetComponent<Animator>();
             maxHP = 40;
@@ -23,12 +22,17 @@ namespace SlimeEvolution.Character.Enemy
             speed = 1.5f;
             damage = 2;
             
-            
             state = EnemyStateType.Idle;
-            //patrolCo = StartCoroutine("EnemyChase", 0.5f);
             enemy = new NamedEnemy(
                 new NormalAttack(damage), new RecoverHP(recoveryAmount), 
                 new Throwing(damage), new Patrol(speed),new Chasing(speed), new StopMovement());
+        }
+
+        //DungeonMediator 테스트
+        void testmed()
+        {
+            Vector3 Test = mediator.TestSend();
+            Debug.Log(Test);
         }
         private void Start()
         {
@@ -36,7 +40,7 @@ namespace SlimeEvolution.Character.Enemy
         }
         private void Update()
         {
-            //항상 체크를 하는데 문제없으려나
+            testmed();//DungeonMediator 테스트
             if ((Vector3.Distance(playerObject.transform.position, gameObject.transform.position) < 8)
                 && (Vector3.Distance(playerObject.transform.position, gameObject.transform.position) > 2)) 
             {

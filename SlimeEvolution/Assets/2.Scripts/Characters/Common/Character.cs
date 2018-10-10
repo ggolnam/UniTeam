@@ -12,7 +12,5 @@ namespace SlimeEvolution.Character
         protected int currentMP;
         protected int damage;
         protected float speed;
-        
-        
     }
 }
