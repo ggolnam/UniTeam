@@ -132,10 +132,11 @@ namespace SlimeEvolution.Character.Enemy
         }
         IEnumerator EnemyChase()
         {
-            if (Random.Range(0, 9) == 0) 
+            if (Random.Range(0, 3) == 0) 
             {
                 stop();
                 useThrowing();
+                //yield return new WaitForSeconds(0.8f);
                 Debug.Log("useThrowing 메소드 입구 들어옴");
             }
             if (state != EnemyStateType.Chase)
