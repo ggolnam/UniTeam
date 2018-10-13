@@ -91,7 +91,6 @@ namespace SlimeEvolution.Character.Enemy
         {
             float xPosition = playerObject.transform.position.x;
             float zPosition = playerObject.transform.position.z;
-
             
             target = new Vector3(xPosition, EnemyObject.transform.position.y, zPosition);
 
@@ -100,15 +99,14 @@ namespace SlimeEvolution.Character.Enemy
             animator.SetFloat("speed", speed);
             animator.SetBool("isAttacking", false);
             navMeshAgent.SetDestination(target);
-            //Random.rotation을 이용해보자
         }
-        void StopChase(NavMeshAgent navMeshAgent, GameObject EnemyObject,
-            GameObject playerObject, Animator animator)
-        {
-            navMeshAgent.speed = 0.0f;
-            animator.SetFloat("speed", navMeshAgent.speed);
-            EnemyObject.transform.LookAt(playerObject.transform.position);
-        }
+        //void StopChase(NavMeshAgent navMeshAgent, GameObject EnemyObject,
+        //    GameObject playerObject, Animator animator)
+        //{
+        //    navMeshAgent.speed = 0.0f;
+        //    animator.SetFloat("speed", navMeshAgent.speed);
+        //    EnemyObject.transform.LookAt(playerObject.transform.position);
+        //}
         public override void Move(NavMeshAgent navMeshAgent, GameObject gameObject, 
             Animator animator) { }
     }

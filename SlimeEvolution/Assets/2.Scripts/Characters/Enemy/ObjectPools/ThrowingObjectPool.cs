@@ -27,12 +27,10 @@ namespace SlimeEvolution.Character.Enemy
             {
                 objectToRegist = Instantiate(itemObject, gameObject.transform);//리소스로드로 가져올것.. 일단 임시로 이렇게
                 //itemObjects[i].transform.position = gameObject.transform.position;
+                //objectToRegist.GetComponent<Rigidbody>();
                 itemObjects.Add(objectToRegist);
-                //itemObjects[i].AddComponent<Rigidbody>();
                 itemObjects[i].name = "ThrowingObject";
                 itemObjects[i].SetActive(false);
-                
-                itemObjects[i].transform.SetParent(this.gameObject.transform);//SetParent를 해야하나?
             }
         }
 
@@ -43,8 +41,8 @@ namespace SlimeEvolution.Character.Enemy
             {
                 if (itemObjects[i].activeInHierarchy == false)
                 {
-                    itemObjects[i].transform.position = enemyTransform.position;
-                    //itemObjects[i].transform.rotation = enemyTransform.rotation;
+                    itemObjects[i].transform.position = new Vector3(enemyTransform.position.x, 0.5f, enemyTransform.position.z);
+                    itemObjects[i].transform.rotation = new Quaternion(0,0,0,0);
                     itemObjects[i].SetActive(true);
                     objectToPop = itemObjects[i];
                     Debug.Log("오브젝트나옴");
@@ -62,6 +60,7 @@ namespace SlimeEvolution.Character.Enemy
         public void PushToPool(GameObject objectToPush)
         {
             objectToPush.SetActive(false);
+            objectToPush.transform.position = this.gameObject.transform.position;
             itemObjects.Add(objectToPush);
         }
     }

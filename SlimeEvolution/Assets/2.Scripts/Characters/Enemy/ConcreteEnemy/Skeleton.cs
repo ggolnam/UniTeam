@@ -31,8 +31,8 @@ namespace SlimeEvolution.Character.Enemy
         //DungeonMediator 테스트
         void testmed()
         {
-            Vector3 Test = mediator.TestSend();
-            Debug.Log(Test);
+            // Test = mediator.TestSend();
+            //Debug.Log(Test);
         }
         private void Start()
         {
@@ -85,13 +85,11 @@ namespace SlimeEvolution.Character.Enemy
             //이부분은 장거리 공격이므로 추격 중에 일정 확률로 공격해야 한다.
             enemy.Throw(playerObject, gameObject, animator, navMesh);
         }
-
-        
-
         void stop()
         {
             enemy.Stop(navMesh, gameObject, animator);
         }
+
         IEnumerator MonsterBehavior()
         {
             if (state == EnemyStateType.Idle)
@@ -132,22 +130,22 @@ namespace SlimeEvolution.Character.Enemy
         }
         IEnumerator EnemyChase()
         {
-            if (Random.Range(0, 3) == 0) 
+            if (Random.Range(0, 100) == 0) 
             {
-                stop();
+                //stop();
                 useThrowing();
                 //yield return new WaitForSeconds(0.8f);
                 Debug.Log("useThrowing 메소드 입구 들어옴");
             }
             if (state != EnemyStateType.Chase)
             {
+                stop();
                 nextBehavior = StartCoroutine(MonsterBehavior());
                 yield return nextBehavior;
             }
             chase();
             //일정 확률로 Throw()를 호출한다.
-            //잠깐동안 Stop()해야 한다.
-            yield return new WaitForSeconds(0.5f);
+            //yield return new WaitForSeconds(0.1f); //몬스터 움직임 끊김문제
             
         }
         IEnumerator EnemyAttack()
@@ -159,7 +157,7 @@ namespace SlimeEvolution.Character.Enemy
             }
             stop();
             attack();
-            yield return new WaitForSeconds(2.0f);
+            //yield return new WaitForSeconds(2.0f);
         }
         IEnumerator Recovery()
         {
