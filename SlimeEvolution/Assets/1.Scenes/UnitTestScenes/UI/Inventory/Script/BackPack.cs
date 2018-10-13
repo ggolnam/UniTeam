@@ -26,6 +26,8 @@ public class BackPack : MonoBehaviour {
     public int MaxQuatityNum;
     public int preslot;
 
+    public int MyMoney;
+
     public GameObject SortItemButton;
     public GameObject FillItemButton;
     public ItemToolTip itemToolTip;
@@ -37,6 +39,7 @@ public class BackPack : MonoBehaviour {
     [Header("Equipement")]
     public Item[] EquipItems = new Item[2];
     public EquipmentSlot[] EquipSlots;
+    
 
 
     public List<Item> Invitems
@@ -50,7 +53,6 @@ public class BackPack : MonoBehaviour {
     public Item GetEquip(Item.EquipmentSlotKind type)
     {
         return ((int)type < EquipSlots.Length) ? EquipItems[(int)type] : null;
-
     }
     public void Replace(int slot)
     {
@@ -172,16 +174,6 @@ public class BackPack : MonoBehaviour {
             }
         }
     }
-
-
-    //public void ShowToolTip(Item inv,Vector3 pos)
-    //{
-    //    itemToolTip.ShowToolTip(EquipItems, inv, pos);
-    //}
-    //public void HideToolTip()
-    //{
-    //    itemToolTip.HideToolTip();
-    //}
 
     void MakeInventorySlot()
     {

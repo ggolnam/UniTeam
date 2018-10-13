@@ -25,6 +25,7 @@ public abstract class ItemSlot : MonoBehaviour {
         }
     }
 
+
     //void OnTooltip(bool show)
     //{
     //    Item item = show ? mItem : null;

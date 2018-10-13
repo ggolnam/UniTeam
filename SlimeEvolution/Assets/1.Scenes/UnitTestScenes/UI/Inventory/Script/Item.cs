@@ -12,6 +12,7 @@ public class Item : ScriptableObject
     public int ID;
     public string Name = null;
     public string SpriteName;
+    public int Price;
     public UIAtlas iconAtlas;
 
     public Kind ItemKind;
