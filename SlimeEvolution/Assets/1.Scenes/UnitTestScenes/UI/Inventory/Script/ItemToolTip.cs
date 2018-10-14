@@ -17,7 +17,7 @@ public class ItemToolTip : MonoBehaviour
     public UILabel InvName;
     public UILabel InvDesc;
 
-
+    //툴팁 보여주기//
     public bool ShowToolTip(Item[] Equip, Item Inv, Vector3 pos)
     {
         if (Inv == null)
@@ -31,12 +31,13 @@ public class ItemToolTip : MonoBehaviour
 
         return true;
     }
+    //툴팁 숨기기//
     public void HideToolTip()
     {
         EquipedItemPanel.SetActive(false);
         InvItemPanel.SetActive(false);
     }
-
+    //장착중인 장비 툴팁 셋팅하기//
     void SetEquipedItemToolTip(Item item)
     {
         if (item == null)
@@ -49,6 +50,7 @@ public class ItemToolTip : MonoBehaviour
         EquipName.text = item.Name.ToString();
         EquipDesc.text = item.ItemKind.ToString();
     }
+    //인벤토리 아이템 툴팁 셋팅하기//
     void SetInvItemToolTip(Item item)
     {
         if (item == null)

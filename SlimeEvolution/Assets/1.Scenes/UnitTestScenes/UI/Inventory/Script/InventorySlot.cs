@@ -6,9 +6,7 @@ using UnityEngine.UI;
 public class InventorySlot : ItemSlot
 {
     public BackPack storage;
-    public UILabel label;
     public int SlotNum;
-    public int Quantity;
     public int MaxQuantity;
 
 
@@ -19,23 +17,6 @@ public class InventorySlot : ItemSlot
         {
             return (storage != null) ? storage.GetItem(SlotNum) : null;
             
-        }
-    }
-
-
-    public void UpdateText()
-    {
-        if (mItem.ItemKind == Item.Kind.Equipment)
-        {
-            label.text = "";
-        }
-        else if (Quantity == 0)
-        {                                                              
-            label.text = "";
-        }
-        else
-        {
-            label.text = Quantity.ToString();
         }
     }
 
@@ -83,40 +64,4 @@ public class InventorySlot : ItemSlot
         }
 
     }
-   
-    void Update()
-    {
-        Item i = observedItem;
-
-        if(mItem != null)
-        {
-            UpdateText();
-        }
-
-
-        if (mItem != i)
-        {
-            mItem = i;
-
-            if (icon != null)
-            {
-                if (mItem == null || mItem.iconAtlas == null)
-                {
-                    icon.enabled = false;
-                    isEmpty = true;
-                }
-                else
-                {
-                    icon.atlas = mItem.iconAtlas;
-                    icon.spriteName = mItem.SpriteName;
-                    icon.enabled = true;
-                    isEmpty = false;
-
-                    icon.MakePixelPerfect();
-                }
-            }
-        }
-
-    }
-
 }
