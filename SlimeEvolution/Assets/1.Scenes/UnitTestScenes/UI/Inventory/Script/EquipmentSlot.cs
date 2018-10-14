@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class EquipmentSlot : ItemSlot{
 
-
     public BackPack storage;
-
     public Item.EquipmentSlotKind equipmentSlotType;
 
 
@@ -16,6 +14,11 @@ public class EquipmentSlot : ItemSlot{
         {
             return (storage != null) ? storage.GetEquip(equipmentSlotType) : null;
         }
+    }
+
+    void Start()
+    {
+        storage = GameObject.FindWithTag("BACKPACK").GetComponent<BackPack>();
     }
     void OnClick()
     {
@@ -46,49 +49,9 @@ public class EquipmentSlot : ItemSlot{
             BackPack.isInvClicked = false;
             UpdateCursor();
             Debug.Log("EQUIP2");
-
-
             storage.itemToolTip.HideToolTip();
 
-            //storage.HideToolTip();
-
 
         }
-    }
-
-
-    void Start()
-    {
-        storage = GameObject.FindWithTag("BACKPACK").GetComponent<BackPack>();
-
-    }
-
-    void Update()
-    {
-        Item i = observedItem;
-
-        if (mItem != i)
-        {
-            mItem = i;
-
-            if (icon != null)
-            {
-                if (mItem == null || mItem.iconAtlas == null)
-                {
-                    icon.enabled = false;
-                    isEmpty = true;
-                }
-                else
-                {
-                    icon.atlas = mItem.iconAtlas;
-                    icon.spriteName = mItem.SpriteName;
-                    icon.enabled = true;
-                    isEmpty = false;
-
-                    icon.MakePixelPerfect();
-                }
-            }
-        }
-
     }
 }

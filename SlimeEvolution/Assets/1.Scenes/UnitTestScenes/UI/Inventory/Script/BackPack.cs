@@ -4,29 +4,17 @@ using UnityEngine;
 
 public class BackPack : MonoBehaviour {
 
-    #region Singleton
-    public static BackPack instance;
-
-    private void Awake()
-    {
-        if (instance != null)
-        {
-            return;
-        }
-        instance = this;
-
-        MakeInventorySlot();
-
-    }
-    #endregion
     public static bool isInvClicked;
     public static bool isEquipClicked;
     public int InvSlotCol;
     int InvSlotRow;
-    public int MaxQuatityNum;
+    int MaxQuatityNum;
     public int preslot;
+    //data 불러올것//
+    public int MyMoney;//{ get; set; }
+    public ShopMediator ShopMediator;
+    public UILabel MoneyLabel;
 
-    public int MyMoney;
 
     public GameObject SortItemButton;
     public GameObject FillItemButton;
@@ -39,9 +27,23 @@ public class BackPack : MonoBehaviour {
     [Header("Equipement")]
     public Item[] EquipItems = new Item[2];
     public EquipmentSlot[] EquipSlots;
-    
 
+    private void Awake()
+    {
+        MaxQuatityNum = 100;
+        MakeInventorySlot();
+    }
+    //돈 셋팅하기//
+    public void SetMoney(int money)
+    {
+        MyMoney = money;
+    }
 
+    private void Update()
+    {
+        MoneyLabel.text = MyMoney.ToString();
+    }
+    //인벤토리 아이템 셋팅//
     public List<Item> Invitems
     {
         get { while (InvItems.Count < InvSlotCol) InvItems.Add(null); return InvItems; }
@@ -50,10 +52,12 @@ public class BackPack : MonoBehaviour {
     {
         return (slot < Invitems.Count) ? InvItems[slot] : null;
     }
+    //장비창 아이템 셋팅//
     public Item GetEquip(Item.EquipmentSlotKind type)
     {
         return ((int)type < EquipSlots.Length) ? EquipItems[(int)type] : null;
     }
+    //아이템 위치바꾸기//
     public void Replace(int slot)
     {
         if (slot < InvSlotCol)
@@ -68,6 +72,23 @@ public class BackPack : MonoBehaviour {
 
         }
     }
+    //샵에서 아이템 위치바꾸기//
+    public void ReceiveItemFromShop(int slot,int quantity,Item item)
+    {
+        ShopMediator.SendItemToShop(slot, InvSlot[preslot].Quantity, InvItems[preslot]);
+        itemToolTip.HideToolTip();
+
+        InvSlot[preslot].Quantity = quantity;
+        InvItems[preslot] = item;
+    }
+    //판매 취소//
+    public void CancelSell(int quantity, Item item)
+    {
+        AddItemToSlot(item);
+        InvSlot[preslot].Quantity = quantity;
+
+    }
+    //장비 장착하기//
     public bool Equip(Item.EquipmentSlotKind equipmentSlotKind)
     {
         Item previtem = InvItems[preslot];
@@ -83,8 +104,8 @@ public class BackPack : MonoBehaviour {
         InvSlot[preslot].Quantity = 0;
 
         return true;
-
     }
+    //장비 장착해제하기//
     public bool UnEquip(int slot)
     {
         Item previtem = EquipItems[preslot];
@@ -97,26 +118,27 @@ public class BackPack : MonoBehaviour {
 
         return true;
     }
-
-
+    //빈칸 정렬하기//
     public void OnClickFillItem()
     {
         FillBlank();
         FillItemButton.SetActive(false);
         SortItemButton.SetActive(true);
     }
+    //아이템 번호순으로 정렬하기//
     public void OnClickSortItem()
     {
         SortItem();
         FillItemButton.SetActive(true);
         SortItemButton.SetActive(false);
     }
+    //정렬버튼 초기화하기
     public void ResetSortButton()
     {
         FillItemButton.SetActive(true);
         SortItemButton.SetActive(false);
     }
-
+    //아이템 정렬 함수//
      void SortItem()
     {
         int i = 0, j = 0, min = 0;
@@ -136,9 +158,7 @@ public class BackPack : MonoBehaviour {
                     if (Invitems[j] != null)
                     {
                         if (InvItems[j].ID < InvItems[min].ID)
-                        {
                             min = j;
-                        }
                     }
                 }
                 Invitems[i] = Invitems[min];
@@ -149,6 +169,7 @@ public class BackPack : MonoBehaviour {
             }
         }
     }
+    //빈칸 정렬 함수//
      void FillBlank()
     {
         int prevQuan =0;
@@ -174,7 +195,7 @@ public class BackPack : MonoBehaviour {
             }
         }
     }
-
+    //인벤토리 만들기//
     void MakeInventorySlot()
     {
         InvSlotRow = 4;
@@ -198,7 +219,7 @@ public class BackPack : MonoBehaviour {
 
         }
     }
-
+    //아이템 추가하기//
     public void AddItemToSlot(Item item)
     {
         for (int i = 0; i < InvSlot.Count; i++)
@@ -216,6 +237,7 @@ public class BackPack : MonoBehaviour {
             }
         }
     }
+    //소비아이템일경우 숫자올리기//
     bool CheckSameItem(Item item)
     {
         bool isbool = false;

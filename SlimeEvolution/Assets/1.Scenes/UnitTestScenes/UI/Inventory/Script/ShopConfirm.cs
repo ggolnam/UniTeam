@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SlimeEvolution.GameSystem;
 
 public class ShopConfirm : MonoBehaviour {
 
+    public ShopMediator ShopMediator;
 
     public GameObject ConfirmPanel;
     public UISprite Item;
@@ -19,7 +21,7 @@ public class ShopConfirm : MonoBehaviour {
 
     public bool isEnoughMoney;
 
-
+    //패널셋팅하기//
     public void SetPanel(Item item)
     {
         ConfirmPanel.gameObject.SetActive(true);
@@ -29,13 +31,19 @@ public class ShopConfirm : MonoBehaviour {
         Price.text = item.Price.ToString();
         ExPlain.text = EXString;
     }
+    //Yes버튼 클릭//
     public void OnClickedYes()
     {
+        //돈있을때 아이템 구매//
         if (IsEnoughMoney())
         {
             ResultExPlain.text = "Buy it";
-            BackPack.instance.AddItemToSlot(shopItem);
+            ShopMediator.SetMnoey((ShopMediator.GetMoney() -shopItem.Price));
+            ShopMediator.AddItemToInv(shopItem);
+
+
         }
+        //없을때 안사짐//
         else
         {
             ResultExPlain.text = "Not Enough Money";
@@ -43,14 +51,21 @@ public class ShopConfirm : MonoBehaviour {
 
         ResultPanel.gameObject.SetActive(true);
     }
+    //No버튼 클릭//
+    public void OnClickedNo()
+    {
+        ConfirmPanel.gameObject.SetActive(false);
+    }
+    //잔돈 확인하기//
     public bool IsEnoughMoney()
     {
-        if (BackPack.instance.MyMoney >= shopItem.Price)
+        if (ShopMediator.GetMoney() >= shopItem.Price)
             isEnoughMoney = true;
 
         Debug.Log(shopItem.Price);
         return isEnoughMoney;
     }
+    //Back버튼 클릭//
     public void OnClickedBackButton()
     {
         ResultPanel.gameObject.SetActive(false);

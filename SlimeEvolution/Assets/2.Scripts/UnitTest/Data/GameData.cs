@@ -26,6 +26,9 @@ namespace SlimeEvolution.GameSystem
     [Serializable]
     public class PlayerData
     {
+        //인벤토리 슬롯넘 --> 아이템//
+        //장비 슬롯넘 --> 아이템//
+        
         public int SlotNumber;
         public int Level;
         public int Gold;

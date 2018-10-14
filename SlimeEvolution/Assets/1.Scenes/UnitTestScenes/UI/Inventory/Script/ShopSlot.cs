@@ -22,8 +22,6 @@ public class ShopSlot : MonoBehaviour {
     void OnClick()
     {
         storage.shopConfirm.SetPanel(item);
-        Debug.Log("gogogo");
-
     }
     
 }
