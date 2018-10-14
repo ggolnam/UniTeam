@@ -41,11 +41,10 @@ namespace SlimeEvolution.Character.Enemy
             {
                 if (itemObjects[i].activeInHierarchy == false)
                 {
+                    
                     itemObjects[i].transform.position = new Vector3(enemyTransform.position.x, 0.5f, enemyTransform.position.z);
-                    itemObjects[i].transform.rotation = new Quaternion(0,0,0,0);
                     itemObjects[i].SetActive(true);
                     objectToPop = itemObjects[i];
-                    Debug.Log("오브젝트나옴");
                     break;
                 }
                 if ((i == 0) && (itemObjects == null))
@@ -61,6 +60,7 @@ namespace SlimeEvolution.Character.Enemy
         {
             objectToPush.SetActive(false);
             objectToPush.transform.position = this.gameObject.transform.position;
+            objectToPush.transform.rotation = this.gameObject.transform.rotation;
             itemObjects.Add(objectToPush);
         }
     }

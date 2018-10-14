@@ -15,6 +15,7 @@ namespace SlimeEvolution.Character.Enemy
         public Transform player;//임시
         DungeonMediator dungeonMediator;
         Rigidbody objectRigidbody;
+        
         Vector3 target;
         public Transform E;
         public Transform P;
@@ -25,36 +26,17 @@ namespace SlimeEvolution.Character.Enemy
         void Awake()
         {
             //오브젝트풀에서 생성되어있기 때문에 참고하는 enemy의 좌표나 로테이션값이 변하지 않은 상태로 있는거같다
-            player = GameObject.FindGameObjectWithTag("Player").transform;//임시
-            enemy = GameObject.FindGameObjectWithTag("Enemy").transform;//임시
-
-            speed = 7f;
-            objectRigidbody = gameObject.GetComponent<Rigidbody>();
-        }
-        private void Update()
-        {
             
-           
             
         }
+        
         void FixedUpdate()
-
         {
-            P = player.transform;
-            E = enemy.transform;
-            //this.gameObject.transform.position = player.transform.position;
-            Move();
-            //조건문
-            Invoke("pushToPool", 3);
+           
         }
         void Move()
         {
             
-            Vector3 a;
-            a = (P.transform.position - E.transform.position).normalized;
-            Debug.Log(a);
-            objectRigidbody.AddForce(Vector3.forward * speed);
-            speed = 1;
         }
         void pushToPool()
         {
