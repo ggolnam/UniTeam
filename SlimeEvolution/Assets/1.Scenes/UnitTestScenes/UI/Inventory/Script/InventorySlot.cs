@@ -70,10 +70,6 @@ public class InventorySlot : ItemSlot
             storage.itemToolTip.HideToolTip();
             storage.ResetSortButton();
 
-            //storage.HideToolTip();
-
-
-
         }
         else
         {
@@ -84,7 +80,6 @@ public class InventorySlot : ItemSlot
             Debug.Log("INVEN2");
 
             storage.ResetSortButton();
-
         }
 
     }

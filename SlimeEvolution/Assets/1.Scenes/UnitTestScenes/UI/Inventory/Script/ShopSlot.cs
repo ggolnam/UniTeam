@@ -18,9 +18,12 @@ public class ShopSlot : MonoBehaviour {
         icon.spriteName = item.SpriteName;
         icon.enabled = true;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    void OnClick()
+    {
+        storage.shopConfirm.SetPanel(item);
+        Debug.Log("gogogo");
+
+    }
+    
 }
