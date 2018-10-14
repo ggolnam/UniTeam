@@ -130,7 +130,7 @@ namespace SlimeEvolution.Character.Enemy
         }
         IEnumerator EnemyChase()
         {
-            if (Random.Range(0, 100) == 0) 
+            if (Random.Range(0, 10) == 0) 
             {
                 //stop();
                 useThrowing();
