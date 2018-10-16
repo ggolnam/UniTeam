@@ -4,13 +4,20 @@ using UnityEngine;
 
 namespace SlimeEvolution.Character
 {
+    public struct CharacterStat
+    { 
+        public int MaxHP;
+        public int CurrentHP;
+        public int MaxMP;
+        public int CurrentMP;
+        public int Damage;
+        public float Speed;
+        public float AttackRange;
+    }
+
     public abstract class Character : MonoBehaviour
     {
-        protected int maxHP;
-        protected int currentHP;
-        protected int maxMP;
-        protected int currentMP;
-        protected int damage;
-        protected float speed;
+        protected CharacterStat characterStat;
+        
     }
 }
