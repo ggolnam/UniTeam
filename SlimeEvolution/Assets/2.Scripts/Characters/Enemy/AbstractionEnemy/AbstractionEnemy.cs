@@ -41,7 +41,7 @@ namespace SlimeEvolution.Character.Enemy
         
 
         public abstract int RecoveryHP(int currentHP, Animator animator);
-        public abstract void Throw(GameObject playerObject, GameObject EnemyObject,
+        public abstract void Skill1(GameObject playerObject, GameObject EnemyObject,
             Animator animator, NavMeshAgent navMeshAgent);
         public abstract void Attack(GameObject gameObject, GameObject EnemyObject, 
             Animator animator, NavMeshAgent navMeshAgent);

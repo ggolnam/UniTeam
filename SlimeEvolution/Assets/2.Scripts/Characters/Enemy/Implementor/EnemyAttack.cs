@@ -26,24 +26,11 @@ namespace SlimeEvolution.Character.Enemy
             Animator animator, NavMeshAgent navMeshAgent)
         {
             Vector3 playerPosition = playerObject.transform.position;
+            playerPosition.y = 0;
                 EnemyObject.transform.LookAt(playerPosition);
                 animator.SetBool("isAttacking", true);
         }
 
     }
-    public class SmeshAttack : EnemyAttack  
-    {
-        public SmeshAttack()
-        {
-            magnification = 3;
-        }
-        public override void Attack(GameObject playerObject, GameObject EnemyObject,
-            Animator animator, NavMeshAgent navMeshAgent)
-        {
-            navMeshAgent.speed = 0f;
-            EnemyObject.transform.LookAt(playerObject.transform.position);
-            animator.SetBool("isSmeshAttacking", true);
-            animator.SetFloat("speed", navMeshAgent.speed);
-        }
-    }
+    
 }

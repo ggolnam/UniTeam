@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 namespace SlimeEvolution.Character.Enemy
 {
-    public class Skeleton : Enemy
+    public class Human : Enemy
     {
         Coroutine nextBehavior;
 
@@ -13,15 +13,16 @@ namespace SlimeEvolution.Character.Enemy
         {
             navMesh = gameObject.GetComponent<NavMeshAgent>();
             animator = gameObject.GetComponent<Animator>();
-            characterStat.MaxHP = 30;
+            characterStat.MaxHP = 50;
             characterStat.CurrentHP = characterStat.MaxHP;
-            recoveryAmount = 5;
-            characterStat.Speed = 2f;
-            characterStat.Damage = 1;
+            recoveryAmount = 10;
+            characterStat.Speed = 2.5f;
+            characterStat.Damage = 3;
             attackRange = 2.1f;
+
             state = state = EnemyStateType.Idle;
-            enemy = new NamedEnemy(new NormalAttack(characterStat.Damage), new RecoverHP(recoveryAmount),
-                new Throwing(characterStat.Damage), new Patrol(characterStat.Speed), new Chasing(characterStat.Speed),
+            enemy = new NamedEnemy(new NormalAttack(characterStat.Damage), new RecoverHP(recoveryAmount), 
+                new SmeshAttack(), new Patrol(characterStat.Speed), new Chasing(characterStat.Speed), 
                 new StopMovement()
                 );
         }
@@ -70,11 +71,12 @@ namespace SlimeEvolution.Character.Enemy
         {
             enemy.Attack(playerObject, gameObject, animator, navMesh);
         }
-        void useRecovering()
+        void useRecoveringHP()
         {
+            //이부분 반환형식이나 누적연산에 대해 더 고려해볼것
             characterStat.CurrentHP += enemy.RecoveryHP(characterStat.CurrentHP, animator);
         }
-        void useThrowing(GameObject playerObject)//throwing
+        void useSmeshing(GameObject playerObject)
         {
             enemy.Skill1(playerObject, this.gameObject, animator, navMesh);
         }
@@ -112,12 +114,6 @@ namespace SlimeEvolution.Character.Enemy
                 }
                 chase(playerObject);
                 yield return new WaitForSeconds(0.5f);
-                if (Random.Range(0, 100) == 0)
-                {
-                    useThrowing(playerObject);
-                }
-                yield return new WaitForSeconds(0.5f);
-
             }
 
         }
@@ -133,14 +129,20 @@ namespace SlimeEvolution.Character.Enemy
                     StopCoroutine(EnemyChase(playerObject));
                     yield return nextBehavior;
                 }
-                if ((characterStat.CurrentHP <= characterStat.MaxHP * hpPercentage) 
-                    && (Random.Range(0, 100) == 0)) 
-                {
-                    useRecovering();
-                }
+                
                 stop();
                 attack(playerObject);
                 yield return new WaitForSeconds(0.5f);
+                if (Random.Range(0, 80) == 0)
+                {
+                    useSmeshing(playerObject);
+                }
+                yield return new WaitForSeconds(0.5f);
+                if ((characterStat.CurrentHP <= characterStat.MaxHP * hpPercentage)
+                    && (Random.Range(0, 100) == 0))
+                {
+                    useRecoveringHP();
+                }
             }
         }
 
@@ -148,5 +150,6 @@ namespace SlimeEvolution.Character.Enemy
         {
             return null;
         }
+
     }
 }

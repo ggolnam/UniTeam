@@ -19,5 +19,7 @@ namespace SlimeEvolution.Character.Enemy
         protected EnemyStateType state;
 
         protected int recoveryAmount;
+        protected const float hpPercentage = 0.1f;
+        protected float attackRange;
     }
 }

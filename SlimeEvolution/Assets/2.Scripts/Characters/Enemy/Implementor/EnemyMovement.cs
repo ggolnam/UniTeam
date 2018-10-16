@@ -110,4 +110,5 @@ namespace SlimeEvolution.Character.Enemy
         public override void Move(NavMeshAgent navMeshAgent, GameObject gameObject, 
             Animator animator) { }
     }
+    
 }

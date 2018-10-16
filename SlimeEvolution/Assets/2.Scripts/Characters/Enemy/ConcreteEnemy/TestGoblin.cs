@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SlimeEvolution.Character;
 using UnityEngine.AI;
+//using SlimeEvolution.Character.Enemy;
 
 namespace SlimeEvolution.Character.Enemy
 {

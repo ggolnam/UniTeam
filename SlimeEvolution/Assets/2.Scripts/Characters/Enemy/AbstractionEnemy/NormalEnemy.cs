@@ -17,7 +17,7 @@ namespace SlimeEvolution.Character.Enemy
             Debug.LogError("<color=red> Error: </color>Not implement RecoveryHP() method in NormalEnemy Class!");
             throw new System.NotImplementedException();
         }
-        public override void Throw(GameObject playerObject, GameObject EnemyObject,
+        public override void Skill1(GameObject playerObject, GameObject EnemyObject,
             Animator animator, NavMeshAgent navMeshAgent)
         {
             Debug.LogError("<color=red> Error: </color>Not implement RecoveryHP() method in NormalEnemy Class!");
