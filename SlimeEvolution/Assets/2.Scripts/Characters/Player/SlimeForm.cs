@@ -10,7 +10,7 @@ namespace SlimeEvolution.Character.Player
 
         public SlimeForm(Transform playerTransform,  Rigidbody rigidbody, Animator animator, ref CharacterStat characterStat) : base(playerTransform, rigidbody, animator)
         {
-            speed = 5;
+            speed = 30;
             attackrange = 3;
             characterStat.MaxHP += 5;
             characterStat.Damage += 2;

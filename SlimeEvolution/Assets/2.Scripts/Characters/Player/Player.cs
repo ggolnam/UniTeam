@@ -151,6 +151,16 @@ namespace SlimeEvolution.Character.Player
             } 
         }
 
+        public void StartAttackHit()
+        {
+            Debug.Log("Hit");
+        }
+
+        public void EndAttackHit()
+        {
+            Debug.Log("End");
+        }
+
     }
 }
 

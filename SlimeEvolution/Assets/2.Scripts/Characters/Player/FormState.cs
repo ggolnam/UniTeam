@@ -31,8 +31,6 @@ namespace SlimeEvolution.Character.Player
                   
         }
 
-
-
         public void LookAt(Vector3 movement)
         {
             Quaternion dir = Quaternion.LookRotation(movement);
