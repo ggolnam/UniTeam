@@ -16,16 +16,16 @@ namespace SlimeEvolution.Character.Enemy
             mediator = new DungeonMediator();//DungeonMediator 테스트
             navMesh = gameObject.GetComponent<NavMeshAgent>();
             animator = gameObject.GetComponent<Animator>();
-            maxHP = 40;
+            characterStat.MaxHP = 40;
             recoveryAmount = 20;
-            currentHP = maxHP;
-            speed = 1.5f;
-            damage = 2;
+            characterStat.CurrentHP = characterStat.MaxHP;
+            characterStat.Speed = 1.5f;
+            characterStat.Damage = 2;
             
             state = EnemyStateType.Idle;
             enemy = new NamedEnemy(
-                new NormalAttack(damage), new RecoverHP(recoveryAmount), 
-                new Throwing(damage), new Patrol(speed),new Chasing(speed), new StopMovement());
+                new NormalAttack(characterStat.Damage = 2), new RecoverHP(recoveryAmount), 
+                new Throwing(characterStat.Damage = 2), new Patrol(characterStat.Speed),new Chasing(characterStat.Speed), new StopMovement());
         }
 
         //DungeonMediator 테스트
@@ -54,7 +54,7 @@ namespace SlimeEvolution.Character.Enemy
             {
                 state = EnemyStateType.Combat;
             }
-            if ((currentHP <= (maxHP/10)) /*&& (Random.value == 0.1f)*/) 
+            if ((characterStat.CurrentHP <= (characterStat.MaxHP / 10)) /*&& (Random.value == 0.1f)*/) 
             {
                 state = EnemyStateType.Dying;
             }
@@ -78,7 +78,7 @@ namespace SlimeEvolution.Character.Enemy
         }
         void useRecovering()
         {
-            currentHP = enemy.RecoveryHP(currentHP, animator);
+            characterStat.CurrentHP = enemy.RecoveryHP(characterStat.CurrentHP, animator);
         }
         void useThrowing() 
         {

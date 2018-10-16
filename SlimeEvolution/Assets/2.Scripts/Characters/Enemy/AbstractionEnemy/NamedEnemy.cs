@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 namespace SlimeEvolution.Character.Enemy
 {
-    public class NamedEnemy:AbstractionEnemy
+    public class NamedEnemy : AbstractionEnemy
     {
         
         public NamedEnemy(EnemyAttack attack, EnemySkill skill1,

@@ -35,15 +35,15 @@ namespace SlimeEvolution.Character.Enemy
             
             navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
             animator = gameObject.GetComponent<Animator>();
-            maxHP = 10;
-            currentHP = maxHP;
-            speed = 1f;
-            damage = 1;
+            characterStat.MaxHP = 10;
+            characterStat.CurrentHP = characterStat.MaxHP;
+            characterStat.Speed = 1f;
+            characterStat.Damage = 1;
             enemyState = EnemyStateType.Idle;
 
             goblin = new NormalEnemy(
-                new NormalAttack(damage), new Patrol(speed),
-                new Chasing(speed), new StopMovement());
+                new NormalAttack(characterStat.Damage), new Patrol(characterStat.Speed),
+                new Chasing(characterStat.Speed), new StopMovement());
         }
        
         private void Start()
