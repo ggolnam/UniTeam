@@ -303,14 +303,16 @@ ModelImporter:
       - time: 0.25306123
         functionName: StartAttackHit
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 11500000, guid: 3cd828429120184449bd986d9e8b3dd4,
+          type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.53469384
         functionName: EndAttackHit
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 11500000, guid: 3cd828429120184449bd986d9e8b3dd4,
+          type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

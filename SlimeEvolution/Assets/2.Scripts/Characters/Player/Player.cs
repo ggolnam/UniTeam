@@ -151,15 +151,12 @@ namespace SlimeEvolution.Character.Player
             } 
         }
 
-        public void StartAttackHit()
+        public int GetPlayerDamage()
         {
-            Debug.Log("Hit");
+            return characterStat.Damage;
         }
 
-        public void EndAttackHit()
-        {
-            Debug.Log("End");
-        }
+        
 
     }
 }

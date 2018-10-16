@@ -18,6 +18,8 @@ namespace SlimeEvolution.Character
     public abstract class Character : MonoBehaviour
     {
         protected CharacterStat characterStat;
+        public CharacterStat CharacterStat
+        { get { return characterStat; } }
         
     }
 }
