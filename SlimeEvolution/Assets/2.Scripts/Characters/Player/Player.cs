@@ -151,6 +151,13 @@ namespace SlimeEvolution.Character.Player
             } 
         }
 
+        public int GetPlayerDamage()
+        {
+            return characterStat.Damage;
+        }
+
+        
+
     }
 }
 

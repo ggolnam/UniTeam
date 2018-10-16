@@ -4,17 +4,23 @@ using UnityEngine;
 
 public class VillageMediator : MonoBehaviour {
 
+
+
     [SerializeField]
     VillageUI villageUI;
 
 
 
-    public void EnterShop()
+    public void EnterShop(ShopSlotCtrl.ShopType shopType)
     {
-        villageUI.ShowShopUI();
+        villageUI.ShowShopUI(shopType);
     }
-    public void EnterInventory()
+    public void EnterInventory(ShopSlotCtrl.ShopType shopType)
     {
-        villageUI.ShowEquipMentUI();
+        villageUI.ShowShopUI(shopType);
+    }
+    public void EnterInventroy()
+    {
+        villageUI.ShowInvUI();
     }
 }
