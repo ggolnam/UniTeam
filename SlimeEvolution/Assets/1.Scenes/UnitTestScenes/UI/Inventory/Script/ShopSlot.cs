@@ -23,5 +23,12 @@ public class ShopSlot : MonoBehaviour {
     {
         storage.shopConfirm.SetPanel(item);
     }
+
+    public void UpdateImg()
+    {
+        icon.atlas = item.iconAtlas;
+        icon.spriteName = item.SpriteName;
+        icon.enabled = true;
+    }
     
 }
