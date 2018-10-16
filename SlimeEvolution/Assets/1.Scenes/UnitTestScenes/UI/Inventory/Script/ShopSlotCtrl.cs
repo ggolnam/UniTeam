@@ -2,7 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class ShopSlotCtrl : MonoBehaviour {
+
+    public enum ShopType
+    {
+        EquipShop,
+        PortionShop,
+    }
 
     int InvSlotCol;
     int InvSlotRow;
@@ -11,7 +19,8 @@ public class ShopSlotCtrl : MonoBehaviour {
     public UILabel ResultPrice;
 
     [Header("ShopSlot")]
-    public List<Item> itemList;
+    public List<Item> EqupitemList;
+    public List<Item> PortionItemList;
     public List<ShopSlot> ShopSlot;
     public GameObject shopSlotPrefab;
     [Header("SellSlot")]
@@ -88,12 +97,34 @@ public class ShopSlotCtrl : MonoBehaviour {
                 slot.storage = this;
                 slot.SlotNum = x;
                 slot.name = "ShopSlot [ " + x + " ]";
-                slot.item = itemList[x];
+                slot.item = PortionItemList[x];
 
                 ShopSlot.Add(slot);
             }
 
         }
+    }
+    public void SetShopItem(ShopType shopType)
+    {
+        PutItem(shopType);
+    }
+
+    void PutItem(ShopType shopType)
+    {
+        List<Item> itemList;
+        if (shopType == ShopType.EquipShop)
+            itemList = EqupitemList;
+        else
+            itemList = PortionItemList;
+
+
+        for (int i = 0; i < ShopSlot.Count; i++)
+        {
+            ShopSlot[i].item = itemList[i];
+            ShopSlot[i].UpdateImg();
+        }
+
+        Debug.Log(shopType);
     }
 
 }

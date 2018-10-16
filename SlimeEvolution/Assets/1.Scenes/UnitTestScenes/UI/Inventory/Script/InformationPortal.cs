@@ -11,6 +11,6 @@ public class InformationPortal : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
-            villageMediator.EnterInventory();
+            villageMediator.EnterInventory(ShopSlotCtrl.ShopType.PortionShop);
     }
 }
