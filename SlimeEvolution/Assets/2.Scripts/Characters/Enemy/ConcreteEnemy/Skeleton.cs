@@ -16,7 +16,7 @@ namespace SlimeEvolution.Character.Enemy
             characterStat.MaxHP = 30;
             characterStat.CurrentHP = characterStat.MaxHP;
             recoveryAmount = 5;
-            characterStat.Speed = 2f;
+            characterStat.Speed = 1f;
             characterStat.Damage = 1;
             attackRange = 2.1f;
             state = state = EnemyStateType.Idle;
@@ -111,12 +111,12 @@ namespace SlimeEvolution.Character.Enemy
                     yield return nextBehavior;
                 }
                 chase(playerObject);
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(1f);
                 if (Random.Range(0, 100) == 0)
                 {
                     useThrowing(playerObject);
                 }
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(1f);
 
             }
 
@@ -140,7 +140,7 @@ namespace SlimeEvolution.Character.Enemy
                 }
                 stop();
                 attack(playerObject);
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(1f);
             }
         }
 

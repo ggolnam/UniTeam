@@ -40,20 +40,20 @@ namespace SlimeEvolution.Character.Enemy
             }
         }
 
-        void newTarget(NavMeshAgent navMeshAgent ,GameObject gameObject, Animator animator)
+        void newTarget(NavMeshAgent navMeshAgent ,GameObject enemyObject, Animator animator)
         {
-            float myX = gameObject.transform.position.x;
-            float myZ = gameObject.transform.position.z;
+            float myX = enemyObject.transform.position.x;
+            float myZ = enemyObject.transform.position.z;
 
-            float xPosition = myX + Random.Range(myX - 50, myX + 50);
-            float zPosition = myZ + Random.Range(myZ - 50, myZ + 50);
+            //개선요망
+            float xPosition = myX + Random.Range(myX - 60, myX + 60);
+            float zPosition = myZ + Random.Range(myZ - 60, myZ + 60);
 
-            target = new Vector3(xPosition, gameObject.transform.position.y, zPosition);
-            gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation,
-                Quaternion.LookRotation(target), 1.0f);
+            target = new Vector3(xPosition, enemyObject.transform.position.y, zPosition);
             
             navMeshAgent.speed = speed;
             navMeshAgent.SetDestination(target);
+            
             animator.SetFloat("speed", speed);
             animator.SetBool("isAttacking", false);
         }
@@ -62,16 +62,14 @@ namespace SlimeEvolution.Character.Enemy
         public override void Chase(NavMeshAgent navMeshAgent, GameObject gameObject,
             GameObject player, Animator animator) { }
     }
+
     public class StopMovement: EnemyMovement
     {
-        public StopMovement()
-        {
-            this.speed = 0.0f;
-        }
-
+        
         public override void Move(NavMeshAgent navMeshAgent, GameObject gameObject, Animator animator)
         {
             navMeshAgent.speed = 0.0f;
+            speed = navMeshAgent.speed;
             animator.SetFloat("speed", speed);
             animator.SetBool("isAttacking", false);
         }
@@ -79,6 +77,7 @@ namespace SlimeEvolution.Character.Enemy
         public override void Chase(NavMeshAgent navMeshAgent, GameObject gameObject,
             GameObject player, Animator animator) { }
     }
+
     public class Chasing : EnemyMovement
     {
         public Chasing(float speed)

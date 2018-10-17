@@ -16,7 +16,7 @@ namespace SlimeEvolution.Character.Enemy
             characterStat.MaxHP = 50;
             characterStat.CurrentHP = characterStat.MaxHP;
             recoveryAmount = 10;
-            characterStat.Speed = 2.5f;
+            characterStat.Speed = 1f;
             characterStat.Damage = 3;
             attackRange = 2.1f;
 
@@ -26,7 +26,7 @@ namespace SlimeEvolution.Character.Enemy
                 new StopMovement()
                 );
         }
-
+       
         private void Start()//OnEnable로 쓸지를 고려
         {
             StartCoroutine(EnemyIdle());
@@ -95,9 +95,9 @@ namespace SlimeEvolution.Character.Enemy
             while (state == EnemyStateType.Idle)
             {
                 patrol();
-                yield return new WaitForSeconds(2.0f);
+                yield return new WaitForSeconds(1f);
                 stop();
-                yield return new WaitForSeconds(2.0f);
+                yield return new WaitForSeconds(2f);
             }
         }
         IEnumerator EnemyChase(GameObject playerObject)
@@ -113,7 +113,7 @@ namespace SlimeEvolution.Character.Enemy
                     yield return nextBehavior;
                 }
                 chase(playerObject);
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(1f);
             }
 
         }
@@ -132,12 +132,15 @@ namespace SlimeEvolution.Character.Enemy
                 
                 stop();
                 attack(playerObject);
-                yield return new WaitForSeconds(0.5f);
-                if (Random.Range(0, 80) == 0)
+                yield return new WaitForSeconds(1.5f);
+                if (Random.Range(0, 1) == 0)
                 {
                     useSmeshing(playerObject);
                 }
-                yield return new WaitForSeconds(0.5f);
+                //yield return new WaitForSeconds(1f);
+                //여기서부터시작 . 유즈 스매시 컨트롤하기
+                animator.SetBool("isSmeshAttacking", false);
+                animator.SetBool("isAttacking", true);
                 if ((characterStat.CurrentHP <= characterStat.MaxHP * hpPercentage)
                     && (Random.Range(0, 100) == 0))
                 {

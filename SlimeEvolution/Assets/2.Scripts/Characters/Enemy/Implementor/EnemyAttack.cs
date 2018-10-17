@@ -26,9 +26,11 @@ namespace SlimeEvolution.Character.Enemy
             Animator animator, NavMeshAgent navMeshAgent)
         {
             Vector3 playerPosition = playerObject.transform.position;
+            animator.SetBool("isSmeshAttacking", false); //wtf
             playerPosition.y = 0;
                 EnemyObject.transform.LookAt(playerPosition);
                 animator.SetBool("isAttacking", true);
+            
         }
 
     }

@@ -122,7 +122,7 @@ namespace SlimeEvolution.Character.Enemy
                 }
                 stop();
                 attack(playerObject);
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(2f);
             }
         }
         

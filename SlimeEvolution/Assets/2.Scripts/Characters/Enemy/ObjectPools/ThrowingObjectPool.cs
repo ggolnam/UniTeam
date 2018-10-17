@@ -9,10 +9,9 @@ namespace SlimeEvolution.Character.Enemy
         public GameObject itemObject;
         [HideInInspector]
         public List<GameObject> itemObjects = new List<GameObject>();
-        [HideInInspector]
-        public List<Rigidbody> itemRigids = new List<Rigidbody>();
+        
         //public 선언을 해야 오브젝트가 생성되는구나 ......ㅗ
-
+        
         public int NumberOfItemObject;
 
         private void Awake()
@@ -24,6 +23,7 @@ namespace SlimeEvolution.Character.Enemy
         }
         void RegistObjects()
         {
+            Rigidbody rigidToRegist;
             GameObject objectToRegist;
             for (int i = 0; i < NumberOfItemObject; i++)
             {
@@ -31,10 +31,6 @@ namespace SlimeEvolution.Character.Enemy
                 itemObjects.Add(objectToRegist);
                 itemObjects[i].name = "ThrowingObject";
                 itemObjects[i].SetActive(false);
-
-                //rigidToRegist = itemObjects[i].GetComponent<Rigidbody>();
-                //itemRigids.Add(rigidToRegist);
-                
             }
         }
         public GameObject PopFromPool(Transform enemyTransform)
@@ -64,6 +60,7 @@ namespace SlimeEvolution.Character.Enemy
             objectToPush.transform.position = this.gameObject.transform.position;
             objectToPush.transform.rotation = this.gameObject.transform.rotation;
             itemObjects.Add(objectToPush);
+            
         }
     }
 }
