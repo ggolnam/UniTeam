@@ -8,9 +8,10 @@ public class MoveShopIcon : MonoBehaviour {
 
     private void Update()
     {
-        //if (transform.position.y >= 60) {
-        //    //gameObject.transform.position.y += Time.deltaTime * speed;
-        //}
+        if (transform.position.y >= 60)
+        {
+            transform.Translate(0, Time.deltaTime * speed, 0);
+        }
         //else if()
     }
 }

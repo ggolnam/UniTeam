@@ -9,11 +9,16 @@ public class ItemToolTip : MonoBehaviour
     [Header("Equiped")]
     public GameObject EquipedItemPanel;
     public UISprite EquipedItem;
+    public UISprite EquipedBGImg;
+
     public UILabel EquipName;
     public UILabel EquipDesc;
+
     [Header("Inventory")]
     public GameObject InvItemPanel;
     public UISprite InvItem;
+    public UISprite InvBGImg;
+
     public UILabel InvName;
     public UILabel InvDesc;
 
@@ -47,6 +52,8 @@ public class ItemToolTip : MonoBehaviour
         EquipedItemPanel.SetActive(true);
         EquipedItem.atlas = item.iconAtlas;
         EquipedItem.spriteName = item.SpriteName;
+        EquipedBGImg.spriteName = item.SpriteEquip;
+
         EquipName.text = item.Name.ToString();
         EquipDesc.text = item.ItemKind.ToString();
     }
@@ -59,6 +66,9 @@ public class ItemToolTip : MonoBehaviour
         InvItemPanel.SetActive(true);
         InvItem.atlas = item.iconAtlas;
         InvItem.spriteName = item.SpriteName;
+        InvBGImg.spriteName = item.SpriteEquip;
+
+
         InvName.text = item.Name.ToString();
         InvDesc.text = item.ItemKind.ToString();
     }

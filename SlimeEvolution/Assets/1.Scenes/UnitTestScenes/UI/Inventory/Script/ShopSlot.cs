@@ -6,9 +6,10 @@ public class ShopSlot : MonoBehaviour {
 
     public ShopSlotCtrl storage;
     public Item item;
-    public UILabel label;
     public int SlotNum;
     public UISprite icon;
+    public UISprite BGImg;
+
 
 
     // Use this for initialization
@@ -16,6 +17,7 @@ public class ShopSlot : MonoBehaviour {
 
         icon.atlas = item.iconAtlas;
         icon.spriteName = item.SpriteName;
+        BGImg.spriteName = item.SpriteInventorySlot;
         icon.enabled = true;
     }
 
@@ -28,6 +30,7 @@ public class ShopSlot : MonoBehaviour {
     {
         icon.atlas = item.iconAtlas;
         icon.spriteName = item.SpriteName;
+        BGImg.spriteName = item.SpriteInventorySlot;
         icon.enabled = true;
     }
     

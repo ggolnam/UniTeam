@@ -9,6 +9,8 @@ public class ShopConfirm : MonoBehaviour {
 
     public GameObject ConfirmPanel;
     public UISprite Item;
+    public UISprite BGImg;
+
     public Item shopItem;
     public UILabel Price;
     public UILabel ExPlain;
@@ -28,6 +30,8 @@ public class ShopConfirm : MonoBehaviour {
         Item.atlas = item.iconAtlas;
         shopItem = item;
         Item.spriteName = item.SpriteName;
+        BGImg.spriteName = item.SpriteInventorySlot;
+
         Price.text = item.Price.ToString();
         ExPlain.text = EXString;
     }

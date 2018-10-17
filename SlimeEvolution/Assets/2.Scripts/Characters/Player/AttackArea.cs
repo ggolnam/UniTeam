@@ -16,7 +16,9 @@ namespace SlimeEvolution.Character.Player
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log(player.CharacterStat.Damage);
+            //Debug.Log(player.CharacterStat.Damage);
+            if (other.CompareTag("Enemy")) 
+                Debug.Log(other.name);
         }
 
 

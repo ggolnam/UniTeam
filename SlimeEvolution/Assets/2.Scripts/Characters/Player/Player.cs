@@ -27,44 +27,50 @@ namespace SlimeEvolution.Character.Player
         PlayerForm currentForm;
         FormState formState;
         Transform target;
-        bool isAttack;
+        AttackAreaActivator attackAreaActivator;
+        bool isDeath;
 
         void Start()
-        {
-            
-            currentForm = PlayerForm.Slime;
+        {          
             rigidbody = GetComponent<Rigidbody>();
+            currentForm = PlayerForm.Slime;
             formState  = new SlimeForm(transform ,rigidbody, formList[(int)PlayerForm.Slime].GetComponent<Animator>(), ref characterStat);
+            attackAreaActivator = formList[(int)PlayerForm.Slime].GetComponent<AttackAreaActivator>();
         }
 
-
+      
         void FixedUpdate()
         {
-            float h = Input.GetAxisRaw("Horizontal"); //좌우 입력. -1이 왼쪽. 1이 오른쪽
-            float v = Input.GetAxisRaw("Vertical"); //상하 입력. -1이 아래, 1이 위
-            if (!(h == 0 && v == 0))
+            if (!isDeath)
             {
-                isAttack = false;
-                target = null;
-                movement.Set(h, 0, v);
-                formState.Move(movement);
-
-            }
-            else if (target !=null)
-            {
-                movement.Set(target.position.x - transform.position.x, 0, target.position.z - transform.position.z);
-                if (Vector3.Distance(transform.position, target.position) > characterStat.AttackRange)
+                float h = Input.GetAxisRaw("Horizontal"); //좌우 입력. -1이 왼쪽. 1이 오른쪽
+                float v = Input.GetAxisRaw("Vertical"); //상하 입력. -1이 아래, 1이 위
+                if (!(h == 0 && v == 0))
                 {
+                    target = null;
+                    movement.Set(h, 0, v);
                     formState.Move(movement);
+                    attackAreaActivator.EndAttackHit();
+                }
+                else if (target != null)
+                {
+                    movement.Set(target.position.x - transform.position.x, 0, target.position.z - transform.position.z);
+                    if (Vector3.Distance(transform.position, target.position) > characterStat.AttackRange)
+                    {
+                        formState.Move(movement);
+                    }
+                    else
+                    {
+                        formState.LookAt(movement);
+                        formState.Attack(target);
+                    }
                 }
                 else
                 {
-                    formState.LookAt(movement);
-                    formState.Attack(target);
+                    formState.Stop();
+                    attackAreaActivator.EndAttackHit();
                 }
             }
-            else 
-                formState.Stop();
         }
 
         //void Run(Vector3 movement) 
@@ -95,9 +101,7 @@ namespace SlimeEvolution.Character.Player
 
         public void OnClickedAttackButton()
         {
-            FindTarget(checkradius);         
-            if(target != null)
-                isAttack = true;                          
+            FindTarget(checkradius);                                  
         }
 
         void ChangeFormState(PlayerForm form)
@@ -123,6 +127,7 @@ namespace SlimeEvolution.Character.Player
                 formList[(int)currentForm].SetActive(false);
                 formList[(int)form].SetActive(true);
                 currentForm = form;
+                attackAreaActivator = formList[(int)form].GetComponent<AttackAreaActivator>();
             }
         }
 
@@ -151,12 +156,17 @@ namespace SlimeEvolution.Character.Player
             } 
         }
 
-        public int GetPlayerDamage()
+        public void HitPlayer(int damage)
         {
-            return characterStat.Damage;
+            characterStat.CurrentHP -= damage;
+            if(characterStat.CurrentHP <= 0)
+            {
+                isDeath = true;
+                formState.Die();              
+            }
+            else
+                formState.Hit();
         }
-
-        
 
     }
 }
