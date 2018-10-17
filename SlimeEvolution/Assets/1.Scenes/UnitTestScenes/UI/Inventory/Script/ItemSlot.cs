@@ -6,10 +6,13 @@ public abstract class ItemSlot : MonoBehaviour {
 
     public UISprite icon;
     public UILabel label;
+    public UISprite BGImg;
     [SerializeField]
     public Item mItem;
     public int Quantity;
     public bool isEmpty;
+
+    protected bool isEquipSlot;
 
     protected static Item mDraggedItem;
 
@@ -51,13 +54,21 @@ public abstract class ItemSlot : MonoBehaviour {
                 if (mItem == null || mItem.iconAtlas == null)
                 {
                     icon.enabled = false;
+                    BGImg.enabled = false;
                     isEmpty = true;
                 }
                 else
                 {
                     icon.atlas = mItem.iconAtlas;
                     icon.spriteName = mItem.SpriteName;
+
+                    if (isEquipSlot)
+                        BGImg.spriteName = mItem.SpriteEquip;
+                    else
+                        BGImg.spriteName = mItem.SpriteInventorySlot;
                     icon.enabled = true;
+                    BGImg.enabled = true;
+
                     isEmpty = false;
 
                     icon.MakePixelPerfect();
