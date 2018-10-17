@@ -34,6 +34,7 @@ public class ShopSlotCtrl : MonoBehaviour {
     private void Awake()
     {
         MakeInventorySlot();
+        
     }
     //판매취소//
     public void CancelSell(int slot, int quantity, Item item)
@@ -98,6 +99,9 @@ public class ShopSlotCtrl : MonoBehaviour {
                 slot.SlotNum = x;
                 slot.name = "ShopSlot [ " + x + " ]";
                 slot.item = PortionItemList[x];
+                EqupitemList[x].SetItemInfo();
+                PortionItemList[x].SetItemInfo();
+
 
                 ShopSlot.Add(slot);
             }
@@ -129,6 +133,9 @@ public class ShopSlotCtrl : MonoBehaviour {
 
 }
 
+
+//Item test = (Item)ScriptableObject.CreateInstance(typeof(Item));
+//Debug.Log(test.SpriteName);
 
 
 //public void PutItem(int slot)

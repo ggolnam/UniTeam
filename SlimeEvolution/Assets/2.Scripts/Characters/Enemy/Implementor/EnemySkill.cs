@@ -8,6 +8,7 @@ namespace SlimeEvolution.Character.Enemy
     public abstract class EnemySkill
     {
         public GameObject enemy;
+        public int magnification;
         public abstract int ActivateSkill(int currentHP, Animator animator);
         public abstract void ActivateSkill(GameObject playerObject, GameObject EnemyObject,
             Animator animator, NavMeshAgent navMeshAgent);
@@ -47,20 +48,44 @@ namespace SlimeEvolution.Character.Enemy
         public override void ActivateSkill(GameObject playerObject, GameObject EnemyObject,
             Animator animator, NavMeshAgent navMeshAgent)
         {
-            Rigidbody throwingRigidbody;
             GameObject throwingObject;
             Vector3 playerPosition = playerObject.transform.position;
-            EnemyObject.transform.LookAt(playerPosition);//플레이어를 향해서 발사한다. 
-            //일단 Instantiate로 오브젝트를 생성하는것만 해주면 OK!
+            EnemyObject.transform.LookAt(playerPosition);
             throwingObject = ThrowingObjectPool.Instance.PopFromPool(EnemyObject.transform);
-         
-            //날아가는 궤도 및 반환조건은 Throwing object의 script에서 구현한다.
-            //animator.SetBool("isAttacking", true);
+            throwingObject.transform.position = new Vector3(EnemyObject.transform.position.x, 0.5f, EnemyObject.transform.position.z);
+            
+            
+            //성능 f.....
+            Rigidbody throwingRigid = throwingObject.GetComponent<Rigidbody>();
+            throwingObject.transform.position = throwingObject.transform.position + EnemyObject.transform.forward * 2;
+            throwingRigid.velocity = EnemyObject.transform.forward * 10;
+           
+        }
+        
+        public override int ActivateSkill(int currentHP, Animator animator)
+        {
+            return 0;
+        }
+        
+    }
+    public class SmeshAttack : EnemySkill
+    {
+        public SmeshAttack()
+        {
+            magnification = 3;
+        }
+        public override void ActivateSkill(GameObject playerObject, GameObject EnemyObject,
+            Animator animator, NavMeshAgent navMeshAgent)
+        {
+            navMeshAgent.speed = 0f;
+            EnemyObject.transform.LookAt(playerObject.transform.position);
+            animator.SetBool("isSmeshAttacking", true);
+            animator.SetFloat("speed", navMeshAgent.speed);
         }
 
         public override int ActivateSkill(int currentHP, Animator animator)
         {
-            throw new System.NotImplementedException();
+            return 0;
         }
     }
 }

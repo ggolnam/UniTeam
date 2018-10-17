@@ -10,6 +10,13 @@ public class VillageUI : MonoBehaviour {
     public ShopSlotCtrl slotCtrl;
 
 
+    private void Start()
+    {
+        InventoryUI.gameObject.SetActive(false);
+        EquipMentUI.gameObject.SetActive(false);
+        ShopUI.gameObject.SetActive(false);
+    }
+
     public void ShowShopUI(ShopSlotCtrl.ShopType shopType)
     {
         InventoryUI.gameObject.SetActive(true);

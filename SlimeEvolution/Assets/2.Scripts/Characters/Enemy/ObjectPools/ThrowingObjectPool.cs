@@ -9,6 +9,8 @@ namespace SlimeEvolution.Character.Enemy
         public GameObject itemObject;
         [HideInInspector]
         public List<GameObject> itemObjects = new List<GameObject>();
+        [HideInInspector]
+        public List<Rigidbody> itemRigids = new List<Rigidbody>();
         //public 선언을 해야 오브젝트가 생성되는구나 ......ㅗ
 
         public int NumberOfItemObject;
@@ -26,14 +28,15 @@ namespace SlimeEvolution.Character.Enemy
             for (int i = 0; i < NumberOfItemObject; i++)
             {
                 objectToRegist = Instantiate(itemObject, gameObject.transform);//리소스로드로 가져올것.. 일단 임시로 이렇게
-                //itemObjects[i].transform.position = gameObject.transform.position;
-                //objectToRegist.GetComponent<Rigidbody>();
                 itemObjects.Add(objectToRegist);
                 itemObjects[i].name = "ThrowingObject";
                 itemObjects[i].SetActive(false);
+
+                //rigidToRegist = itemObjects[i].GetComponent<Rigidbody>();
+                //itemRigids.Add(rigidToRegist);
+                
             }
         }
-
         public GameObject PopFromPool(Transform enemyTransform)
         {
             GameObject objectToPop = null;
@@ -41,13 +44,12 @@ namespace SlimeEvolution.Character.Enemy
             {
                 if (itemObjects[i].activeInHierarchy == false)
                 {
-                    
-                    itemObjects[i].transform.position = new Vector3(enemyTransform.position.x, 0.5f, enemyTransform.position.z);
                     itemObjects[i].SetActive(true);
+                    itemObjects[i].transform.position = transform.position + enemyTransform.forward * 2;
                     objectToPop = itemObjects[i];
                     break;
                 }
-                if ((i == 0) && (itemObjects == null))
+                if(itemObjects == null)
                 {
                     Debug.Log("<color=red> Warning!:</color> " + itemObjects[i].name + " pool is empty");
                     return null;

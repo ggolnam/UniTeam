@@ -2,182 +2,150 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using SlimeEvolution.GameSystem;
 
 namespace SlimeEvolution.Character.Enemy
 {
     public class Skeleton : Enemy
     {
-        Random random;
         Coroutine nextBehavior;
-        DungeonMediator mediator;//DungeonMediator 테스트
+
         private void Awake()
         {
-            mediator = new DungeonMediator();//DungeonMediator 테스트
             navMesh = gameObject.GetComponent<NavMeshAgent>();
             animator = gameObject.GetComponent<Animator>();
-            characterStat.MaxHP = 40;
-            recoveryAmount = 20;
+            characterStat.MaxHP = 30;
             characterStat.CurrentHP = characterStat.MaxHP;
-            characterStat.Speed = 1.5f;
-            characterStat.Damage = 2;
-            
-            state = EnemyStateType.Idle;
-            enemy = new NamedEnemy(
-                new NormalAttack(characterStat.Damage = 2), new RecoverHP(recoveryAmount), 
-                new Throwing(characterStat.Damage = 2), new Patrol(characterStat.Speed),new Chasing(characterStat.Speed), new StopMovement());
+            recoveryAmount = 5;
+            characterStat.Speed = 2f;
+            characterStat.Damage = 1;
+            attackRange = 2.1f;
+            state = state = EnemyStateType.Idle;
+            enemy = new NamedEnemy(new NormalAttack(characterStat.Damage), new RecoverHP(recoveryAmount),
+                new Throwing(characterStat.Damage), new Patrol(characterStat.Speed), new Chasing(characterStat.Speed),
+                new StopMovement()
+                );
         }
 
-        //DungeonMediator 테스트
-        void testmed()
+        private void Start()//OnEnable로 쓸지를 고려
         {
-            // Test = mediator.TestSend();
-            //Debug.Log(Test);
+            StartCoroutine(EnemyIdle());
         }
-        private void Start()
+
+        private void OnTriggerEnter(Collider other)
         {
-            StartCoroutine(MonsterBehavior());
-        }
-        private void Update()
-        {
-            testmed();//DungeonMediator 테스트
-            if ((Vector3.Distance(playerObject.transform.position, gameObject.transform.position) < 8)
-                && (Vector3.Distance(playerObject.transform.position, gameObject.transform.position) > 2)) 
+            if (other.CompareTag("Player"))
             {
                 state = EnemyStateType.Chase;
+                StopCoroutine(EnemyIdle());
+                StartCoroutine(EnemyChase(other.gameObject));
             }
-            if (Vector3.Distance(playerObject.transform.position, gameObject.transform.position) >= 8)
+        }
+
+        //ontriggerstay를 쓰는방향으로 오늘안에 enemy마무리합시다.
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("Player"))
             {
                 state = EnemyStateType.Idle;
+                StopCoroutine(EnemyChase(other.gameObject));
+                StopCoroutine(EnemyAttack(other.gameObject));
+                StartCoroutine(EnemyIdle());
             }
-            if (Vector3.Distance(playerObject.transform.position, gameObject.transform.position) <= 2)
-            {
-                state = EnemyStateType.Combat;
-            }
-            if ((characterStat.CurrentHP <= (characterStat.MaxHP / 10)) /*&& (Random.value == 0.1f)*/) 
-            {
-                state = EnemyStateType.Dying;
-            }
-            //if(gameObject.activeInHierarchy == false)
-            //{
-            //    state = EnemyStateType.Death;
-            //}
         }
-       
+        void OnDisable()
+        {
+            enemyDie();
+            StopAllCoroutines();
+        }
+
         void patrol()
         {
             enemy.Move(navMesh, gameObject, animator);
         }
-        void chase()
+        void chase(GameObject playerObject)
         {
             enemy.Chase(navMesh, gameObject, playerObject, animator);
         }
-        void attack()
+        void attack(GameObject playerObject)
         {
             enemy.Attack(playerObject, gameObject, animator, navMesh);
         }
         void useRecovering()
         {
-            characterStat.CurrentHP = enemy.RecoveryHP(characterStat.CurrentHP, animator);
+            characterStat.CurrentHP += enemy.RecoveryHP(characterStat.CurrentHP, animator);
         }
-        void useThrowing() 
+        void useThrowing(GameObject playerObject)//throwing
         {
-            //이부분은 장거리 공격이므로 추격 중에 일정 확률로 공격해야 한다.
-            enemy.Throw(playerObject, gameObject, animator, navMesh);
+            enemy.Skill1(playerObject, this.gameObject, animator, navMesh);
         }
         void stop()
         {
             enemy.Stop(navMesh, gameObject, animator);
         }
-
-        IEnumerator MonsterBehavior()
+        void enemyDie() //상위 클래스에서 구현하여 상속만 하면 가능
         {
-            if (state == EnemyStateType.Idle)
-            {
-                nextBehavior = StartCoroutine(EnemyIdle());
-                yield return nextBehavior;
-            }
-            if (state == EnemyStateType.Chase)
-            {
-                nextBehavior = StartCoroutine(EnemyChase());
-                yield return nextBehavior;
-            }
-            if (state == EnemyStateType.Combat)
-            {
-                nextBehavior = StartCoroutine(EnemyAttack());
-                yield return nextBehavior;
-            }
-            if(state == EnemyStateType.Dying)
-            {
-                nextBehavior = StartCoroutine(Recovery());
-                yield return nextBehavior;
-            }
-           
-            nextBehavior = StartCoroutine(MonsterBehavior());
+            Debug.Log("죽음");
+            //몬스터 죽음의 카운트를 시스템에 전송(시스템으로부터 메소드를 받아야함)
         }
+
         IEnumerator EnemyIdle()
         {
-             if (state != EnemyStateType.Idle)
-             {
-                 nextBehavior = StartCoroutine(MonsterBehavior());
-                 yield return nextBehavior;
-             }
-             
-             patrol();
-             yield return new WaitForSeconds(2.0f);
-             stop();
-             yield return new WaitForSeconds(2.0f);
-        }
-        IEnumerator EnemyChase()
-        {
-            if (Random.Range(0, 10) == 0) 
+            while (state == EnemyStateType.Idle)
             {
-                //stop();
-                useThrowing();
-                //yield return new WaitForSeconds(0.8f);
-                Debug.Log("useThrowing 메소드 입구 들어옴");
-            }
-            if (state != EnemyStateType.Chase)
-            {
+                patrol();
+                yield return new WaitForSeconds(2.0f);
                 stop();
-                nextBehavior = StartCoroutine(MonsterBehavior());
-                yield return nextBehavior;
+                yield return new WaitForSeconds(2.0f);
             }
-            chase();
-            //일정 확률로 Throw()를 호출한다.
-            //yield return new WaitForSeconds(0.1f); //몬스터 움직임 끊김문제
-            
         }
-        IEnumerator EnemyAttack()
+        IEnumerator EnemyChase(GameObject playerObject)
         {
-            if (state != EnemyStateType.Combat)
+            while (state == EnemyStateType.Chase)
             {
-                nextBehavior = StartCoroutine(MonsterBehavior());
-                yield return nextBehavior;
+                if (Vector3.Distance(playerObject.transform.position, this.gameObject.transform.position) <= attackRange)
+                {
+                    stop();
+                    state = EnemyStateType.Combat;
+                    nextBehavior = StartCoroutine(EnemyAttack(playerObject));
+                    StopCoroutine(EnemyAttack(playerObject));
+                    yield return nextBehavior;
+                }
+                chase(playerObject);
+                yield return new WaitForSeconds(0.5f);
+                if (Random.Range(0, 100) == 0)
+                {
+                    useThrowing(playerObject);
+                }
+                yield return new WaitForSeconds(0.5f);
+
             }
-            stop();
-            attack();
-            //yield return new WaitForSeconds(2.0f);
+
         }
-        IEnumerator Recovery()
+        IEnumerator EnemyAttack(GameObject playerObject)
         {
-            if (state == EnemyStateType.Dying)
+            while (state == EnemyStateType.Combat)
             {
-                useRecovering();
-
-                yield return new WaitForSeconds(1f);
-                animator.SetBool("isRecovering", false); //왜 이샛기만 들어가면 중첩합 버그나 날까 ... ?
-                StopCoroutine(Recovery());
-
-                state = EnemyStateType.Idle;
-               
-                nextBehavior = StartCoroutine(MonsterBehavior());
-                yield return nextBehavior;
+                if (Vector3.Distance(playerObject.transform.position, this.gameObject.transform.position) > attackRange)
+                {
+                    chase(playerObject);
+                    state = EnemyStateType.Chase;
+                    nextBehavior = StartCoroutine(EnemyChase(playerObject));
+                    StopCoroutine(EnemyChase(playerObject));
+                    yield return nextBehavior;
+                }
+                if ((characterStat.CurrentHP <= characterStat.MaxHP * hpPercentage) 
+                    && (Random.Range(0, 100) == 0)) 
+                {
+                    useRecovering();
+                }
+                stop();
+                attack(playerObject);
+                yield return new WaitForSeconds(0.5f);
             }
         }
+
         IEnumerator EnemyDie()
         {
-            Debug.Log("몬스터 쥬금");
             return null;
         }
     }

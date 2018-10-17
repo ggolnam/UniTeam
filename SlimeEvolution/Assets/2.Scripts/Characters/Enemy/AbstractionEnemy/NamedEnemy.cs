@@ -23,7 +23,7 @@ namespace SlimeEvolution.Character.Enemy
             return skill1.ActivateSkill(currentHP, animator);
         }
 
-        public override void Throw(GameObject playerObject, GameObject EnemyObject,
+        public override void Skill1(GameObject playerObject, GameObject EnemyObject,
             Animator animator, NavMeshAgent navMeshAgent)
         {
             skill2.ActivateSkill(playerObject, EnemyObject, animator, navMeshAgent);

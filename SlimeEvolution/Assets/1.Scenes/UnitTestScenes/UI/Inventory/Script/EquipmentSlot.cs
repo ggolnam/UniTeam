@@ -19,6 +19,7 @@ public class EquipmentSlot : ItemSlot{
     void Start()
     {
         storage = GameObject.FindWithTag("BACKPACK").GetComponent<BackPack>();
+        isEquipSlot = true;
     }
     void OnClick()
     {
