@@ -46,6 +46,17 @@ namespace SlimeEvolution.Character.Player
         {
             animator.SetBool("IsAttack", true);
             animator.SetBool("IsMove", false);
+
+        }
+
+        public void Hit()
+        {
+
+        }
+
+        public void Die()
+        {
+
         }
 
         public abstract void ResetStat(ref CharacterStat characterStat);

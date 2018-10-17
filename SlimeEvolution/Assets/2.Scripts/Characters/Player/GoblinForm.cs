@@ -13,7 +13,7 @@ namespace SlimeEvolution.Character.Player
             characterStat.MaxHP += 2;
             characterStat.Damage += 3;
             characterStat.Speed += 10;
-            characterStat.AttackRange += 3;
+            characterStat.AttackRange += 2;
         }
 
         public override void ResetStat(ref CharacterStat characterStat)
@@ -21,7 +21,7 @@ namespace SlimeEvolution.Character.Player
             characterStat.MaxHP -= 2;
             characterStat.Damage -= 3;
             characterStat.Speed -= 10;
-            characterStat.AttackRange -= 3;
+            characterStat.AttackRange -= 2;
         }
     }
 }
