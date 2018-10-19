@@ -24,7 +24,9 @@ public class ShopSellSlot : ItemSlot
             {
                 //인벤토리에 아이템추가
                 //아이템 제거
+
                 ShopSlotCtrl.CancelSell(SlotNum,Quantity,mItem);
+
             }
             
         }

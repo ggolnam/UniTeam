@@ -45,6 +45,7 @@ public abstract class ItemSlot : MonoBehaviour {
         if (mItem != null)
             UpdateText();
 
+
         if (mItem != i)
         {
             mItem = i;
@@ -75,6 +76,7 @@ public abstract class ItemSlot : MonoBehaviour {
                 }
             }
         }
+
 
     }
 }

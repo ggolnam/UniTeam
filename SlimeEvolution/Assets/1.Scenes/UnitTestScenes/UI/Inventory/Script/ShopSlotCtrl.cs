@@ -128,7 +128,6 @@ public class ShopSlotCtrl : MonoBehaviour {
             ShopSlot[i].UpdateImg();
         }
 
-        Debug.Log(shopType);
     }
 
 }
