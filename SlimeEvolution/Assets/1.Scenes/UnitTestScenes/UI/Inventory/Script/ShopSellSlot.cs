@@ -8,7 +8,7 @@ public class ShopSellSlot : ItemSlot
     public int SlotNum;
     public int MaxQuantity;
 
-    protected override Item observedItem
+    protected override Item ObservedItem
     {
         get
         {
@@ -18,23 +18,23 @@ public class ShopSellSlot : ItemSlot
 
     void OnClick()
     {
-        if(mDraggedItem == null)
+        if(DraggedItem == null)
         {
-            if(mItem!=null)
+            if(Item!=null)
             {
                 //인벤토리에 아이템추가
                 //아이템 제거
 
-                ShopSlotCtrl.CancelSell(SlotNum,Quantity,mItem);
+                ShopSlotCtrl.CancelSell(SlotNum,Quantity,Item);
 
             }
             
         }
         else
         {
-            ShopSlotCtrl.SendItem(SlotNum, Quantity, mItem);
+            ShopSlotCtrl.SendItem(SlotNum, Quantity, Item);
 
-            mDraggedItem = null;
+            DraggedItem = null;
             BackPack.isInvClicked = false;
             UpdateCursor();
         }

@@ -10,12 +10,14 @@ public class ShopMediator : AbstractVillageMediator
     BackPack backPack;
     [SerializeField]
     ShopConfirm shopConfirm;
+    [SerializeField]
+    ItemToolTip ItemToolTip;
+
 
     //판매취소//
     public void CancelSell(int quantity, Item item)
     {
         backPack.CancelSell(quantity, item);
-
     }
     //샵으로 판매할 아이템보내기//
     public override void SendItemToShop(int slot,int quantity, Item item)
@@ -37,8 +39,6 @@ public class ShopMediator : AbstractVillageMediator
     //돈 받아오기//
     public int GetMoney()
     {
-        Debug.Log(backPack.MyMoney);
-
         return backPack.MyMoney; 
     }
     //돈 셋팅//
@@ -49,5 +49,20 @@ public class ShopMediator : AbstractVillageMediator
     public bool IsInvEmpty()
     {
         return backPack.CheckEmptySlot();
+    }
+    public void HideShopUI()
+    {
+        shopConfirm.OnClickedBackButton();
+        HideToolTip();
+    }
+    public void ShowConfirmPanel(Item item)
+    {
+        ItemToolTip.ShowShopToolTip(item);
+        shopConfirm.SetPanel(item);
+    }
+    public void HideToolTip()
+    {
+        ItemToolTip.HideToolTip();
+
     }
 }

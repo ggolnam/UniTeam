@@ -56,12 +56,13 @@ public class ShopConfirm : MonoBehaviour {
         {
             ResultExPlain.text = "There is No Empty Slot";
         }
-
+        ShopMediator.HideToolTip();
         ResultPanel.gameObject.SetActive(true);
     }
     //No버튼 클릭//
     public void OnClickedNo()
     {
+        ShopMediator.HideToolTip();
         ConfirmPanel.gameObject.SetActive(false);
     }
     //잔돈 확인하기//
@@ -79,6 +80,7 @@ public class ShopConfirm : MonoBehaviour {
     {
         ResultPanel.gameObject.SetActive(false);
         ConfirmPanel.gameObject.SetActive(false);
+        Debug.Log("OnClickedBackButton");
     }
 
 }

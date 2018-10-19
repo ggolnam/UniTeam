@@ -22,6 +22,14 @@ public class ItemToolTip : MonoBehaviour
     public UILabel InvName;
     public UILabel InvDesc;
 
+    [Header("Shop")]
+    public GameObject ShopItemPanel;
+    public UISprite ShopItem;
+    public UISprite ShopBGImg;
+
+    public UILabel ShopName;
+    public UILabel ShopDesc;
+
     //툴팁 보여주기//
     public bool ShowToolTip(Item[] Equip, Item Inv, Vector3 pos)
     {
@@ -36,11 +44,28 @@ public class ItemToolTip : MonoBehaviour
 
         return true;
     }
+    public void ShowShopToolTip(Item item)
+    {
+        if (item == null)
+            return;
+
+        ShopItemPanel.SetActive(true);
+        ShopItem.atlas = item.iconAtlas;
+        ShopItem.spriteName = item.SpriteName;
+        ShopBGImg.spriteName = item.SpriteEquip;
+
+
+        ShopName.text = item.Name.ToString();
+        ShopDesc.text = item.ItemKind.ToString();
+
+    }
     //툴팁 숨기기//
     public void HideToolTip()
     {
         EquipedItemPanel.SetActive(false);
         InvItemPanel.SetActive(false);
+        ShopItemPanel.SetActive(false);
+
     }
     //장착중인 장비 툴팁 셋팅하기//
     void SetEquipedItemToolTip(Item item)

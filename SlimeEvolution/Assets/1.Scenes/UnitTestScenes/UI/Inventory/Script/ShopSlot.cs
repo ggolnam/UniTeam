@@ -23,7 +23,7 @@ public class ShopSlot : MonoBehaviour {
 
     void OnClick()
     {
-        storage.shopConfirm.SetPanel(item);
+        storage.shopMediator.ShowConfirmPanel(item);
     }
 
     public void UpdateImg()

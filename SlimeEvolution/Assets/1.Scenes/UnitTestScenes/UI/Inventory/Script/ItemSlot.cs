@@ -8,21 +8,21 @@ public abstract class ItemSlot : MonoBehaviour {
     public UILabel label;
     public UISprite BGImg;
     [SerializeField]
-    public Item mItem;
+    public Item Item;
     public int Quantity;
     public bool isEmpty;
 
     protected bool isEquipSlot;
 
-    protected static Item mDraggedItem;
+    protected static Item DraggedItem;
 
-    abstract protected Item observedItem { get; }
+    abstract protected Item ObservedItem { get; }
 
     protected void UpdateCursor()
     {
-        if (mDraggedItem != null && mItem != null)
+        if (DraggedItem != null && Item != null)
         {
-            UICursor.Set(mDraggedItem.iconAtlas, mDraggedItem.SpriteName);
+            UICursor.Set(DraggedItem.iconAtlas, DraggedItem.SpriteName);
         }
         else
         {
@@ -31,7 +31,7 @@ public abstract class ItemSlot : MonoBehaviour {
     }
     public void UpdateText()
     {
-        if (mItem.ItemKind == Item.Kind.Equipment)
+        if (Item.ItemKind == Item.Kind.Equipment)
             label.text = "";
         else if (Quantity == 0)
             label.text = "";
@@ -40,19 +40,19 @@ public abstract class ItemSlot : MonoBehaviour {
     }
     void Update()
     {
-        Item i = observedItem;
+        Item i = ObservedItem;
 
-        if (mItem != null)
+        if (Item != null)
             UpdateText();
 
 
-        if (mItem != i)
+        if (Item != i)
         {
-            mItem = i;
+            Item = i;
 
             if (icon != null)
             {
-                if (mItem == null || mItem.iconAtlas == null)
+                if (Item == null || Item.iconAtlas == null)
                 {
                     icon.enabled = false;
                     BGImg.enabled = false;
@@ -60,13 +60,13 @@ public abstract class ItemSlot : MonoBehaviour {
                 }
                 else
                 {
-                    icon.atlas = mItem.iconAtlas;
-                    icon.spriteName = mItem.SpriteName;
+                    icon.atlas = Item.iconAtlas;
+                    icon.spriteName = Item.SpriteName;
 
                     if (isEquipSlot)
-                        BGImg.spriteName = mItem.SpriteEquip;
+                        BGImg.spriteName = Item.SpriteEquip;
                     else
-                        BGImg.spriteName = mItem.SpriteInventorySlot;
+                        BGImg.spriteName = Item.SpriteInventorySlot;
                     icon.enabled = true;
                     BGImg.enabled = true;
 

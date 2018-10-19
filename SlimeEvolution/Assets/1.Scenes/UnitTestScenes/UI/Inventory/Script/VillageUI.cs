@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public  delegate void OnClickHideUI();
+
 public class VillageUI : MonoBehaviour {
 
     public GameObject EquipMentUI;
@@ -9,10 +11,16 @@ public class VillageUI : MonoBehaviour {
     public GameObject ShopUI;
     public UIPanel InvScorll;
     public ShopSlotCtrl slotCtrl;
-    public delegate void OnClickHideUI();
-    public OnClickHideUI onClickHide;
+    public OnClickHideUI HideUIDelegate;
+    ShopMediator shopMediator;
+    private void OnEnable()
+    {
+        shopMediator = GameObject.FindGameObjectWithTag("Mediator").GetComponent<ShopMediator>();
 
-    
+
+        HideUIDelegate = new OnClickHideUI(shopMediator.HideShopUI);
+
+    }
 
     private void Start()
     {
@@ -39,8 +47,8 @@ public class VillageUI : MonoBehaviour {
     public void HideUI()
     {
         //callback하기//
-        if (onClickHide != null)
-            onClickHide();
+        if (HideUIDelegate != null)
+            HideUIDelegate();
 
         InvScorll.transform.localPosition = Vector3.zero;
         InvScorll.clipOffset=Vector2.zero;
