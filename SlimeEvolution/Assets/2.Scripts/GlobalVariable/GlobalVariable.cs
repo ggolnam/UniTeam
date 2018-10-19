@@ -23,6 +23,15 @@ namespace SlimeEvolution.GlobalVariable
         Human,
 
     }
+
+    public enum EnemyStateType
+    {
+        Idle,
+        Chase,
+        Combat,
+        Dying,
+        Death
+    }
     public class GlobalVariable
     {
 

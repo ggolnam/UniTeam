@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SlimeEvolution.Character.Enemy
+namespace SlimeEvolution.Character.LagacyEnemy
 {
     public class ThrowingObjectPool : Singleton<ThrowingObjectPool>
     {

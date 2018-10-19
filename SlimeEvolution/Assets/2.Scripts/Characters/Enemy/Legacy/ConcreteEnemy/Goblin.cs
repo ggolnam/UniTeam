@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using SlimeEvolution.GlobalVariable;
 
-namespace SlimeEvolution.Character.Enemy
+namespace SlimeEvolution.Character.LagacyEnemy
 {
-    public class Skeleton : Enemy
+    public class Goblin : Enemy
     {
         Coroutine nextBehavior;
 
@@ -13,27 +14,26 @@ namespace SlimeEvolution.Character.Enemy
         {
             navMesh = gameObject.GetComponent<NavMeshAgent>();
             animator = gameObject.GetComponent<Animator>();
-            characterStat.MaxHP = 30;
+            characterStat.MaxHP = 20;
             characterStat.CurrentHP = characterStat.MaxHP;
-            recoveryAmount = 5;
             characterStat.Speed = 1f;
             characterStat.Damage = 1;
             attackRange = 2.1f;
+
             state = state = EnemyStateType.Idle;
-            enemy = new NamedEnemy(new NormalAttack(characterStat.Damage), new RecoverHP(recoveryAmount),
-                new Throwing(characterStat.Damage), new Patrol(characterStat.Speed), new Chasing(characterStat.Speed),
-                new StopMovement()
-                );
+            enemy = new NormalEnemy(
+                new NormalAttack(characterStat.Damage), new Patrol(characterStat.Speed),
+                new Chasing(characterStat.Speed), new StopMovement());
         }
 
-        private void Start()//OnEnable로 쓸지를 고려
+        private void Start()
         {
             StartCoroutine(EnemyIdle());
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if(other.CompareTag("Player"))
             {
                 state = EnemyStateType.Chase;
                 StopCoroutine(EnemyIdle());
@@ -42,9 +42,11 @@ namespace SlimeEvolution.Character.Enemy
         }
 
         //ontriggerstay를 쓰는방향으로 오늘안에 enemy마무리합시다.
+        
+
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if(other.CompareTag("Player"))
             {
                 state = EnemyStateType.Idle;
                 StopCoroutine(EnemyChase(other.gameObject));
@@ -69,14 +71,6 @@ namespace SlimeEvolution.Character.Enemy
         void attack(GameObject playerObject)
         {
             enemy.Attack(playerObject, gameObject, animator, navMesh);
-        }
-        void useRecovering()
-        {
-            characterStat.CurrentHP += enemy.RecoveryHP(characterStat.CurrentHP, animator);
-        }
-        void useThrowing(GameObject playerObject)//throwing
-        {
-            enemy.Skill1(playerObject, this.gameObject, animator, navMesh);
         }
         void stop()
         {
@@ -108,18 +102,12 @@ namespace SlimeEvolution.Character.Enemy
                     state = EnemyStateType.Combat;
                     nextBehavior = StartCoroutine(EnemyAttack(playerObject));
                     StopCoroutine(EnemyAttack(playerObject));
-                    yield return nextBehavior;
+                   yield return nextBehavior;
                 }
                 chase(playerObject);
-                yield return new WaitForSeconds(1f);
-                if (Random.Range(0, 100) == 0)
-                {
-                    useThrowing(playerObject);
-                }
-                yield return new WaitForSeconds(1f);
-
+                yield return new WaitForSeconds(0.5f);
             }
-
+            
         }
         IEnumerator EnemyAttack(GameObject playerObject)
         {
@@ -133,20 +121,16 @@ namespace SlimeEvolution.Character.Enemy
                     StopCoroutine(EnemyChase(playerObject));
                     yield return nextBehavior;
                 }
-                if ((characterStat.CurrentHP <= characterStat.MaxHP * hpPercentage) 
-                    && (Random.Range(0, 100) == 0)) 
-                {
-                    useRecovering();
-                }
                 stop();
                 attack(playerObject);
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(2f);
             }
         }
-
+        
         IEnumerator EnemyDie()
         {
             return null;
         }
+
     }
 }

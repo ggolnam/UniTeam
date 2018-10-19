@@ -3,18 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using SlimeEvolution.Character;
 using UnityEngine.AI;
-//using SlimeEvolution.Character.Enemy;
+using SlimeEvolution.GlobalVariable;
 
-namespace SlimeEvolution.Character.Enemy
+namespace SlimeEvolution.Character.LagacyEnemy
 {
-    public enum EnemyStateType
-    {
-        Idle,
-        Chase,
-        Combat,
-        Dying,
-        Death
-    }
+   
 
     //코루틴이나 기타 이벤트함수를 기준으로 몬스터를 움직인다.
     //매개변수를 Awake쪽의 생성부분에서 넣어준다.

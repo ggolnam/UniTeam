@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace SlimeEvolution.Character.Enemy
+namespace SlimeEvolution.Character.LagacyEnemy
 {
     public class NormalEnemy : AbstractionEnemy
     {

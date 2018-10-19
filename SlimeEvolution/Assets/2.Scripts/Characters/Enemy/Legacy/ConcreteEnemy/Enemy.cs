@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using SlimeEvolution.GameSystem;
+using SlimeEvolution.GlobalVariable;
 
-namespace SlimeEvolution.Character.Enemy
+namespace SlimeEvolution.Character.LagacyEnemy
 {
     public abstract class Enemy : Character
     {
         [SerializeField]
-        protected GameObject playerObject;
+        public GameObject playerObject;
         [SerializeField]
-        protected GameObject basePosition;
+        public GameObject basePosition;
         
         protected AbstractionEnemy enemy;
         protected NavMeshAgent navMesh;
