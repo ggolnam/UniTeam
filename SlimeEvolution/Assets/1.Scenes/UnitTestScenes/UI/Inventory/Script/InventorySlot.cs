@@ -11,7 +11,7 @@ public class InventorySlot : ItemSlot
 
 
 
-    override protected Item observedItem
+    override protected Item ObservedItem
     {
         get
         {
@@ -22,18 +22,18 @@ public class InventorySlot : ItemSlot
 
     void OnClick()
     {
-        if (!BackPack.isInvClicked && mDraggedItem == null) 
+        if (!BackPack.isInvClicked && DraggedItem == null) 
         {
             //원래자리에 있던 아이템을 든다//
             //mDraggedItem을 mitem으로 설정
             storage.preslot = SlotNum;
-            mDraggedItem = mItem;
+            DraggedItem = Item;
 
             BackPack.isInvClicked = true;
             UpdateCursor();
             ////////////
             Vector3 pos = UICamera.mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            storage.itemToolTip.ShowToolTip(storage.EquipItems, mItem, pos);
+            storage.itemToolTip.ShowToolTip(storage.EquipItems, Item, pos);
             storage.ResetSortButton();
             ////////////
 
@@ -42,7 +42,7 @@ public class InventorySlot : ItemSlot
         else if (BackPack.isInvClicked && !BackPack.isEquipClicked) 
         {
             storage.Replace(SlotNum);
-            mDraggedItem = null;
+            DraggedItem = null;
             BackPack.isInvClicked = false;
             BackPack.isEquipClicked = false;
             UpdateCursor();
@@ -55,7 +55,7 @@ public class InventorySlot : ItemSlot
         else
         {
             storage.UnEquip(SlotNum);
-            mDraggedItem = null;
+            DraggedItem = null;
             BackPack.isEquipClicked = false;
             UpdateCursor();
             Debug.Log("INVEN2");

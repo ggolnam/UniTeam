@@ -8,7 +8,7 @@ public class EquipmentSlot : ItemSlot{
     public Item.EquipmentSlotKind equipmentSlotType;
 
 
-    protected override Item observedItem
+    protected override Item ObservedItem
     {
         get
         {
@@ -23,11 +23,11 @@ public class EquipmentSlot : ItemSlot{
     }
     void OnClick()
     {
-        if (!BackPack.isEquipClicked && mDraggedItem == null) 
+        if (!BackPack.isEquipClicked && DraggedItem == null) 
         {
             //원래자리에 있던 아이템을 든다//
             //mDraggedItem을 mitem으로 설정
-            mDraggedItem = mItem;
+            DraggedItem = Item;
             storage.preslot = (int)equipmentSlotType;
             BackPack.isEquipClicked = true;
             UpdateCursor();
@@ -36,7 +36,7 @@ public class EquipmentSlot : ItemSlot{
         }
         else if (BackPack.isEquipClicked && !BackPack.isInvClicked) 
         {
-            mDraggedItem = null;
+            DraggedItem = null;
             BackPack.isEquipClicked = false ;
             BackPack.isInvClicked = false;
             UpdateCursor();
@@ -46,7 +46,7 @@ public class EquipmentSlot : ItemSlot{
         else
         {
             storage.Equip(equipmentSlotType);
-            mDraggedItem = null;
+            DraggedItem = null;
             BackPack.isInvClicked = false;
             UpdateCursor();
             Debug.Log("EQUIP2");

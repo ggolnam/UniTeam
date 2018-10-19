@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BackPack : MonoBehaviour {
 
+    //진
     public static bool isInvClicked;
     public static bool isEquipClicked;
     public int InvSlotCol;
@@ -84,8 +85,9 @@ public class BackPack : MonoBehaviour {
     //판매 취소//
     public void CancelSell(int quantity, Item item)
     {
-        AddItemToSlot(item);
-        InvSlot[preslot].Quantity = quantity;
+        AddItemToSlot(quantity, item);
+        //InvSlot[preslot].Quantity = quantity;
+        Debug.Log(InvSlot[preslot].Quantity);
 
     }
     //장비 장착하기//
@@ -220,7 +222,7 @@ public class BackPack : MonoBehaviour {
         }
     }
     //아이템 추가하기//
-    public void AddItemToSlot(Item item)
+    public void AddItemToSlot(int quantity, Item item)
     {
         for (int i = 0; i < InvSlot.Count; i++)
         {
@@ -231,11 +233,24 @@ public class BackPack : MonoBehaviour {
                 if (InvSlot[i].isEmpty)
                 {
                     InvItems[i] = item;
-                    InvSlot[i].Quantity++;
+                    InvSlot[i].Quantity = quantity;
                     return;
                 }
             }
         }
+    }
+    public bool CheckEmptySlot()
+    {
+        bool isEmpty = false;
+
+        for (int i = 0; i < InvSlot.Count; i++)
+        {
+            if (InvSlot[i].isEmpty)
+                isEmpty = true;
+        }
+
+        return isEmpty;
+
     }
     //소비아이템일경우 숫자올리기//
     bool CheckSameItem(Item item)

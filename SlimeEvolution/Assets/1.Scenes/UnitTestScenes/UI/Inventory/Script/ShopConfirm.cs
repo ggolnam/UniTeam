@@ -39,25 +39,30 @@ public class ShopConfirm : MonoBehaviour {
     public void OnClickedYes()
     {
         //돈있을때 아이템 구매//
-        if (IsEnoughMoney())
+        if (IsEnoughMoney() && ShopMediator.IsInvEmpty())
         {
             ResultExPlain.text = "Buy it";
             ShopMediator.SetMnoey((ShopMediator.GetMoney() -shopItem.Price));
-            ShopMediator.AddItemToInv(shopItem);
+            ShopMediator.AddItemToInv(1, shopItem);
 
 
         }
         //없을때 안사짐//
-        else
+        else if (!IsEnoughMoney())
         {
             ResultExPlain.text = "Not Enough Money";
         }
-
+        else
+        {
+            ResultExPlain.text = "There is No Empty Slot";
+        }
+        ShopMediator.HideToolTip();
         ResultPanel.gameObject.SetActive(true);
     }
     //No버튼 클릭//
     public void OnClickedNo()
     {
+        ShopMediator.HideToolTip();
         ConfirmPanel.gameObject.SetActive(false);
     }
     //잔돈 확인하기//
@@ -65,8 +70,9 @@ public class ShopConfirm : MonoBehaviour {
     {
         if (ShopMediator.GetMoney() >= shopItem.Price)
             isEnoughMoney = true;
+        else
+            isEnoughMoney = false;
 
-        Debug.Log(shopItem.Price);
         return isEnoughMoney;
     }
     //Back버튼 클릭//
@@ -74,10 +80,7 @@ public class ShopConfirm : MonoBehaviour {
     {
         ResultPanel.gameObject.SetActive(false);
         ConfirmPanel.gameObject.SetActive(false);
+        Debug.Log("OnClickedBackButton");
     }
-
-
-
-
 
 }
