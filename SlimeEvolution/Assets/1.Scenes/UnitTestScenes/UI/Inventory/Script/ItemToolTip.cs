@@ -5,7 +5,8 @@ using UnityEngine;
 public class ItemToolTip : MonoBehaviour
 {
 
-
+    [SerializeField]
+    Transform inventoryTooltip;
     [Header("Equiped")]
     public GameObject EquipedItemPanel;
     public UISprite EquipedItem;
@@ -36,7 +37,7 @@ public class ItemToolTip : MonoBehaviour
         if (Inv == null)
             return false;
 
-        transform.position = pos;
+        inventoryTooltip.position = pos;
         if (Inv.ItemKind == Item.Kind.Equipment)
             SetEquipedItemToolTip(Equip[(int)Inv.EquipSlotKind]);
         SetInvItemToolTip(Inv);

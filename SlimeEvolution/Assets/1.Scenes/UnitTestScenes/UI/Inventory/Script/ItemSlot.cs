@@ -31,9 +31,7 @@ public abstract class ItemSlot : MonoBehaviour {
     }
     public void UpdateText()
     {
-        if (Item.ItemKind == Item.Kind.Equipment)
-            label.text = "";
-        else if (Quantity == 0)
+        if (Quantity <= 1)
             label.text = "";
         else
             label.text = Quantity.ToString();
@@ -42,7 +40,7 @@ public abstract class ItemSlot : MonoBehaviour {
     {
         Item i = ObservedItem;
 
-        if (Item != null)
+        //if (Item != null)
             UpdateText();
 
 

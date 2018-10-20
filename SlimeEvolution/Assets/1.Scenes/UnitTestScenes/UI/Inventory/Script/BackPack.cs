@@ -16,7 +16,6 @@ public class BackPack : MonoBehaviour {
     public ShopMediator ShopMediator;
     public UILabel MoneyLabel;
 
-
     public GameObject SortItemButton;
     public GameObject FillItemButton;
     public ItemToolTip itemToolTip;
@@ -86,26 +85,27 @@ public class BackPack : MonoBehaviour {
     public void CancelSell(int quantity, Item item)
     {
         AddItemToSlot(quantity, item);
-        //InvSlot[preslot].Quantity = quantity;
-        Debug.Log(InvSlot[preslot].Quantity);
-
     }
     //장비 장착하기//
     public bool Equip(Item.EquipmentSlotKind equipmentSlotKind)
     {
-        Item previtem = InvItems[preslot];
-
-        if (previtem.ItemKind != Item.Kind.Equipment || previtem.EquipSlotKind != equipmentSlotKind)
+        if (InvItems[preslot] != null)
         {
-            Debug.Log("not a Equipment");
-            return false;
+            Item previtem = InvItems[preslot];
+
+            if (previtem.ItemKind != Item.Kind.Equipment || previtem.EquipSlotKind != equipmentSlotKind)
+            {
+                Debug.Log("not a Equipment");
+                return false;
+            }
+
+            InvItems[preslot] = EquipItems[(int)equipmentSlotKind];
+            EquipItems[(int)equipmentSlotKind] = previtem;
+            InvSlot[preslot].Quantity = 0;
+
+            return true;
         }
-
-        InvItems[preslot] = EquipItems[(int)equipmentSlotKind];
-        EquipItems[(int)equipmentSlotKind] = previtem;
-        InvSlot[preslot].Quantity = 0;
-
-        return true;
+        return false;
     }
     //장비 장착해제하기//
     public bool UnEquip(int slot)
@@ -234,6 +234,7 @@ public class BackPack : MonoBehaviour {
                 {
                     InvItems[i] = item;
                     InvSlot[i].Quantity = quantity;
+                    InvSlot[i].isEmpty = false;
                     return;
                 }
             }
