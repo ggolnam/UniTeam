@@ -25,13 +25,16 @@ public class EquipmentSlot : ItemSlot{
     {
         if (!BackPack.isEquipClicked && DraggedItem == null) 
         {
-            //원래자리에 있던 아이템을 든다//
-            //mDraggedItem을 mitem으로 설정
-            DraggedItem = Item;
-            storage.preslot = (int)equipmentSlotType;
-            BackPack.isEquipClicked = true;
-            UpdateCursor();
-            Debug.Log("EQUIP");
+            if (Item != null)
+            {
+
+                DraggedItem = Item;
+                storage.preslot = (int)equipmentSlotType;
+                BackPack.isEquipClicked = true;
+                UpdateCursor();
+                Debug.Log("EQUIP");
+            }
+            Debug.Log("NullItem");
 
         }
         else if (BackPack.isEquipClicked && !BackPack.isInvClicked) 

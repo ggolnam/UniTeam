@@ -24,20 +24,23 @@ public class InventorySlot : ItemSlot
     {
         if (!BackPack.isInvClicked && DraggedItem == null) 
         {
-            //원래자리에 있던 아이템을 든다//
-            //mDraggedItem을 mitem으로 설정
-            storage.preslot = SlotNum;
-            DraggedItem = Item;
 
-            BackPack.isInvClicked = true;
-            UpdateCursor();
-            ////////////
-            Vector3 pos = UICamera.mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            storage.itemToolTip.ShowToolTip(storage.EquipItems, Item, pos);
-            storage.ResetSortButton();
-            ////////////
+            if (Item != null)
+            {
+                storage.preslot = SlotNum;
+                DraggedItem = Item;
 
-            Debug.Log("INVEN");
+                BackPack.isInvClicked = true;
+                UpdateCursor();
+
+                Vector3 pos = UICamera.mainCamera.ScreenToWorldPoint(Input.mousePosition);
+                storage.itemToolTip.ShowToolTip(storage.EquipItems, Item, pos);
+                storage.ResetSortButton();
+                
+                Debug.Log("INVEN");
+            }
+            Debug.Log("NullItem");
+
         }
         else if (BackPack.isInvClicked && !BackPack.isEquipClicked) 
         {

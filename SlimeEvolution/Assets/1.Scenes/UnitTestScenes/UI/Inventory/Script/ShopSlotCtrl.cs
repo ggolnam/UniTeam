@@ -72,12 +72,27 @@ public class ShopSlotCtrl : MonoBehaviour {
         for (int slot = 0; slot < SellListSlot.Length; slot++)
         {
             SellListItems[slot] = null;
-            SellListSlot[slot].Quantity = 0;
+            SellListSlot[slot].Quantity = 1;
         }
 
         shopMediator.SetMnoey(shopMediator.GetMoney() + sum);
         CalculateSum();
     }
+
+
+    public void ReturnItemToInv()
+    {
+        for (int slot = 0; slot < SellListSlot.Length; slot++)
+        {
+            if (SellListSlot[slot].Item != null)
+                CancelSell(SellListSlot[slot].SlotNum, SellListSlot[slot].Quantity, SellListSlot[slot].Item);
+
+            SellListItems[slot] = null;
+            SellListSlot[slot].Quantity = 1;
+        }
+    }
+
+
     void Update()
     {
         ResultPrice.text = CalculateSum().ToString();
