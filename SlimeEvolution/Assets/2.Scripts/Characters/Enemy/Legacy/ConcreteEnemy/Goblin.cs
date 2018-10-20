@@ -28,7 +28,28 @@ namespace SlimeEvolution.Character.LagacyEnemy
 
         private void Start()
         {
-            StartCoroutine(EnemyIdle());
+            state = EnemyStateType.Idle;
+        }
+
+        private void Update()
+        {
+            switch (state)
+            {
+                case EnemyStateType.Idle:
+                    enemy.Move(navMesh, gameObject, animator);
+                    enemy.Stop(navMesh, gameObject, animator);
+                    break;
+                case EnemyStateType.Chase:
+                    enemy.Chase(navMesh, gameObject, playerObject, animator);
+                    break;
+                case EnemyStateType.Combat:
+                    enemy.Attack(playerObject, gameObject, animator, navMesh);
+                    break;
+                case EnemyStateType.Death:
+                    Debug.Log("죽음");
+                    break;
+            }
+
         }
 
         private void OnTriggerEnter(Collider other)
@@ -36,100 +57,24 @@ namespace SlimeEvolution.Character.LagacyEnemy
             if(other.CompareTag("Player"))
             {
                 state = EnemyStateType.Chase;
-                StopCoroutine(EnemyIdle());
-                StartCoroutine(EnemyChase(other.gameObject));
             }
         }
 
-        //ontriggerstay를 쓰는방향으로 오늘안에 enemy마무리합시다.
+        private void OnTriggerStay(Collider other)
+        {
+            state = EnemyStateType.Chase;
+            if (Vector3.Distance(this.gameObject.transform.position, other.gameObject.transform.position) <= 4)
+            {
+                state = EnemyStateType.Combat;
+            }
+        }
         
-
         private void OnTriggerExit(Collider other)
         {
             if(other.CompareTag("Player"))
             {
                 state = EnemyStateType.Idle;
-                StopCoroutine(EnemyChase(other.gameObject));
-                StopCoroutine(EnemyAttack(other.gameObject));
-                StartCoroutine(EnemyIdle());
             }
-        }
-        void OnDisable()
-        {
-            enemyDie();
-            StopAllCoroutines();
-        }
-
-        void patrol()
-        {
-            enemy.Move(navMesh, gameObject, animator);
-        }
-        void chase(GameObject playerObject)
-        {
-            enemy.Chase(navMesh, gameObject, playerObject, animator);
-        }
-        void attack(GameObject playerObject)
-        {
-            enemy.Attack(playerObject, gameObject, animator, navMesh);
-        }
-        void stop()
-        {
-            enemy.Stop(navMesh, gameObject, animator);
-        }
-        void enemyDie() //상위 클래스에서 구현하여 상속만 하면 가능
-        {
-            Debug.Log("죽음");
-            //몬스터 죽음의 카운트를 시스템에 전송(시스템으로부터 메소드를 받아야함)
-        }
-
-        IEnumerator EnemyIdle()
-        {
-            while (state == EnemyStateType.Idle)
-            {
-                patrol();
-                yield return new WaitForSeconds(2.0f);
-                stop();
-                yield return new WaitForSeconds(2.0f);
-            }
-        }
-        IEnumerator EnemyChase(GameObject playerObject)
-        {
-            while (state == EnemyStateType.Chase)
-            {
-                if (Vector3.Distance(playerObject.transform.position, this.gameObject.transform.position) <= attackRange)
-                {
-                    stop();
-                    state = EnemyStateType.Combat;
-                    nextBehavior = StartCoroutine(EnemyAttack(playerObject));
-                    StopCoroutine(EnemyAttack(playerObject));
-                   yield return nextBehavior;
-                }
-                chase(playerObject);
-                yield return new WaitForSeconds(0.5f);
-            }
-            
-        }
-        IEnumerator EnemyAttack(GameObject playerObject)
-        {
-            while (state == EnemyStateType.Combat)
-            {
-                if (Vector3.Distance(playerObject.transform.position, this.gameObject.transform.position) > attackRange)
-                {
-                    chase(playerObject);
-                    state = EnemyStateType.Chase;
-                    nextBehavior = StartCoroutine(EnemyChase(playerObject));
-                    StopCoroutine(EnemyChase(playerObject));
-                    yield return nextBehavior;
-                }
-                stop();
-                attack(playerObject);
-                yield return new WaitForSeconds(2f);
-            }
-        }
-        
-        IEnumerator EnemyDie()
-        {
-            return null;
         }
 
     }

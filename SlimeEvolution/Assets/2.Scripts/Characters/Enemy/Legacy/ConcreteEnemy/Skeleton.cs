@@ -29,7 +29,37 @@ namespace SlimeEvolution.Character.LagacyEnemy
 
         private void Start()//OnEnable로 쓸지를 고려
         {
-            StartCoroutine(EnemyIdle());
+            state = EnemyStateType.Idle;
+        }
+
+        private void Update()
+        {
+            switch(state)
+            {
+                case EnemyStateType.Idle:
+                    enemy.Move(navMesh, gameObject, animator);
+                    enemy.Stop(navMesh, gameObject, animator);
+                    break;
+                case EnemyStateType.Chase:
+                    if (Random.Range(0, 30) == 0)
+                    {
+                        enemy.Skill1(playerObject, this.gameObject, animator, navMesh);
+                    }
+                    else
+                    {
+                        enemy.Chase(navMesh, gameObject, playerObject, animator);
+                    }
+                    break;
+                case EnemyStateType.Combat:
+                    enemy.Attack(playerObject, gameObject, animator, navMesh);
+                    break;
+                case EnemyStateType.Week:
+                    enemy.RecoveryHP(CharacterStat.CurrentHP, animator);
+                    break;
+                case EnemyStateType.Death:
+
+                    break;
+            }
         }
 
         private void OnTriggerEnter(Collider other)
@@ -37,117 +67,34 @@ namespace SlimeEvolution.Character.LagacyEnemy
             if (other.CompareTag("Player"))
             {
                 state = EnemyStateType.Chase;
-                StopCoroutine(EnemyIdle());
-                StartCoroutine(EnemyChase(other.gameObject));
             }
         }
 
-        //ontriggerstay를 쓰는방향으로 오늘안에 enemy마무리합시다.
+        private void OnTriggerStay(Collider other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                if (Vector3.Distance(this.gameObject.transform.position, other.gameObject.transform.position) <= 4)
+                {
+                    state = EnemyStateType.Combat;
+                    if ((characterStat.CurrentHP < characterStat.MaxHP * 0.1f) && (Random.Range(0, 30) == 0))
+                    {
+                        state = EnemyStateType.Week;
+                    }
+                }
+                else
+                {
+                    state = EnemyStateType.Chase;
+                }
+            }
+        }
+
         private void OnTriggerExit(Collider other)
         {
             if (other.CompareTag("Player"))
             {
                 state = EnemyStateType.Idle;
-                StopCoroutine(EnemyChase(other.gameObject));
-                StopCoroutine(EnemyAttack(other.gameObject));
-                StartCoroutine(EnemyIdle());
             }
-        }
-        void OnDisable()
-        {
-            enemyDie();
-            StopAllCoroutines();
-        }
-
-        void patrol()
-        {
-            enemy.Move(navMesh, gameObject, animator);
-        }
-        void chase(GameObject playerObject)
-        {
-            enemy.Chase(navMesh, gameObject, playerObject, animator);
-        }
-        void attack(GameObject playerObject)
-        {
-            enemy.Attack(playerObject, gameObject, animator, navMesh);
-        }
-        void useRecovering()
-        {
-            characterStat.CurrentHP += enemy.RecoveryHP(characterStat.CurrentHP, animator);
-        }
-        void useThrowing(GameObject playerObject)//throwing
-        {
-            enemy.Skill1(playerObject, this.gameObject, animator, navMesh);
-        }
-        void stop()
-        {
-            enemy.Stop(navMesh, gameObject, animator);
-        }
-        void enemyDie() //상위 클래스에서 구현하여 상속만 하면 가능
-        {
-            Debug.Log("죽음");
-            //몬스터 죽음의 카운트를 시스템에 전송(시스템으로부터 메소드를 받아야함)
-        }
-
-        IEnumerator EnemyIdle()
-        {
-            while (state == EnemyStateType.Idle)
-            {
-                patrol();
-                yield return new WaitForSeconds(2.0f);
-                stop();
-                yield return new WaitForSeconds(2.0f);
-            }
-        }
-        IEnumerator EnemyChase(GameObject playerObject)
-        {
-            while (state == EnemyStateType.Chase)
-            {
-                if (Vector3.Distance(playerObject.transform.position, this.gameObject.transform.position) <= attackRange)
-                {
-                    stop();
-                    state = EnemyStateType.Combat;
-                    nextBehavior = StartCoroutine(EnemyAttack(playerObject));
-                    StopCoroutine(EnemyAttack(playerObject));
-                    yield return nextBehavior;
-                }
-                chase(playerObject);
-                yield return new WaitForSeconds(1f);
-                if (Random.Range(0, 100) == 0)
-                {
-                    useThrowing(playerObject);
-                }
-                yield return new WaitForSeconds(1f);
-
-            }
-
-        }
-        IEnumerator EnemyAttack(GameObject playerObject)
-        {
-            while (state == EnemyStateType.Combat)
-            {
-                if (Vector3.Distance(playerObject.transform.position, this.gameObject.transform.position) > attackRange)
-                {
-                    chase(playerObject);
-                    state = EnemyStateType.Chase;
-                    nextBehavior = StartCoroutine(EnemyChase(playerObject));
-                    StopCoroutine(EnemyChase(playerObject));
-                    yield return nextBehavior;
-                }
-                if ((characterStat.CurrentHP <= characterStat.MaxHP * hpPercentage) 
-                    && (Random.Range(0, 100) == 0)) 
-                {
-                    useRecovering();
-                }
-                stop();
-                attack(playerObject);
-                yield return new WaitForSeconds(1f);
-            }
-        }
-
-        IEnumerator EnemyDie()
-        {
-            return null;
         }
     }
 }

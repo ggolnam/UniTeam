@@ -56,7 +56,7 @@ namespace SlimeEvolution.Character.LagacyEnemy
             }
             if ((characterStat.CurrentHP <= (characterStat.MaxHP * 0.1f)) /*&& (Random.value == 0.1f)*/) 
             {
-                state = EnemyStateType.Dying;
+                state = EnemyStateType.Week;
             }
             //if(gameObject.activeInHierarchy == false)
             //{
@@ -107,7 +107,7 @@ namespace SlimeEvolution.Character.LagacyEnemy
                 nextBehavior = StartCoroutine(EnemyAttack());
                 yield return nextBehavior;
             }
-            if(state == EnemyStateType.Dying)
+            if(state == EnemyStateType.Week)
             {
                 nextBehavior = StartCoroutine(Recovery());
                 yield return nextBehavior;
@@ -157,7 +157,7 @@ namespace SlimeEvolution.Character.LagacyEnemy
         }
         IEnumerator Recovery()
         {
-            if (state == EnemyStateType.Dying)
+            if (state == EnemyStateType.Week)
             {
                 useRecovering();
 

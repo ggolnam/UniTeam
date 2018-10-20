@@ -29,7 +29,7 @@ namespace SlimeEvolution.GlobalVariable
         Idle,
         Chase,
         Combat,
-        Dying,
+        Week,
         Death
     }
     public class GlobalVariable

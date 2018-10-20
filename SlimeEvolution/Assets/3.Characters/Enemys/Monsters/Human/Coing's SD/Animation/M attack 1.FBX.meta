@@ -127,9 +127,17 @@ ModelImporter:
     optimizeGameObjects: 0
     motionNodeName: 
     rigImportErrors: 
-    rigImportWarnings: 
+    rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
+      copied configuration does not match position in animation file:\n\t'Bip001 L
+      Thigh' : position error = 326.862976 mm\n\t'Bip001 L Calf' : position error
+      = 107.033241 mm\n\t'Bip001 R Thigh' : position error = 115.947296 mm\n\t'Bip001
+      R Calf' : position error = 69.905045 mm\n"
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
+      improve retargeting quality.\n\t'Bip001 Spine' has translation animation that
+      will be discarded.\n\t'Bip001 L Thigh' has translation animation that will be
+      discarded.\n\t'Bip001 R Thigh' has translation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     animationCompression: 3
@@ -150,8 +158,8 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
+      loopTime: 1
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
