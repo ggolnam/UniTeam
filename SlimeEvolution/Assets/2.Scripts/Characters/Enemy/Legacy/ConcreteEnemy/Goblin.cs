@@ -12,6 +12,7 @@ namespace SlimeEvolution.Character.LagacyEnemy
 
         private void Awake()
         {
+            WaitingTime = 2f;
             navMesh = gameObject.GetComponent<NavMeshAgent>();
             animator = gameObject.GetComponent<Animator>();
             characterStat.MaxHP = 20;
@@ -33,11 +34,24 @@ namespace SlimeEvolution.Character.LagacyEnemy
 
         private void Update()
         {
+            Timer += Time.deltaTime;
             switch (state)
             {
                 case EnemyStateType.Idle:
-                    enemy.Move(navMesh, gameObject, animator);
-                    enemy.Stop(navMesh, gameObject, animator);
+                    if (Timer >= WaitingTime)
+                    {
+                        enemy.Stop(navMesh, gameObject, animator);
+                        Timer = 0f;
+                        state = EnemyStateType.Patrol;
+                    }
+                    break;
+                case EnemyStateType.Patrol:
+                    if (Timer >= WaitingTime)
+                    {
+                        enemy.Move(navMesh, gameObject, animator);
+                        Timer = 0f;
+                        state = EnemyStateType.Idle;
+                    }
                     break;
                 case EnemyStateType.Chase:
                     enemy.Chase(navMesh, gameObject, playerObject, animator);
@@ -62,10 +76,14 @@ namespace SlimeEvolution.Character.LagacyEnemy
 
         private void OnTriggerStay(Collider other)
         {
-            state = EnemyStateType.Chase;
-            if (Vector3.Distance(this.gameObject.transform.position, other.gameObject.transform.position) <= 4)
+            if (other.CompareTag("Player"))
             {
-                state = EnemyStateType.Combat;
+                state = EnemyStateType.Chase;
+                if (Vector3.Distance(this.gameObject.transform.position,
+                    other.gameObject.transform.position) <= attackRange)
+                {
+                    state = EnemyStateType.Combat;
+                }
             }
         }
         

@@ -27,6 +27,7 @@ namespace SlimeEvolution.GlobalVariable
     public enum EnemyStateType
     {
         Idle,
+        Patrol,
         Chase,
         Combat,
         Week,

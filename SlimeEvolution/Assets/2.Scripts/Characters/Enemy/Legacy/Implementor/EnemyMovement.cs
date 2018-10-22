@@ -20,8 +20,7 @@ namespace SlimeEvolution.Character.LagacyEnemy
         
     }
 
-
-
+    
     public class Patrol : EnemyMovement
     {
         public Patrol(float speed)
@@ -32,7 +31,7 @@ namespace SlimeEvolution.Character.LagacyEnemy
         public override void Move(NavMeshAgent meshAgent, GameObject gameObject, Animator animator)
         {
             timer += Time.deltaTime;
-
+            Debug.Log("호출됨");
             if (timer >= newtarget)
             {
                 newTarget(meshAgent,gameObject, animator);
@@ -45,7 +44,7 @@ namespace SlimeEvolution.Character.LagacyEnemy
             float myX = enemyObject.transform.position.x;
             float myZ = enemyObject.transform.position.z;
 
-            //개선요망
+            //랜덤 방향 계산 개선요망
             float xPosition = myX + Random.Range(myX - 60, myX + 60);
             float zPosition = myZ + Random.Range(myZ - 60, myZ + 60);
 
@@ -57,8 +56,7 @@ namespace SlimeEvolution.Character.LagacyEnemy
             animator.SetFloat("speed", speed);
             animator.SetBool("isAttacking", false);
         }
-
-      
+        
         public override void Chase(NavMeshAgent navMeshAgent, GameObject gameObject,
             GameObject player, Animator animator) { }
     }
@@ -85,6 +83,7 @@ namespace SlimeEvolution.Character.LagacyEnemy
             magnification = 3f;
             this.speed = speed * magnification;
         }
+
         public override void Chase(NavMeshAgent navMeshAgent, GameObject EnemyObject,
             GameObject playerObject, Animator animator)
         {
@@ -99,13 +98,7 @@ namespace SlimeEvolution.Character.LagacyEnemy
             animator.SetBool("isAttacking", false);
             navMeshAgent.SetDestination(target);
         }
-        //void StopChase(NavMeshAgent navMeshAgent, GameObject EnemyObject,
-        //    GameObject playerObject, Animator animator)
-        //{
-        //    navMeshAgent.speed = 0.0f;
-        //    animator.SetFloat("speed", navMeshAgent.speed);
-        //    EnemyObject.transform.LookAt(playerObject.transform.position);
-        //}
+
         public override void Move(NavMeshAgent navMeshAgent, GameObject gameObject, 
             Animator animator) { }
     }

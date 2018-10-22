@@ -8,10 +8,9 @@ namespace SlimeEvolution.Character.LagacyEnemy
 {
     public class Skeleton : Enemy
     {
-        Coroutine nextBehavior;
-
         private void Awake()
         {
+            WaitingTime = 3f;
             navMesh = gameObject.GetComponent<NavMeshAgent>();
             animator = gameObject.GetComponent<Animator>();
             characterStat.MaxHP = 30;
@@ -34,11 +33,24 @@ namespace SlimeEvolution.Character.LagacyEnemy
 
         private void Update()
         {
-            switch(state)
+            Timer += Time.deltaTime;
+            switch (state)
             {
                 case EnemyStateType.Idle:
-                    enemy.Move(navMesh, gameObject, animator);
-                    enemy.Stop(navMesh, gameObject, animator);
+                    if (Timer >= WaitingTime)
+                    {
+                        enemy.Stop(navMesh, gameObject, animator);
+                        Timer = 0f;
+                        state = EnemyStateType.Patrol;
+                    }
+                    break;
+                case EnemyStateType.Patrol:
+                    if (Timer >= WaitingTime)
+                    {
+                        enemy.Move(navMesh, gameObject, animator);
+                        Timer = 0f;
+                        state = EnemyStateType.Idle;
+                    }
                     break;
                 case EnemyStateType.Chase:
                     if (Random.Range(0, 30) == 0)
@@ -74,10 +86,12 @@ namespace SlimeEvolution.Character.LagacyEnemy
         {
             if (other.CompareTag("Player"))
             {
-                if (Vector3.Distance(this.gameObject.transform.position, other.gameObject.transform.position) <= 4)
+                if (Vector3.Distance(this.gameObject.transform.position,
+                    other.gameObject.transform.position) <= attackRange)
                 {
                     state = EnemyStateType.Combat;
-                    if ((characterStat.CurrentHP < characterStat.MaxHP * 0.1f) && (Random.Range(0, 30) == 0))
+                    if ((characterStat.CurrentHP < characterStat.MaxHP * 0.1f) 
+                        && (Random.Range(0, 30) == 0))
                     {
                         state = EnemyStateType.Week;
                     }
