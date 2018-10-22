@@ -9,13 +9,15 @@ namespace SlimeEvolution.Character.Player
         AttackSkill attackSkill;
         DefendSkill defendSkill;
         BuffSkill buffSkill;
-        
-        public Skill(PlayerForm playerForm)
-        {
+        Transform playerTransform;
 
-            switch(playerForm)
+        public Skill(PlayerForm playerForm, Transform playerTransform)
+        {
+            this.playerTransform = playerTransform;
+            switch (playerForm)
             {
                 case PlayerForm.Slime :
+                    attackSkill = new Smashing(playerTransform);
                     break;
                 case PlayerForm.Goblin :
                     break;
@@ -26,9 +28,9 @@ namespace SlimeEvolution.Character.Player
             }
         }
 
-        public void UseAttackSkill()
+        public void UseAttackSkill(Transform target)
         {
-
+            attackSkill.Use(target);
         }
 
         public void UseDefendSkill()
