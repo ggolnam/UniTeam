@@ -21,10 +21,15 @@ public class ShopPortal : MonoBehaviour {
         if (other.CompareTag("Player"))
             villageMediator.EnterShop(shopType);
     }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+            villageMediator.ExitShop();
+    }
 
     private void Update()
     {
-        gameObject.transform.Rotate(0, Time.deltaTime * 5*speed, 0);
+        //gameObject.transform.Rotate(0, Time.deltaTime * 5*speed, 0);
 
         if (gameObject.transform.localPosition.y <= TestMaxUp && !isTurn)
         {

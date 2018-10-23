@@ -55,6 +55,7 @@ public class ShopMediator : AbstractVillageMediator
         shopConfirm.OnClickedBackButton();
         shopSlotCtrl.ReturnItemToInv();
         HideToolTip();
+
     }
     public void ShowConfirmPanel(Item item)
     {

@@ -23,4 +23,8 @@ public class VillageMediator : MonoBehaviour {
     {
         villageUI.ShowInvUI();
     }
+    public void ExitShop()
+    {
+        villageUI.HideUI();
+    }
 }
