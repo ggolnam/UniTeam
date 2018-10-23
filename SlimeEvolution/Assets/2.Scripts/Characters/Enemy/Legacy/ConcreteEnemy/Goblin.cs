@@ -13,7 +13,7 @@ namespace SlimeEvolution.Character.LagacyEnemy
         private void Awake()
         {
             WaitingTime = 2f;
-            navMesh = gameObject.GetComponent<NavMeshAgent>();
+            
             animator = gameObject.GetComponent<Animator>();
             characterStat.MaxHP = 20;
             characterStat.CurrentHP = characterStat.MaxHP;
@@ -26,10 +26,12 @@ namespace SlimeEvolution.Character.LagacyEnemy
                 new NormalAttack(characterStat.Damage), new Patrol(characterStat.Speed),
                 new Chasing(characterStat.Speed), new StopMovement());
         }
-
+        
         private void Start()
         {
+            navMesh = gameObject.GetComponent<NavMeshAgent>();
             state = EnemyStateType.Idle;
+            
         }
 
         private void Update()

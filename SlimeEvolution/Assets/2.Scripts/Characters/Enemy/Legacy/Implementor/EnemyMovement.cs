@@ -12,7 +12,6 @@ namespace SlimeEvolution.Character.LagacyEnemy
         protected float speed;
         protected float timer;
         protected float magnification;
-        protected int newtarget;
         
         public abstract void Move(NavMeshAgent navMeshAgent, GameObject gameObject, Animator animator);
         public abstract void Chase(NavMeshAgent navMeshAgent, GameObject gameObject, GameObject player, 
@@ -28,34 +27,26 @@ namespace SlimeEvolution.Character.LagacyEnemy
             this.speed = speed;
         }
 
-        public override void Move(NavMeshAgent meshAgent, GameObject gameObject, Animator animator)
+        public override void Move(NavMeshAgent navMeshAgent, GameObject enemyObject, Animator animator)
         {
-            timer += Time.deltaTime;
-            Debug.Log("호출됨");
-            if (timer >= newtarget)
-            {
-                newTarget(meshAgent,gameObject, animator);
-                timer = 0;
-            }
-        }
 
-        void newTarget(NavMeshAgent navMeshAgent ,GameObject enemyObject, Animator animator)
-        {
             float myX = enemyObject.transform.position.x;
             float myZ = enemyObject.transform.position.z;
 
             //랜덤 방향 계산 개선요망
-            float xPosition = myX + Random.Range(myX - 60, myX + 60);
-            float zPosition = myZ + Random.Range(myZ - 60, myZ + 60);
+            float xPosition = myX + Random.Range(myX - 360, myX + 360);
+            float zPosition = myZ + Random.Range(myZ - 360, myZ + 360);
 
             target = new Vector3(xPosition, enemyObject.transform.position.y, zPosition);
-            
+
             navMeshAgent.speed = speed;
             navMeshAgent.SetDestination(target);
-            
+
             animator.SetFloat("speed", speed);
             animator.SetBool("isAttacking", false);
         }
+
+        
         
         public override void Chase(NavMeshAgent navMeshAgent, GameObject gameObject,
             GameObject player, Animator animator) { }

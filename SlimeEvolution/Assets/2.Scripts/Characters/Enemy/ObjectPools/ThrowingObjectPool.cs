@@ -23,7 +23,6 @@ namespace SlimeEvolution.Character.LagacyEnemy
         }
         void RegistObjects()
         {
-            Rigidbody rigidToRegist;
             GameObject objectToRegist;
             for (int i = 0; i < NumberOfItemObject; i++)
             {
@@ -45,7 +44,7 @@ namespace SlimeEvolution.Character.LagacyEnemy
                     objectToPop = itemObjects[i];
                     break;
                 }
-                if(itemObjects == null)
+                if(itemObjects[0].activeInHierarchy == true)
                 {
                     Debug.Log("<color=red> Warning!:</color> " + itemObjects[i].name + " pool is empty");
                     return null;
