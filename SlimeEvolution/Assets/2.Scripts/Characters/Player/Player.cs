@@ -22,6 +22,8 @@ namespace SlimeEvolution.Character.Player
         float checkradius;
         [SerializeField]
         LayerMask checkLayer;
+
+        Skill playerSkill;
         Rigidbody rigidbody;
         Vector3 movement;
         PlayerForm currentForm;
@@ -36,6 +38,7 @@ namespace SlimeEvolution.Character.Player
             currentForm = PlayerForm.Slime;
             formState  = new SlimeForm(transform ,rigidbody, formList[(int)PlayerForm.Slime].GetComponent<Animator>(), ref characterStat);
             attackAreaActivator = formList[(int)PlayerForm.Slime].GetComponent<AttackAreaActivator>();
+            playerSkill =  new Skill(currentForm, transform);
         }
 
       
@@ -62,7 +65,7 @@ namespace SlimeEvolution.Character.Player
                     else
                     {
                         formState.LookAt(movement);
-                        formState.Attack(target);
+                        formState.Attack();
                     }
                 }
                 else
@@ -73,11 +76,6 @@ namespace SlimeEvolution.Character.Player
             }
         }
 
-        //void Run(Vector3 movement) 
-        //{
-        //    movement = movement.normalized * speed * Time.deltaTime;
-        //    rigidbody.MovePosition(transform.position + movement);
-        //}
 
         public void OnClickedChangeButton(int form)
         {
@@ -96,8 +94,15 @@ namespace SlimeEvolution.Character.Player
                     ChangeFormState(PlayerForm.Human); 
                     break;
             }
-            Debug.Log(characterStat.Speed);
         }
+
+        public void OnClickSkillButton()
+        {
+            FindTarget(checkradius);
+            if (target != null) 
+                playerSkill.UseAttackSkill(target);
+        }
+
 
         public void OnClickedAttackButton()
         {
@@ -134,11 +139,9 @@ namespace SlimeEvolution.Character.Player
 
         void FindTarget(float radius)
         {
-            //Debug.Log("Find");
             Collider[] targets = Physics.OverlapSphere(transform.position, radius, checkLayer);
             if (targets.Length != 0)
             {
-                //Debug.Log("Find2");
                 float min = 10;
                 float distance;
                 for (int i = 0; i < targets.Length; i++)
@@ -149,7 +152,6 @@ namespace SlimeEvolution.Character.Player
                     {
                         min = distance;
                         target = targets[i].transform;
-                        //Debug.Log("Target On");
                     }
 
                 }

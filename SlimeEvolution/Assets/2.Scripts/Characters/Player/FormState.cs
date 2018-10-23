@@ -42,7 +42,7 @@ namespace SlimeEvolution.Character.Player
             animator.SetBool("IsMove", false);
         }
 
-        public void Attack(Transform target)
+        public void Attack()
         {
             animator.SetBool("IsAttack", true);
             animator.SetBool("IsMove", false);

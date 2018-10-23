@@ -22,5 +22,10 @@ namespace SlimeEvolution.Character.LagacyEnemy
         protected int recoveryAmount;
         protected const float hpPercentage = 0.1f;
         protected float attackRange;
+
+        protected float Timer;
+        protected float WaitingTime;
+        
+
     }
 }

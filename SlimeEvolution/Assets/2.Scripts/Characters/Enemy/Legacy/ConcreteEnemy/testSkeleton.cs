@@ -58,10 +58,6 @@ namespace SlimeEvolution.Character.LagacyEnemy
             {
                 state = EnemyStateType.Week;
             }
-            //if(gameObject.activeInHierarchy == false)
-            //{
-            //    state = EnemyStateType.Death;
-            //}
         }
        
         void patrol()
