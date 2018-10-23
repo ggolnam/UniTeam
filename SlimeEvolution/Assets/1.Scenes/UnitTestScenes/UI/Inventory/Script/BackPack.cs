@@ -226,7 +226,7 @@ public class BackPack : MonoBehaviour {
     {
         for (int i = 0; i < InvSlot.Count; i++)
         {
-            if (CheckSameItem(item))
+            if (CheckSameItem(item, quantity))
                 return;
             else
             {
@@ -254,14 +254,14 @@ public class BackPack : MonoBehaviour {
 
     }
     //소비아이템일경우 숫자올리기//
-    bool CheckSameItem(Item item)
+    bool CheckSameItem(Item item,int qunatity)
     {
         bool isbool = false;
         for (int i = 0; i < InvSlot.Count; i++)
         {
             if (InvItems[i] != null && item.ID == InvItems[i].ID && item.ItemKind == Item.Kind.Disposable && InvSlot[i].Quantity < MaxQuatityNum)
             {
-                InvSlot[i].Quantity++;
+                InvSlot[i].Quantity+= qunatity;
                 isbool = true;
                 break;
             }

@@ -80,7 +80,6 @@ public class ShopConfirm : MonoBehaviour {
     {
         ResultPanel.gameObject.SetActive(false);
         ConfirmPanel.gameObject.SetActive(false);
-        Debug.Log("OnClickedBackButton");
     }
 
 }

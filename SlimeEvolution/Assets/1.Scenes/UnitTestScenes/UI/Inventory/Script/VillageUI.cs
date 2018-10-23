@@ -47,7 +47,7 @@ public class VillageUI : MonoBehaviour {
     public void HideUI()
     {
         //callback하기//
-        if (HideUIDelegate != null)
+        if (HideUIDelegate != null && InventoryUI.activeSelf==true)
             HideUIDelegate();
 
         InvScorll.transform.localPosition = Vector3.zero;
