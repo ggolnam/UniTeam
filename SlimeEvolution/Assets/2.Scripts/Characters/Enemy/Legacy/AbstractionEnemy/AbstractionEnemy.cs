@@ -41,15 +41,15 @@ namespace SlimeEvolution.Character.LagacyEnemy
         
 
         public abstract int RecoveryHP(int currentHP, Animator animator);
-        public abstract void Skill1(GameObject playerObject, GameObject EnemyObject,
+        public abstract void Skill1(Vector3 playerPosition, Transform enemyTransform,
             Animator animator, NavMeshAgent navMeshAgent);
-        public abstract void Attack(GameObject gameObject, GameObject EnemyObject, 
+        public abstract void Attack(Vector3 playerPosition, Transform enemyTransform,
             Animator animator, NavMeshAgent navMeshAgent);
-        public abstract void Move(NavMeshAgent navMeshAgent, GameObject gameObject, 
+        public abstract void Move(NavMeshAgent navMeshAgent, Transform enemyTransform,
             Animator animator);
-        public abstract void Chase(NavMeshAgent navMeshAgent, GameObject gameObject, 
-            GameObject player, Animator animator);
-        public abstract void Stop(NavMeshAgent navMeshAgent, GameObject gameObject, 
+        public abstract void Chase(NavMeshAgent navMeshAgent, Transform enemyTransform,
+            Vector3 playerPosition, Animator animator);
+        public abstract void Stop(NavMeshAgent navMeshAgent, Transform enemyTransform,
             Animator animator);
        
     }

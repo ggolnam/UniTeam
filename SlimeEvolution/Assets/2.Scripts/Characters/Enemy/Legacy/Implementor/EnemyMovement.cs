@@ -13,8 +13,8 @@ namespace SlimeEvolution.Character.LagacyEnemy
         protected float timer;
         protected float magnification;
         
-        public abstract void Move(NavMeshAgent navMeshAgent, GameObject gameObject, Animator animator);
-        public abstract void Chase(NavMeshAgent navMeshAgent, GameObject gameObject, GameObject player, 
+        public abstract void Move(NavMeshAgent navMeshAgent, Transform enemyTransform, Animator animator);
+        public abstract void Chase(NavMeshAgent navMeshAgent, Transform enemyTransform, Vector3 playerPosition, 
             Animator animator);
         
     }
@@ -27,17 +27,20 @@ namespace SlimeEvolution.Character.LagacyEnemy
             this.speed = speed;
         }
 
-        public override void Move(NavMeshAgent navMeshAgent, GameObject enemyObject, Animator animator)
+        public override void Move(NavMeshAgent navMeshAgent, Transform enemyTransform, Animator animator)
         {
 
-            float myX = enemyObject.transform.position.x;
-            float myZ = enemyObject.transform.position.z;
+            float myX = enemyTransform.position.x;
+            float myZ = enemyTransform.position.z;
 
             //랜덤 방향 계산 개선요망
-            float xPosition = myX + Random.Range(myX - 360, myX + 360);
-            float zPosition = myZ + Random.Range(myZ - 360, myZ + 360);
+            //float xPosition = myX + Random.Range(myX - 100, myX + 100);
+            //float zPosition = myZ + Random.Range(myZ - 100, myZ + 100);
 
-            target = new Vector3(xPosition, enemyObject.transform.position.y, zPosition);
+            float xPosition = myX + Random.Range(-20, 20);
+            float zPosition = myZ + Random.Range(-20, 20);
+
+            target = new Vector3(xPosition, enemyTransform.transform.position.y, zPosition);
 
             navMeshAgent.speed = speed;
             navMeshAgent.SetDestination(target);
@@ -48,14 +51,14 @@ namespace SlimeEvolution.Character.LagacyEnemy
 
         
         
-        public override void Chase(NavMeshAgent navMeshAgent, GameObject gameObject,
-            GameObject player, Animator animator) { }
+        public override void Chase(NavMeshAgent navMeshAgent, Transform enemyTransform,
+            Vector3 playerPosition, Animator animator) { }
     }
 
     public class StopMovement: EnemyMovement
     {
         
-        public override void Move(NavMeshAgent navMeshAgent, GameObject gameObject, Animator animator)
+        public override void Move(NavMeshAgent navMeshAgent, Transform enemyTransform, Animator animator)
         {
             navMeshAgent.speed = 0.0f;
             speed = navMeshAgent.speed;
@@ -63,8 +66,8 @@ namespace SlimeEvolution.Character.LagacyEnemy
             animator.SetBool("isAttacking", false);
         }
 
-        public override void Chase(NavMeshAgent navMeshAgent, GameObject gameObject,
-            GameObject player, Animator animator) { }
+        public override void Chase(NavMeshAgent navMeshAgent, Transform enemyTransform,
+             Vector3 playerPosition, Animator animator) { }
     }
 
     public class Chasing : EnemyMovement
@@ -75,22 +78,22 @@ namespace SlimeEvolution.Character.LagacyEnemy
             this.speed = speed * magnification;
         }
 
-        public override void Chase(NavMeshAgent navMeshAgent, GameObject EnemyObject,
-            GameObject playerObject, Animator animator)
+        public override void Chase(NavMeshAgent navMeshAgent, Transform enemyTransform,
+            Vector3 playerPosition, Animator animator)
         {
-            float xPosition = playerObject.transform.position.x;
-            float zPosition = playerObject.transform.position.z;
+            float xPosition = playerPosition.x;
+            float zPosition = playerPosition.z;
             
-            target = new Vector3(xPosition, EnemyObject.transform.position.y, zPosition);
+            target = new Vector3(xPosition, enemyTransform.transform.position.y, zPosition);
 
-            EnemyObject.transform.LookAt(playerObject.transform.position);
+            enemyTransform.transform.LookAt(playerPosition);
             navMeshAgent.speed = speed;
             animator.SetFloat("speed", speed);
             animator.SetBool("isAttacking", false);
             navMeshAgent.SetDestination(target);
         }
 
-        public override void Move(NavMeshAgent navMeshAgent, GameObject gameObject, 
+        public override void Move(NavMeshAgent navMeshAgent, Transform enemyTransform, 
             Animator animator) { }
     }
     

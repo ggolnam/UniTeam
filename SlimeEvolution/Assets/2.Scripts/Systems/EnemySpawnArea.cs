@@ -4,43 +4,42 @@ using UnityEngine;
 
 namespace SlimeEvolution.GameSystem
 {
+    /// <summary>
+    /// EnemySpawnArea, EnemyObjectPool을 어디서 관리할건지 설계를 해야함
+    /// </summary>
     public class EnemySpawnArea : MonoBehaviour
     {
-        [SerializeField]
-        GameObject goblinSpawnArea;
-        [SerializeField]
-        GameObject skeletonSpawnArea;
-        [SerializeField]
-        GameObject knightSpawnArea;
+        float countingTime = 0;
+        const float spawnningTime = 5f;
+        //게임 컨트롤러에 들어갈 내용
         
-        //EnemyObjectPool enemyObjectPool;
+        const int numberOfSpawnArea = 10;
+        const int limitOfSpawnedEnemy = 2;
+        int countingEnemy = 0;
+        public Transform[] SpawnPositions = new Transform[numberOfSpawnArea];
 
-        int aliveEnemyCount;
-        int maxAliveEnemyCount;
-
-        
-        private void Start()
+        void Update()
         {
-            maxAliveEnemyCount = EnemyObjectPool.Instance.NumberOfEnemyObjects; //생성자
-            EnemySpawn("");
-        }
-
-        void EnemySpawn(string enemyName)
-        {
-            GameObject toSpawnObject;
-            for (int i = 0; i < EnemyObjectPool.Instance.NumberOfEnemyObjects * 0.2 ; i++)
+            if (countingEnemy < limitOfSpawnedEnemy)
             {
-                toSpawnObject = EnemyObjectPool.Instance.PopFromPool(gameObject);
-                toSpawnObject.transform.position = gameObject.transform.position;
+                countingTime += Time.deltaTime;
+                if (countingTime >= spawnningTime)
+                {
+                    Spawn();
+                    countingTime = 0f;
+                }
             }
         }
 
-        void EnemyCount()
+        
+        void Spawn()
         {
-
+            GameObject testSpawn;
+            testSpawn = EnemyObjectPool.Instance.PopFromPool(gameObject.transform);
+            testSpawn.transform.position = gameObject.transform.position;
+            countingEnemy++;
         }
 
-
-
+        
     }
 }

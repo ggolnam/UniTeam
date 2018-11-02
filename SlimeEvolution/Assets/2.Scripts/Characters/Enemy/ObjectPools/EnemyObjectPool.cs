@@ -1,75 +1,66 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace SlimeEvolution.GameSystem
 {
-    public class EnemyObjectPool : Singleton<EnemyObjectPool>
+    public class EnemyObjectPool : Singleton<EnemyObjectPool>//: Singleton<EnemyObjectPool>
     {
+        //오브젝트 풀 매니저 필요
+        public Queue<GameObject> enemyObjects = new Queue<GameObject>();
+        public List<GameObject> PopedObjects = new List<GameObject>();
         public GameObject enemyObject;
-        [HideInInspector]
-        public List<GameObject> EnemyObjects = new List<GameObject>();
+        public GameObject Parent;
 
-        public int NumberOfEnemyObjects;
+        const int objectsAmount = 50;
 
-
-        private void Awake()
-        {
-            NumberOfEnemyObjects = 30;
-            RegistObjects();
-        }
-
+       
         private void Start()
         {
-            
+            RegistObjects();
         }
 
         void RegistObjects()
         {
-            GameObject objectToRegist;
-            for(int i = 0; i<NumberOfEnemyObjects; i++)
+            GameObject toRegist;
+            for(int i = 0; i < objectsAmount; i++ )
             {
-                //리소스로드 
-                objectToRegist = Instantiate(enemyObject, gameObject.transform);
-                objectToRegist.transform.position = this.gameObject.transform.position;
-                EnemyObjects.Add(objectToRegist);
-                EnemyObjects[i].name = enemyObject.name;
-                
-                EnemyObjects[i].SetActive(false);
+                toRegist = Instantiate(enemyObject, gameObject.transform);
+                enemyObjects.Enqueue(toRegist);
+                toRegist.SetActive(false);
             }
         }
 
-        public GameObject PopFromPool(GameObject spawnArea)
+        public GameObject PopFromPool(Transform spawnPosition)
         {
-            GameObject objectToPop = null;
-            for (int i = NumberOfEnemyObjects - 1; i >= 0; i--) 
+            GameObject toPopObject;
+            toPopObject = enemyObjects.Dequeue();
+            PopedObjects.Add(toPopObject);
+            toPopObject.transform.position = spawnPosition.position;
+            toPopObject.SetActive(true);
+            
+            return toPopObject;
+        }
+
+        public void PushToPool(GameObject toPushObject)
+        {
+            //for(int i = 0; i < PopedObjects.Count; i++)
+            //{
+            if(PopedObjects.Contains(toPushObject))
             {
-                if(EnemyObjects[i].activeInHierarchy == false)
-                {
-                    EnemyObjects[i].SetActive(true);
-                    EnemyObjects[i].transform.position = spawnArea.transform.position;
-                    objectToPop = EnemyObjects[i];
-                    objectToPop.GetComponent<NavMeshAgent>();
-                    break;
-                }
-                
-                if(EnemyObjects[0].activeInHierarchy == true)
-                {
-                    Debug.Log("<color=red> Warning!:pool is empty.</color>");
-                    break;
-                }
+                PopedObjects.Remove(toPushObject);
+                enemyObjects.Enqueue(toPushObject);
+                toPushObject.SetActive(false);
+                    //break;
             }
-            return objectToPop;
+            else
+            {
+                Debug.Log("현재 push된 오브젝트가 풀에 맞지 않습니다.");
+            }
+           // }
         }
 
-        public void PushToPool(GameObject objectToPush)
-        {
-            objectToPush.SetActive(false);
-            objectToPush.transform.position = this.gameObject.transform.position;
-            //EnemyObjects.Add
-        }
-
-        
     }
 }
