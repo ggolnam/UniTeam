@@ -9,13 +9,13 @@ namespace SlimeEvolution.GameSystem
     /// </summary>
     public class EnemySpawnArea : MonoBehaviour
     {
-        float countingTime = 0;
-        const float spawnningTime = 5f;
+        protected float countingTime = 0;
+        protected const float spawnningTime = 5f;
         //게임 컨트롤러에 들어갈 내용
-        
-        const int numberOfSpawnArea = 10;
-        const int limitOfSpawnedEnemy = 2;
-        int countingEnemy = 0;
+
+        protected const int numberOfSpawnArea = 10;
+        protected const int limitOfSpawnedEnemy = 2;
+        protected int countingEnemy = 0;
         public Transform[] SpawnPositions = new Transform[numberOfSpawnArea];
 
         void Update()
@@ -31,15 +31,14 @@ namespace SlimeEvolution.GameSystem
             }
         }
 
-        
-        void Spawn()
+
+        protected void Spawn()
         {
             GameObject testSpawn;
-            testSpawn = EnemyObjectPool.Instance.PopFromPool(gameObject.transform);
-            testSpawn.transform.position = gameObject.transform.position;
+            //testSpawn = ObjectPool.Instance.PopFromPool(gameObject.transform);
+            //testSpawn.transform.position = gameObject.transform.position;
             countingEnemy++;
+            
         }
-
-        
     }
 }

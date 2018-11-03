@@ -99,7 +99,7 @@ namespace SlimeEvolution.Character.LagacyEnemy
 
         private void OnDisable()
         {
-            EnemyObjectPool.Instance.PushToPool(gameObject);
+            //ObjectPool.Instance.PushToPool(gameObject);
         }
 
     }
