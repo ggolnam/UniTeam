@@ -12,7 +12,6 @@ namespace SlimeEvolution.Character.Player
         Human,
     }
 
-    
 
     public class Player : Character
     {

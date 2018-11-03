@@ -15,6 +15,14 @@ namespace SlimeEvolution.GameSystem
         public int Experience;
     }
 
+    [Serializable]
+    public struct SkillData
+    {
+        public int AttackSkillLevel;
+        public int DefendSkillLevel;
+        public int BuffSkillLevel;
+    }
+
     public struct ItemData
     {
         
@@ -32,17 +40,24 @@ namespace SlimeEvolution.GameSystem
         public int SlotNumber;
         public int Level;
         public int Gold;
-        public StatData statData;
+        public StatData Stat;
+        public SkillData[] SkillLevels = new SkillData[4];
         public PlayerData(int slotNumber)
         {
             Level = 1;
             SlotNumber = slotNumber;
-            statData.HealthPoint = 100;
-            statData.ManaPoint = 50;
-            statData.SkillPoint = 1;
-            statData.StrikingPower = 10;
-            statData.DefensivePower = 5;
-            statData.Critical = 5;
+            Stat.HealthPoint = 100;
+            Stat.ManaPoint = 50;
+            Stat.SkillPoint = 1;
+            Stat.StrikingPower = 10;
+            Stat.DefensivePower = 5;
+            Stat.Critical = 5;
+            for(int i = 0; i < SkillLevels.Length; i ++)
+            {
+                SkillLevels[i].AttackSkillLevel = 1;
+                SkillLevels[i].DefendSkillLevel = 1;
+                SkillLevels[i].BuffSkillLevel = 1;
+            }
         }
 
         public PlayerData()

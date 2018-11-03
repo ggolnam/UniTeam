@@ -18,10 +18,11 @@ namespace SlimeEvolution.Character.Player
             {
                 case PlayerForm.Slime :
                     attackSkill = new Smashing(playerTransform);
+
                     break;
                 case PlayerForm.Goblin :
                     break;
-                case PlayerForm.Skeleton :
+                case PlayerForm.Skeleton : 
                     break;
                 case PlayerForm.Human :
                     break;
@@ -35,12 +36,12 @@ namespace SlimeEvolution.Character.Player
 
         public void UseDefendSkill()
         {
-
+            defendSkill.Use();
         }
 
         public void UseBuffSkill()
         {
-
+            buffSkill.Use();
         }
 
     }      

@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace SlimeEvolution.Character.Player
 {
-    public class BuffSkill 
+    public abstract class BuffSkill 
     {
 
-        
+        public abstract void Use();
     }
 }

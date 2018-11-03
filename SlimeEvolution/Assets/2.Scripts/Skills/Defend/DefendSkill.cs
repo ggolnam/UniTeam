@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace SlimeEvolution.Character.Player
 {
-    public class DefendSkill 
+    public abstract class DefendSkill 
     {
 
-    
+        public abstract void Use();
     }
 }

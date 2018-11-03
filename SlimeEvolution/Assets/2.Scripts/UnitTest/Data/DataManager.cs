@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using UnityEngine;
+using SlimeEvolution.Character.Player;
 
 namespace SlimeEvolution.GameSystem
 {
@@ -16,6 +17,7 @@ namespace SlimeEvolution.GameSystem
         public LoginResult LoginResultCallback;
         public delegate void SignUpResult(string Text);
         public LoginResult SignUpResultCallback;
+
 
         GameData gameData;
         int playerNumber;
@@ -72,8 +74,15 @@ namespace SlimeEvolution.GameSystem
 
         public void SaveStatData(StatData statData)
         {
-            gameData.PlayerList[playerNumber].statData = statData;
+            gameData.PlayerList[playerNumber].Stat = statData;
         }
+
+        public void SaveSkillData(SkillData skillData, PlayerForm form)
+        {
+            gameData.PlayerList[playerNumber].SkillLevels[(int)form] = skillData;
+        }
+
+
         /// <summary>
         /// AssetBundle의 키 값을 비교하여 업데이트 유무를 Bool형식으로 리턴함.(사용자는 꼭 Enum순서대로 함수를 사용할것. 
         /// ex) Player -> Skill(o) , Player -> Enemy(x))

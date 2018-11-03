@@ -4,22 +4,24 @@ using UnityEngine;
 
 public class TestPool : MonoBehaviour
 {
-    private Queue<GameObject> testPool;
-
-    void Start()
-    {
-        testPool = new Queue<GameObject>();
-    }
+    private List<Queue<GameObject>> testPoolList;
 
     public void CreateObject()
     {
-        for (int i = 0; i < 100; i++)
+        testPoolList = new List<Queue<GameObject>>();
+        testPoolList.Add(new Queue<GameObject>());
+        testPoolList.Add(new Queue<GameObject>());
+        for (int i = 0; i < 5; i++)
         {
-            GameObject cube = Instantiate(Resources.Load("Cube") as GameObject);
-            cube.name = "Cube";
-            testPool.Enqueue(cube);
-            cube.transform.parent = gameObject.transform;
-            
+            GameObject temp = Instantiate(Resources.Load("HitYellow1") as GameObject);
+            GameObject temp2 = Instantiate(Resources.Load("HitRed3") as GameObject);
+            temp.name = "HitYellow1";
+            testPoolList[0].Enqueue(temp);
+            temp.transform.parent = gameObject.transform;
+            temp2.name = "HitRed3";
+            testPoolList[1].Enqueue(temp2);
+            temp2.transform.parent = gameObject.transform;
+
         }
         Debug.Log("Create");
     }
@@ -27,27 +29,31 @@ public class TestPool : MonoBehaviour
     public void ResetObject()
     {
         GameObject temp;
-        int Count = testPool.Count;
-        for (int i = 0; i < Count; i ++)
+        for (int i = 0; i < testPoolList[0].Count; i ++)
         {
-            temp = testPool.Dequeue();
+            temp = testPoolList[0].Dequeue();
+            Destroy(temp);
+        }
+        for(int i = 0; i < testPoolList[1].Count; i ++)
+        {
+            temp = testPoolList[1].Dequeue();
             Destroy(temp);
         }
         Debug.Log("Delete");
 
     }
 
-    public GameObject PopFromPool()
+    public GameObject PopFromPool(int num)
     {
-        return testPool.Dequeue();
+        return testPoolList[num].Dequeue();
     }
 
-    public void PushToPool(GameObject cube)
+    public void PushToPool(GameObject particle, int num)
     {
-        cube.SetActive(false);
-        cube.transform.rotation = Quaternion.Euler(Vector3.zero);
+        particle.SetActive(false);
+        particle.transform.rotation = Quaternion.Euler(Vector3.zero);
 
-        testPool.Enqueue(cube);
+        testPoolList[num].Enqueue(particle);
     }
 
 }

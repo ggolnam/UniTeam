@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SlimeEvolution.GameSystem;
 
 namespace SlimeEvolution.Character.Player
 {
@@ -11,8 +12,9 @@ namespace SlimeEvolution.Character.Player
 
         public override void Use(Transform target)
         {
-            temp[1].transform.position = target.position;
-            temp[1].SetActive(true);
+            GameObject temp = ObjectPoolManager.Instance.testPool.PopFromPool(1);
+            temp.transform.position = target.position;
+            temp.SetActive(true);
         }
     }
 }
