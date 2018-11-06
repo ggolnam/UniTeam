@@ -78,9 +78,9 @@ namespace SlimeEvolution.UI
             characterSlotList[index].Slot.SetActive(!emptySlot[index].activeSelf);
             characterSlotList[index].LevelText.text = "LV : " + playerList[index].Level.ToString();
             characterSlotList[index].GoldText.text = "Gold : " + playerList[index].Gold.ToString();
-            characterSlotList[index].HpText.text = "HP : " + playerList[index].statData.HealthPoint.ToString();
-            characterSlotList[index].MpText.text = "MP : " + playerList[index].statData.ManaPoint.ToString();
-            characterSlotList[index].StrText.text = "STR : " + playerList[index].statData.StrikingPower.ToString();
+            characterSlotList[index].HpText.text = "HP : " + playerList[index].Stat.HealthPoint.ToString();
+            characterSlotList[index].MpText.text = "MP : " + playerList[index].Stat.ManaPoint.ToString();
+            characterSlotList[index].StrText.text = "STR : " + playerList[index].Stat.StrikingPower.ToString();
         }    
     }
 }
