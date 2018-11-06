@@ -8,8 +8,6 @@ namespace SlimeEvolution.GameSystem
 {
     public class ObjectPool//: Singleton<EnemyObjectPool>//: Singleton<EnemyObjectPool>
     {
-        //생성자로 ... ? gameObject를 넣어주면 되려나 
-        //오브젝트 풀 매니저 필요
         public Queue<GameObject> enemyObjects = new Queue<GameObject>();
         public List<GameObject> PopedObjects = new List<GameObject>();
         public GameObject ObjectToPush;
@@ -54,6 +52,5 @@ namespace SlimeEvolution.GameSystem
                 Debug.Log("현재 push된 오브젝트가 풀에 맞지 않습니다.");
             }
         }
-
     }
 }

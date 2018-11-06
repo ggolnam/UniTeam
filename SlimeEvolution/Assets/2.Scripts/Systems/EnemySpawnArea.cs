@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace SlimeEvolution.GameSystem
 {
+    //더이상 필요없는 스크립트
     /// <summary>
     /// EnemySpawnArea, EnemyObjectPool을 어디서 관리할건지 설계를 해야함
     /// </summary>

@@ -9,8 +9,6 @@ namespace SlimeEvolution.Character.LagacyEnemy
 {
     public class Goblin : Enemy
     {
-        Coroutine nextBehavior;
-
         private void Awake()
         {
             WaitingTime = 2f;

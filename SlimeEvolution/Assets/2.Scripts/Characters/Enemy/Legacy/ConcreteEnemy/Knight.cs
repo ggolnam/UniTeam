@@ -6,7 +6,7 @@ using SlimeEvolution.GlobalVariable;
 
 namespace SlimeEvolution.Character.LagacyEnemy
 {
-    public class Human: Enemy
+    public class Knight: Enemy
     {
         private void Awake()
         {
