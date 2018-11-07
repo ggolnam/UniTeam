@@ -10,7 +10,7 @@ namespace SlimeEvolution.Character.LagacyEnemy
         protected int magnification;
         protected int damage;
         
-        public abstract void Attack(GameObject gameObject, GameObject EnemyObject,
+        public abstract void Attack(Vector3 playerPosition, Transform enemyTransform,
             Animator animator, NavMeshAgent navMeshAgent);
     }
     
@@ -22,13 +22,11 @@ namespace SlimeEvolution.Character.LagacyEnemy
         {
             magnification = 1;
         }
-        public override void Attack(GameObject playerObject, GameObject EnemyObject,
+        public override void Attack(Vector3 playerPosition, Transform enemyTransform,
             Animator animator, NavMeshAgent navMeshAgent)
         {
-            Vector3 playerPosition = playerObject.transform.position;
-            //animator.SetBool("isSmeshAttacking", false); //wtf
-            playerPosition.y = EnemyObject.transform.position.y;
-            EnemyObject.transform.LookAt(playerPosition);
+            playerPosition.y = enemyTransform.position.y;
+            enemyTransform.LookAt(playerPosition);
                 animator.SetBool("isAttacking", true);
             
         }

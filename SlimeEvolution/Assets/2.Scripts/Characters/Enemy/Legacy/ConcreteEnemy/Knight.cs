@@ -6,7 +6,7 @@ using SlimeEvolution.GlobalVariable;
 
 namespace SlimeEvolution.Character.LagacyEnemy
 {
-    public class Human: Enemy
+    public class Knight: Enemy
     {
         private void Awake()
         {
@@ -41,7 +41,7 @@ namespace SlimeEvolution.Character.LagacyEnemy
                 case EnemyStateType.Idle:
                     if (Timer >= WaitingTime)
                     {
-                        enemy.Stop(navMesh, gameObject, animator);
+                        enemy.Stop(navMesh, gameObject.transform, animator);
                         Timer = 0f;
                         state = EnemyStateType.Patrol;
                     }
@@ -49,16 +49,16 @@ namespace SlimeEvolution.Character.LagacyEnemy
                 case EnemyStateType.Patrol:
                     if (Timer >= WaitingTime)
                     {
-                        enemy.Move(navMesh, gameObject, animator);
+                        enemy.Move(navMesh, gameObject.transform, animator);
                         Timer = 0f;
                         state = EnemyStateType.Idle;
                     }
                     break;
                 case EnemyStateType.Chase:
-                    enemy.Chase(navMesh, gameObject, playerObject, animator);
+                    enemy.Chase(navMesh, gameObject.transform, playerObject.transform.position, animator);
                     break;
                 case EnemyStateType.Combat:
-                    enemy.Attack(playerObject, gameObject, animator, navMesh);
+                    enemy.Attack(playerObject.transform.position, gameObject.transform, animator, navMesh);
                     break;
                 case EnemyStateType.Week:
                     characterStat.CurrentHP += enemy.RecoveryHP(characterStat.CurrentHP, animator);

@@ -16,7 +16,7 @@ namespace SlimeEvolution.Character.LagacyEnemy
             characterStat.MaxHP = 30;
             characterStat.CurrentHP = characterStat.MaxHP;
             recoveryAmount = 5;
-            characterStat.Speed = 1f;
+            characterStat.Speed = 4f;
             characterStat.Damage = 1;
             attackRange = 2.1f;
             state = state = EnemyStateType.Idle;
@@ -39,7 +39,7 @@ namespace SlimeEvolution.Character.LagacyEnemy
                 case EnemyStateType.Idle:
                     if (Timer >= WaitingTime)
                     {
-                        enemy.Stop(navMesh, gameObject, animator);
+                        enemy.Stop(navMesh, gameObject.transform, animator);
                         Timer = 0f;
                         state = EnemyStateType.Patrol;
                     }
@@ -47,7 +47,7 @@ namespace SlimeEvolution.Character.LagacyEnemy
                 case EnemyStateType.Patrol:
                     if (Timer >= WaitingTime)
                     {
-                        enemy.Move(navMesh, gameObject, animator);
+                        enemy.Move(navMesh, gameObject.transform, animator);
                         Timer = 0f;
                         state = EnemyStateType.Idle;
                     }
@@ -55,15 +55,15 @@ namespace SlimeEvolution.Character.LagacyEnemy
                 case EnemyStateType.Chase:
                     if (Random.Range(0, 30) == 0)
                     {
-                        enemy.Skill1(playerObject, this.gameObject, animator, navMesh);
+                        enemy.Skill1(playerObject.transform.position, this.gameObject.transform, animator, navMesh);
                     }
                     else
                     {
-                        enemy.Chase(navMesh, gameObject, playerObject, animator);
+                        enemy.Chase(navMesh, gameObject.transform, playerObject.transform.position, animator);
                     }
                     break;
                 case EnemyStateType.Combat:
-                    enemy.Attack(playerObject, gameObject, animator, navMesh);
+                    enemy.Attack(playerObject.transform.position, gameObject.transform, animator, navMesh);
                     break;
                 case EnemyStateType.Week:
                     enemy.RecoveryHP(CharacterStat.CurrentHP, animator);

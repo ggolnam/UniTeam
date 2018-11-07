@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using SlimeEvolution.GlobalVariable;
+using SlimeEvolution.GameSystem;
 
 namespace SlimeEvolution.Character.LagacyEnemy
 {
     public class Goblin : Enemy
     {
-        Coroutine nextBehavior;
-
         private void Awake()
         {
             WaitingTime = 2f;
@@ -17,7 +16,7 @@ namespace SlimeEvolution.Character.LagacyEnemy
             animator = gameObject.GetComponent<Animator>();
             characterStat.MaxHP = 20;
             characterStat.CurrentHP = characterStat.MaxHP;
-            characterStat.Speed = 1f;
+            characterStat.Speed = 5f;
             characterStat.Damage = 1;
             attackRange = 2.1f;
 
@@ -31,7 +30,6 @@ namespace SlimeEvolution.Character.LagacyEnemy
         {
             navMesh = gameObject.GetComponent<NavMeshAgent>();
             state = EnemyStateType.Idle;
-            
         }
 
         private void Update()
@@ -42,7 +40,7 @@ namespace SlimeEvolution.Character.LagacyEnemy
                 case EnemyStateType.Idle:
                     if (Timer >= WaitingTime)
                     {
-                        enemy.Stop(navMesh, gameObject, animator);
+                        enemy.Stop(navMesh, gameObject.transform, animator);
                         Timer = 0f;
                         state = EnemyStateType.Patrol;
                     }
@@ -50,16 +48,16 @@ namespace SlimeEvolution.Character.LagacyEnemy
                 case EnemyStateType.Patrol:
                     if (Timer >= WaitingTime)
                     {
-                        enemy.Move(navMesh, gameObject, animator);
+                        enemy.Move(navMesh, gameObject.transform, animator);
                         Timer = 0f;
                         state = EnemyStateType.Idle;
                     }
                     break;
                 case EnemyStateType.Chase:
-                    enemy.Chase(navMesh, gameObject, playerObject, animator);
+                    enemy.Chase(navMesh, gameObject.transform, playerObject.transform.position, animator);
                     break;
                 case EnemyStateType.Combat:
-                    enemy.Attack(playerObject, gameObject, animator, navMesh);
+                    enemy.Attack(playerObject.transform.position, gameObject.transform, animator, navMesh);
                     break;
                 case EnemyStateType.Death:
                     Debug.Log("죽음");
@@ -95,6 +93,11 @@ namespace SlimeEvolution.Character.LagacyEnemy
             {
                 state = EnemyStateType.Idle;
             }
+        }
+
+        private void OnDisable()
+        {
+            //ObjectPool.Instance.PushToPool(gameObject);
         }
 
     }

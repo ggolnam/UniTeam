@@ -4,10 +4,7 @@ using UnityEngine;
 
 namespace SlimeEvolution.GameSystem
 {
-    public class DungeonSystem : MonoBehaviour
+    public class GoblinPool
     {
-
-
-
     }
 }
