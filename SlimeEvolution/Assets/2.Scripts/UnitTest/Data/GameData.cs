@@ -23,6 +23,7 @@ namespace SlimeEvolution.GameSystem
         public int BuffSkillLevel;
     }
 
+    [Serializable]
     public struct ItemData
     {
         

@@ -12,6 +12,11 @@ namespace SlimeEvolution.Character.Player
         Human,
     }
 
+    public enum PlayerSkill
+    {
+        
+    }
+
 
     public class Player : Character
     {

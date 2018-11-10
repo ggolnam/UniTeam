@@ -7,7 +7,9 @@ namespace SlimeEvolution.Character.Player
 {
     public class Smashing : AttackSkill
     {
-        public Smashing(Transform playerTransform) : base (playerTransform)
+
+
+        public Smashing(Transform playerTransform, PlayerForm playerForm) : base (playerTransform, playerForm)
         { }
 
         public override void Use(Transform target)
