@@ -17,7 +17,7 @@ namespace SlimeEvolution.GameSystem
         public LoginResult LoginResultCallback;
         public delegate void SignUpResult(string Text);
         public LoginResult SignUpResultCallback;
-        public int playerNumber { get; private set; }
+        public int playerNumber{ get; private set; }
 
         public GameData GameData { get; private set; }
 

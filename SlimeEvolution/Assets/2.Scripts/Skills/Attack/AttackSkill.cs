@@ -14,8 +14,9 @@ namespace SlimeEvolution.Character.Player
         public AttackSkill(Transform playerTransform, PlayerForm playerForm)
         {
             this.playerTransform = playerTransform;
-            skillLevel = DataManager.Instance.GameData.PlayerList[DataManager.Instance.playerNumber].SkillLevels[(int)playerForm].AttackSkillLevel;
-
+            Debug.Log(TestDataManager.Instance.playerNumber);
+            skillLevel = TestDataManager.Instance.GameData.PlayerList[TestDataManager.Instance.playerNumber].SkillLevels[(int)playerForm].AttackSkillLevel;
+            
         }
 
         public abstract void Use(Transform target);

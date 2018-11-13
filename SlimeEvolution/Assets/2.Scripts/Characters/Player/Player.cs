@@ -35,6 +35,7 @@ namespace SlimeEvolution.Character.Player
         Transform target;
         AttackAreaActivator attackAreaActivator;
         bool isDeath;
+        bool isAttack;
 
         void Start()
         {          
@@ -42,10 +43,11 @@ namespace SlimeEvolution.Character.Player
             currentForm = PlayerForm.Slime;
             formState  = new SlimeForm(transform ,rigidbody, formList[(int)PlayerForm.Slime].GetComponent<Animator>(), ref characterStat);
             attackAreaActivator = formList[(int)PlayerForm.Slime].GetComponent<AttackAreaActivator>();
-            playerSkill =  new Skill(currentForm, transform);
+            playerSkill = new Skill(currentForm, transform);
+
         }
 
-      
+
         void FixedUpdate()
         {
             if (!isDeath)
@@ -59,27 +61,35 @@ namespace SlimeEvolution.Character.Player
                     formState.Move(movement);
                     attackAreaActivator.EndAttackHit();
                 }
-                else if (target != null)
-                {
-                    movement.Set(target.position.x - transform.position.x, 0, target.position.z - transform.position.z);
-                    if (Vector3.Distance(transform.position, target.position) > characterStat.AttackRange)
-                    {
-                        formState.Move(movement);
-                    }
-                    else
-                    {
-                        formState.LookAt(movement);
-                        formState.Attack();
-                    }
-                }
-                else
+                else 
                 {
                     formState.Stop();
                     attackAreaActivator.EndAttackHit();
                 }
             }
         }
-
+        
+        IEnumerator AttackCoroutine()
+        {
+            while (true)
+            {
+                isAttack = true;
+                movement.Set(target.position.x - transform.position.x, 0, target.position.z - transform.position.z);
+                if (Vector3.Distance(transform.position, target.position) > characterStat.AttackRange)
+                {
+                    formState.Move(movement);
+                }
+                else
+                {
+                    formState.LookAt(movement);
+                    formState.Attack();
+                    break;
+                }
+                yield return null;
+            }
+            yield return new WaitForSeconds(3f);
+            isAttack = false;
+        }
 
         public void OnClickedChangeButton(int form)
         {
@@ -102,6 +112,7 @@ namespace SlimeEvolution.Character.Player
 
         public void OnClickSkillButton()
         {
+
             FindTarget(checkradius);
             if (target != null) 
                 playerSkill.UseAttackSkill(target);
@@ -110,7 +121,12 @@ namespace SlimeEvolution.Character.Player
 
         public void OnClickedAttackButton()
         {
-            FindTarget(checkradius);                                  
+            if (!isAttack)
+            {
+                FindTarget(checkradius);
+                if (target != null)
+                    StartCoroutine(AttackCoroutine());
+            }
         }
 
         void ChangeFormState(PlayerForm form)
