@@ -73,7 +73,6 @@ namespace SlimeEvolution.Character.Player
         {
             while (true)
             {
-                isAttack = true;
                 movement.Set(target.position.x - transform.position.x, 0, target.position.z - transform.position.z);
                 if (Vector3.Distance(transform.position, target.position) > characterStat.AttackRange)
                 {
@@ -87,8 +86,7 @@ namespace SlimeEvolution.Character.Player
                 }
                 yield return null;
             }
-            yield return new WaitForSeconds(3f);
-            isAttack = false;
+            yield return null;
         }
 
         public void OnClickedChangeButton(int form)
@@ -121,12 +119,11 @@ namespace SlimeEvolution.Character.Player
 
         public void OnClickedAttackButton()
         {
-            if (!isAttack)
-            {
-                FindTarget(checkradius);
-                if (target != null)
-                    StartCoroutine(AttackCoroutine());
-            }
+            
+            FindTarget(checkradius);
+            if (target != null)
+                StartCoroutine(AttackCoroutine());
+
         }
 
         void ChangeFormState(PlayerForm form)
@@ -190,6 +187,7 @@ namespace SlimeEvolution.Character.Player
                 formState.Hit();
         }
 
+        
     }
 }
 
