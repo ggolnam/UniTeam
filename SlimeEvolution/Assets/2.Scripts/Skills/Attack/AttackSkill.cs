@@ -8,6 +8,7 @@ namespace SlimeEvolution.Character.Player
     public abstract class AttackSkill 
     {
         protected int skillLevel;
+        protected float coolTime;
         protected Transform playerTransform;
 
 
@@ -19,6 +20,6 @@ namespace SlimeEvolution.Character.Player
             
         }
 
-        public abstract void Use(Transform target);
+        public abstract IEnumerator Use(Transform target);
     }
 }

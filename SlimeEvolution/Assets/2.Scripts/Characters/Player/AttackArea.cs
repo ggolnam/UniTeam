@@ -7,6 +7,9 @@ namespace SlimeEvolution.Character.Player
 
     public class AttackArea : MonoBehaviour
     {
+        [SerializeField]
+        private PlayerForm form;
+
         Player player;
 
         void Start()
@@ -16,9 +19,19 @@ namespace SlimeEvolution.Character.Player
 
         private void OnTriggerEnter(Collider other)
         {
-            //Debug.Log(player.CharacterStat.Damage);
-            if (other.CompareTag("Enemy")) 
-                Debug.Log(other.name);
+            if (other.CompareTag("Enemy"))
+            {
+                switch (form)
+                {
+                    case PlayerForm.Slime:
+
+                        GameObject temp = GameSystem.ObjectPoolManager.Instance.testPool.PopFromPool(0);
+                        temp.transform.position = other.transform.position;
+                        temp.SetActive(true);
+                        break;
+                }
+            }
+
         }
 
 

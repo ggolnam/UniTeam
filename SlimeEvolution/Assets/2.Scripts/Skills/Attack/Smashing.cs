@@ -12,11 +12,12 @@ namespace SlimeEvolution.Character.Player
         public Smashing(Transform playerTransform, PlayerForm playerForm) : base (playerTransform, playerForm)
         { }
 
-        public override void Use(Transform target)
+        public override IEnumerator Use(Transform target)
         {
             GameObject temp = ObjectPoolManager.Instance.testPool.PopFromPool(1);
             temp.transform.position = target.position;
             temp.SetActive(true);
+            yield return null;
         }
     }
 }
