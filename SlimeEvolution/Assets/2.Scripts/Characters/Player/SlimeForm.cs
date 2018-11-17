@@ -16,6 +16,7 @@ namespace SlimeEvolution.Character.Player
             characterStat.Damage += 2;
             characterStat.Speed += 5;
             characterStat.AttackRange += 3;
+            characterStat.AttackSpeed += 2.5f;
         }
 
         public override void ResetStat(ref CharacterStat characterStat)
@@ -24,6 +25,7 @@ namespace SlimeEvolution.Character.Player
             characterStat.Damage -= 2;
             characterStat.Speed -= 5;
             characterStat.AttackRange -= 3;
+            characterStat.AttackSpeed -= 2.5f;
         }
 
 

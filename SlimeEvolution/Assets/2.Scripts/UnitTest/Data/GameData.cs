@@ -23,6 +23,7 @@ namespace SlimeEvolution.GameSystem
         public int BuffSkillLevel;
     }
 
+    [Serializable]
     public struct ItemData
     {
         
@@ -74,6 +75,13 @@ namespace SlimeEvolution.GameSystem
         public string UserPassword;
         public PlayerData[] PlayerList = new PlayerData[3];
 
+        public GameData()         // player 테스트를 위해서
+        {
+            for (int i = 0; i < PlayerList.Length; i++)
+            {
+                PlayerList[i] = new PlayerData(i + 1);
+            }
+        }
     }
 }
 

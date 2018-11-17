@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BackPack : MonoBehaviour {
+public class BackPack : MonoBehaviour
+{
 
     //진
     public static bool isInvClicked;
@@ -65,7 +66,7 @@ public class BackPack : MonoBehaviour {
             int prevQuan = InvSlot[preslot].Quantity;
             InvSlot[preslot].Quantity = InvSlot[slot].Quantity;
             InvSlot[slot].Quantity = prevQuan;
-            
+
             Item previtem = InvItems[preslot];
             InvItems[preslot] = InvItems[slot];
             InvItems[slot] = previtem;
@@ -73,7 +74,7 @@ public class BackPack : MonoBehaviour {
         }
     }
     //샵에서 아이템 위치바꾸기//
-    public void ReceiveItemFromShop(int slot,int quantity,Item item)
+    public void ReceiveItemFromShop(int slot, int quantity, Item item)
     {
         ShopMediator.SendItemToShop(slot, InvSlot[preslot].Quantity, InvItems[preslot]);
         itemToolTip.HideToolTip();
@@ -113,8 +114,8 @@ public class BackPack : MonoBehaviour {
         Item previtem = EquipItems[preslot];
 
         if (InvItems[slot] != null)
-                return false;
-         
+            return false;
+
         EquipItems[preslot] = InvItems[slot];
         InvItems[slot] = previtem;
 
@@ -141,13 +142,13 @@ public class BackPack : MonoBehaviour {
         SortItemButton.SetActive(false);
     }
     //아이템 정렬 함수//
-     void SortItem()
+    void SortItem()
     {
         int i = 0, j = 0, min = 0;
         int prevQuan = 0;
         Item temp = null;
 
-        for ( i = 0; i < InvItems.Count - 1; i++)
+        for (i = 0; i < InvItems.Count - 1; i++)
         {
             if (Invitems[i] != null)
             {
@@ -155,7 +156,7 @@ public class BackPack : MonoBehaviour {
                 prevQuan = InvSlot[i].Quantity;
                 min = i;
 
-                for ( j = i + 1; j < InvItems.Count; j++)
+                for (j = i + 1; j < InvItems.Count; j++)
                 {
                     if (Invitems[j] != null)
                     {
@@ -172,18 +173,18 @@ public class BackPack : MonoBehaviour {
         }
     }
     //빈칸 정렬 함수//
-     void FillBlank()
+    void FillBlank()
     {
-        int prevQuan =0;
-        Item temp =null;
-        for (int i = 0; i < InvItems.Count-1; i++)
+        int prevQuan = 0;
+        Item temp = null;
+        for (int i = 0; i < InvItems.Count - 1; i++)
         {
             if (Invitems[i] == null)
             {
                 temp = Invitems[i];
                 prevQuan = InvSlot[i].Quantity;
 
-                for (int j = i + 1; j < InvItems.Count; j++) 
+                for (int j = i + 1; j < InvItems.Count; j++)
                 {
                     if (Invitems[j] != null)
                     {
@@ -207,14 +208,14 @@ public class BackPack : MonoBehaviour {
             GameObject go = NGUITools.AddChild(gameObject, inventroySlotPrefab);
 
             InventorySlot slot = go.GetComponent<InventorySlot>();
-            if(slot != null)
+            if (slot != null)
             {
                 slot.storage = this;
                 slot.SlotNum = x;
                 slot.isEmpty = true;
                 slot.name = "Slot [ " + x + " ]";
                 slot.label.text = "";
-                slot.Quantity = 0;             
+                slot.Quantity = 0;
                 slot.MaxQuantity = MaxQuatityNum;
                 InvSlot.Add(slot);
             }
@@ -254,18 +255,18 @@ public class BackPack : MonoBehaviour {
 
     }
     //소비아이템일경우 숫자올리기//
-    bool CheckSameItem(Item item,int qunatity)
+    bool CheckSameItem(Item item, int qunatity)
     {
         bool isbool = false;
         for (int i = 0; i < InvSlot.Count; i++)
         {
             if (InvItems[i] != null && item.ID == InvItems[i].ID && item.ItemKind == Item.Kind.Disposable && InvSlot[i].Quantity < MaxQuatityNum)
             {
-                InvSlot[i].Quantity+= qunatity;
+                InvSlot[i].Quantity += qunatity;
                 isbool = true;
                 break;
             }
-        }      
+        }
         return isbool;
     }
 }

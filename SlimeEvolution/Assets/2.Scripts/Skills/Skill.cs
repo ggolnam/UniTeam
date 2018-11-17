@@ -17,8 +17,8 @@ namespace SlimeEvolution.Character.Player
             switch (playerForm)
             {
                 case PlayerForm.Slime :
-                    attackSkill = new Smashing(playerTransform);
-
+                    attackSkill = new Smashing(playerTransform, playerForm);
+                    defendSkill = new Harden();
                     break;
                 case PlayerForm.Goblin :
                     break;

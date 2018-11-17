@@ -17,20 +17,17 @@ namespace SlimeEvolution.GameSystem
         public LoginResult LoginResultCallback;
         public delegate void SignUpResult(string Text);
         public LoginResult SignUpResultCallback;
+        public int playerNumber{ get; private set; }
 
-
-        GameData gameData;
-        int playerNumber;
-        public GameData GameData
-        {
-            get { return gameData; }
-        }
+        public GameData GameData { get; private set; }
 
         GameDataLoader gameDataLoader;
 
+
+
         void Start()
         {
-            gameData = new GameData();
+            GameData = new GameData();
             gameDataLoader = new GameDataLoader();
         }
 
@@ -41,7 +38,7 @@ namespace SlimeEvolution.GameSystem
         public void ChoicePlayer(int slotNumber, bool isNewCharacter)
         {
             if(isNewCharacter)
-                gameData.PlayerList[slotNumber] = new PlayerData(slotNumber);
+                GameData.PlayerList[slotNumber] = new PlayerData(slotNumber);
 
             playerNumber = slotNumber;
         } 
@@ -58,28 +55,28 @@ namespace SlimeEvolution.GameSystem
 
         public void SaveGameData(GameData gameData)
         {
-            this.gameData = gameData;
+            this.GameData = gameData;
         }
 
         public void SaveGameDataInDB()
         {
-            gameDataLoader.SetUpdateInDB(gameData);
+            gameDataLoader.SetUpdateInDB(GameData);
         }
 
         public void ResetData(int slotNum)
         {
-            gameData.PlayerList[slotNum] = new PlayerData();
-            gameDataLoader.SetUpdateInDB(gameData);
+            GameData.PlayerList[slotNum] = new PlayerData();
+            gameDataLoader.SetUpdateInDB(GameData);
         }
 
         public void SaveStatData(StatData statData)
         {
-            gameData.PlayerList[playerNumber].Stat = statData;
+            GameData.PlayerList[playerNumber].Stat = statData;
         }
 
         public void SaveSkillData(SkillData skillData, PlayerForm form)
         {
-            gameData.PlayerList[playerNumber].SkillLevels[(int)form] = skillData;
+            GameData.PlayerList[playerNumber].SkillLevels[(int)form] = skillData;
         }
 
 

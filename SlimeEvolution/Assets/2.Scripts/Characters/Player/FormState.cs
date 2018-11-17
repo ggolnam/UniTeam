@@ -22,7 +22,7 @@ namespace SlimeEvolution.Character.Player
 
         public void Move(Vector3 movement)
         {
-            animator.SetBool("IsAttack", false);
+            animator.ResetTrigger("AttackTrigger");
             animator.SetBool("IsMove", true);
             movement = movement.normalized;
             LookAt(movement);
@@ -44,7 +44,7 @@ namespace SlimeEvolution.Character.Player
 
         public void Attack()
         {
-            animator.SetBool("IsAttack", true);
+            animator.SetTrigger("AttackTrigger");
             animator.SetBool("IsMove", false);
 
         }
