@@ -29,18 +29,12 @@ namespace SlimeEvolution.Character.LagacyEnemy
 
         public override void Move(NavMeshAgent navMeshAgent, Transform enemyTransform, Animator animator)
         {
+            int randomValue = Random.Range(-20, 20);
+            
+            float xPosition = enemyTransform.position.x + randomValue;
+            float zPosition = enemyTransform.position.z + randomValue;
 
-            float myX = enemyTransform.position.x;
-            float myZ = enemyTransform.position.z;
-
-            //랜덤 방향 계산 개선요망
-            //float xPosition = myX + Random.Range(myX - 100, myX + 100);
-            //float zPosition = myZ + Random.Range(myZ - 100, myZ + 100);
-
-            float xPosition = myX + Random.Range(-20, 20);
-            float zPosition = myZ + Random.Range(-20, 20);
-
-            target = new Vector3(xPosition, enemyTransform.transform.position.y, zPosition);
+            target = new Vector3(xPosition, enemyTransform.position.y, zPosition);
 
             navMeshAgent.speed = speed;
             navMeshAgent.SetDestination(target);
@@ -49,8 +43,6 @@ namespace SlimeEvolution.Character.LagacyEnemy
             animator.SetBool("isAttacking", false);
         }
 
-        
-        
         public override void Chase(NavMeshAgent navMeshAgent, Transform enemyTransform,
             Vector3 playerPosition, Animator animator) { }
     }
@@ -81,10 +73,7 @@ namespace SlimeEvolution.Character.LagacyEnemy
         public override void Chase(NavMeshAgent navMeshAgent, Transform enemyTransform,
             Vector3 playerPosition, Animator animator)
         {
-            float xPosition = playerPosition.x;
-            float zPosition = playerPosition.z;
-            
-            target = new Vector3(xPosition, enemyTransform.transform.position.y, zPosition);
+            target = new Vector3(playerPosition.x, enemyTransform.transform.position.y, playerPosition.z);
 
             enemyTransform.transform.LookAt(playerPosition);
             navMeshAgent.speed = speed;

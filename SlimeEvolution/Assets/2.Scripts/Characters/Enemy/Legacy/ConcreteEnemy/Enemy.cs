@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using SlimeEvolution.GameSystem;
 using SlimeEvolution.GlobalVariable;
+//////////////////test
+using TestLee;
 
 namespace SlimeEvolution.Character.LagacyEnemy
 {
@@ -25,7 +27,15 @@ namespace SlimeEvolution.Character.LagacyEnemy
 
         protected float Timer;
         protected float WaitingTime;
-        
 
+        //protected TestMediator testmediator;
+
+        protected void JudgeEnemyDeath()
+        {
+            if(CharacterStat.CurrentHP <= 0)
+            {
+                state = EnemyStateType.Death;
+            }
+        }
     }
 }

@@ -27,15 +27,13 @@ namespace SlimeEvolution.Character.LagacyEnemy
         {
             animator.SetBool("isRecovering", true);
             currentHP += recoveryAmount;
-            //회복 이펙트 호출
+            
             return currentHP;
         }
 
         public override void ActivateSkill(Vector3 playerPosition, Transform enemyTransform,
             Animator animator, NavMeshAgent navMeshAgent)
-        {
-            throw new System.NotImplementedException();
-        }
+        {  }
     }
     public class Throwing : EnemySkill
     {
@@ -55,7 +53,6 @@ namespace SlimeEvolution.Character.LagacyEnemy
             throwingObject.transform.position = new Vector3(enemyTransform.position.x, 0.5f, enemyTransform.position.z);
             
             
-            //성능 f.....
             Rigidbody throwingRigid = throwingObject.GetComponent<Rigidbody>();
             throwingObject.transform.position = throwingObject.transform.position + enemyTransform.transform.forward * 2;
             throwingRigid.velocity = enemyTransform.transform.forward * 10;

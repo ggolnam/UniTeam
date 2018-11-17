@@ -60,7 +60,10 @@ namespace SlimeEvolution.Character.LagacyEnemy
                     enemy.Attack(playerObject.transform.position, gameObject.transform, animator, navMesh);
                     break;
                 case EnemyStateType.Death:
-                    Debug.Log("죽음");
+                    //death카운트를 GameController역할을 하는 놈에게 보낸다. //mediator? callback?
+                    //
+                    
+                    EnemyObjectManager.Instance.goblinPool.PushToPool(this.gameObject);
                     break;
             }
 
@@ -84,6 +87,11 @@ namespace SlimeEvolution.Character.LagacyEnemy
                 {
                     state = EnemyStateType.Combat;
                 }
+                ////////////////
+                if(characterStat.CurrentHP <= 0)
+                {
+                    state = EnemyStateType.Death;
+                }
             }
         }
         
@@ -94,11 +102,6 @@ namespace SlimeEvolution.Character.LagacyEnemy
                 state = EnemyStateType.Idle;
             }
         }
-
-        private void OnDisable()
-        {
-            //ObjectPool.Instance.PushToPool(gameObject);
-        }
-
+        
     }
 }

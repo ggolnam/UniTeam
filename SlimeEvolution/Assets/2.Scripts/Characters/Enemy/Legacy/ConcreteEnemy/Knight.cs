@@ -16,7 +16,7 @@ namespace SlimeEvolution.Character.LagacyEnemy
             characterStat.MaxHP = 50;
             characterStat.CurrentHP = characterStat.MaxHP;
             recoveryAmount = 10;
-            characterStat.Speed = 1f;
+            characterStat.Speed = 5f;
             characterStat.Damage = 3;
             attackRange = 2.1f;
 

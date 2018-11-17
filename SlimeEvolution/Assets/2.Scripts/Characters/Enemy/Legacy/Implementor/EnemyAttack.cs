@@ -14,8 +14,6 @@ namespace SlimeEvolution.Character.LagacyEnemy
             Animator animator, NavMeshAgent navMeshAgent);
     }
     
-
-
     public class NormalAttack : EnemyAttack
     {
         public NormalAttack(float damage)
@@ -28,7 +26,6 @@ namespace SlimeEvolution.Character.LagacyEnemy
             playerPosition.y = enemyTransform.position.y;
             enemyTransform.LookAt(playerPosition);
                 animator.SetBool("isAttacking", true);
-            
         }
 
     }

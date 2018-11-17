@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -29,13 +30,22 @@ namespace SlimeEvolution.GameSystem
 
         public GameObject PopFromPool(Transform spawnPosition)
         {
-            GameObject toPopObject;
-            toPopObject = enemyObjects.Dequeue();
-            PopedObjects.Add(toPopObject);
-            toPopObject.transform.position = spawnPosition.position;
-            toPopObject.SetActive(true);
-            
-            return toPopObject;
+            try
+            {
+                GameObject toPopObject;
+                toPopObject = enemyObjects.Dequeue();
+                PopedObjects.Add(toPopObject);
+                toPopObject.transform.position = spawnPosition.position;
+                toPopObject.SetActive(true);
+
+                return toPopObject;
+            }
+            catch(InvalidOperationException)
+            {
+                //catch부분에는 파일스트림으로 기록하거나 서버가 알수 있게 조치한다.
+                Debug.Log("ObjectPool의 object가 부족합니다.");
+                return null;
+            }
         }
 
         public void PushToPool(GameObject toPushObject)
@@ -45,7 +55,6 @@ namespace SlimeEvolution.GameSystem
                 PopedObjects.Remove(toPushObject);
                 enemyObjects.Enqueue(toPushObject);
                 toPushObject.SetActive(false);
-                    
             }
             else
             {
