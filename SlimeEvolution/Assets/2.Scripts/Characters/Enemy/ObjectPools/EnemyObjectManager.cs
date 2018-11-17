@@ -4,11 +4,20 @@ using UnityEngine;
 
 namespace SlimeEvolution.GameSystem
 {
+    public struct EnemyStruct
+    {
+        public int NumberOfEnemy;
+        public ObjectPool EnemyObjectPool;
+        public GameObject EnemyParent;
+        public Transform[] SpawnAreas;
+    }
     public class EnemyObjectManager : Singleton<EnemyObjectManager>
     {
+        EnemyStruct[] enemyStruct = new EnemyStruct[3];
+
         //0:고블린  1:스켈레톤  2:나이트
         int[] enemyNumbers = new int[3] { 0, 0, 0 };
-
+        
         [HideInInspector]
         public GameObject GoblinObject;//List사용
         [HideInInspector]
