@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SlimeEvolution.Character.LagacyEnemy
+namespace SlimeEvolution.Character.EnemyLagacy
 {
     public class ThrowingObjectPool : Singleton<ThrowingObjectPool>
     {
@@ -56,8 +56,6 @@ namespace SlimeEvolution.Character.LagacyEnemy
         public void PushToPool(GameObject objectToPush)
         {
             objectToPush.SetActive(false);
-            objectToPush.transform.position = this.gameObject.transform.position;
-            objectToPush.transform.rotation = this.gameObject.transform.rotation;
             itemObjects.Add(objectToPush);
             
         }

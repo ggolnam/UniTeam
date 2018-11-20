@@ -30,7 +30,7 @@ namespace SlimeEvolution.GameSystem
             GameObject toSpawnObject;
             for (int i = 0; i < EnemyObjectPool.Instance.NumberOfEnemyObjects * 0.2 ; i++)
             {
-                toSpawnObject = EnemyObjectPool.Instance.PopFromPool(gameObject);
+                toSpawnObject = EnemyObjectPool.Instance.PopFromPool(gameObject.transform.position);
                 toSpawnObject.transform.position = gameObject.transform.position;
             }
         }

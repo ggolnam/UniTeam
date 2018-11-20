@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using SlimeEvolution.GameSystem;
 using SlimeEvolution.GlobalVariable;
 
-namespace SlimeEvolution.Character.LagacyEnemy
+namespace SlimeEvolution.Character.EnemyLagacy
 {
     public abstract class Enemy : Character
     {

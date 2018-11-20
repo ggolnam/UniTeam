@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace SlimeEvolution.Character.LagacyEnemy
+namespace SlimeEvolution.Character.EnemyLagacy
 {
     public abstract class EnemySkill
     {
-        public GameObject enemy;
         public int magnification;
         public abstract int ActivateSkill(int currentHP, Animator animator);
-        public abstract void ActivateSkill(GameObject playerObject, GameObject EnemyObject,
+        public abstract void ActivateSkill(Vector3 playerPosition, Transform enemyTransform,
             Animator animator, NavMeshAgent navMeshAgent);
     }
     
@@ -31,7 +30,7 @@ namespace SlimeEvolution.Character.LagacyEnemy
             return currentHP;
         }
 
-        public override void ActivateSkill(GameObject playerObject, GameObject EnemyObject,
+        public override void ActivateSkill(Vector3 playerPosition, Transform enemyTransform,
             Animator animator, NavMeshAgent navMeshAgent)
         {
             throw new System.NotImplementedException();
@@ -45,20 +44,19 @@ namespace SlimeEvolution.Character.LagacyEnemy
             this.damage = damage;
         }
 
-        public override void ActivateSkill(GameObject playerObject, GameObject EnemyObject,
+        public override void ActivateSkill(Vector3 playerPosition, Transform enemyTransform,
             Animator animator, NavMeshAgent navMeshAgent)
         {
             GameObject throwingObject;
-            Vector3 playerPosition = playerObject.transform.position;
-            EnemyObject.transform.LookAt(playerPosition);
-            throwingObject = ThrowingObjectPool.Instance.PopFromPool(EnemyObject.transform);
-            throwingObject.transform.position = new Vector3(EnemyObject.transform.position.x, 0.5f, EnemyObject.transform.position.z);
+            enemyTransform.transform.LookAt(playerPosition);
+            throwingObject = ThrowingObjectPool.Instance.PopFromPool(enemyTransform.transform);
+            throwingObject.transform.position = new Vector3(enemyTransform.transform.position.x, 0.5f, enemyTransform.transform.position.z);
             
             
             //성능 f.....
             Rigidbody throwingRigid = throwingObject.GetComponent<Rigidbody>();
-            throwingObject.transform.position = throwingObject.transform.position + EnemyObject.transform.forward * 2;
-            throwingRigid.velocity = EnemyObject.transform.forward * 10;
+            throwingObject.transform.position = throwingObject.transform.position + enemyTransform.transform.forward * 2;
+            throwingRigid.velocity = enemyTransform.transform.forward * 10;
            
         }
         
@@ -74,11 +72,11 @@ namespace SlimeEvolution.Character.LagacyEnemy
         {
             magnification = 3;
         }
-        public override void ActivateSkill(GameObject playerObject, GameObject EnemyObject,
+        public override void ActivateSkill(Vector3 playerObject, Transform enemyTransform,
             Animator animator, NavMeshAgent navMeshAgent)
         {
             navMeshAgent.speed = 0f;
-            EnemyObject.transform.LookAt(playerObject.transform.position);
+            enemyTransform.transform.LookAt(playerObject);
             animator.SetBool("isSmeshAttacking", true);
             animator.SetFloat("speed", navMeshAgent.speed);
         }

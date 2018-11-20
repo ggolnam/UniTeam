@@ -40,7 +40,7 @@ namespace SlimeEvolution.GameSystem
             }
         }
 
-        public GameObject PopFromPool(GameObject spawnArea)
+        public GameObject PopFromPool(Vector3 spawnArea)
         {
             GameObject objectToPop = null;
             for (int i = NumberOfEnemyObjects - 1; i >= 0; i--) 
@@ -48,9 +48,8 @@ namespace SlimeEvolution.GameSystem
                 if(EnemyObjects[i].activeInHierarchy == false)
                 {
                     EnemyObjects[i].SetActive(true);
-                    EnemyObjects[i].transform.position = spawnArea.transform.position;
+                    EnemyObjects[i].transform.position = spawnArea;
                     objectToPop = EnemyObjects[i];
-                    objectToPop.GetComponent<NavMeshAgent>();
                     break;
                 }
                 
@@ -66,10 +65,6 @@ namespace SlimeEvolution.GameSystem
         public void PushToPool(GameObject objectToPush)
         {
             objectToPush.SetActive(false);
-            objectToPush.transform.position = this.gameObject.transform.position;
-            //EnemyObjects.Add
         }
-
-        
     }
 }

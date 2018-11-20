@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace SlimeEvolution.Character.LagacyEnemy
+namespace SlimeEvolution.Character.EnemyLagacy
 {
     public class NamedEnemy : AbstractionEnemy
     {
@@ -13,9 +13,9 @@ namespace SlimeEvolution.Character.LagacyEnemy
             : base(attack, skill1,skill2, movement, chase, stop)
         { }
 
-        public override void Attack(GameObject gameObject, GameObject EnemyObject, Animator animator, NavMeshAgent navMeshAgent)
+        public override void Attack(Vector3 playerPosition, Transform enemyTransform, Animator animator, NavMeshAgent navMeshAgent)
         {
-            attack.Attack(gameObject, EnemyObject, animator, navMeshAgent);
+            attack.Attack(playerPosition, enemyTransform, animator, navMeshAgent);
         }
 
         public override int RecoveryHP(int currentHP, Animator animator)
@@ -23,25 +23,25 @@ namespace SlimeEvolution.Character.LagacyEnemy
             return skill1.ActivateSkill(currentHP, animator);
         }
 
-        public override void Skill1(GameObject playerObject, GameObject EnemyObject,
+        public override void Skill1(Vector3 playerPosition, Transform enemyTransform,
             Animator animator, NavMeshAgent navMeshAgent)
         {
-            skill2.ActivateSkill(playerObject, EnemyObject, animator, navMeshAgent);
+            skill2.ActivateSkill(playerPosition, enemyTransform, animator, navMeshAgent);
         }
 
-        public override void Move(NavMeshAgent meshAgent, GameObject gameObject, Animator animator)
+        public override void Move(NavMeshAgent meshAgent, Transform enemyTransform, Animator animator)
         {
-            movement.Move(meshAgent, gameObject, animator);
+            movement.Move(meshAgent, enemyTransform, animator);
         }
 
-        public override void Chase(NavMeshAgent meshAgent, GameObject gameObject, GameObject player, Animator animator)
+        public override void Chase(NavMeshAgent meshAgent, Transform enemyTransform, Vector3 playerPosition, Animator animator)
         {
-            chase.Chase(meshAgent, gameObject, player, animator);
+            chase.Chase(meshAgent, enemyTransform, playerPosition, animator);
         }
 
-        public override void Stop(NavMeshAgent navMeshAgent, GameObject gameObject, Animator animator)
+        public override void Stop(NavMeshAgent navMeshAgent, Transform enemyTransform, Animator animator)
         {
-            stopMovement.Move(navMeshAgent, gameObject, animator);
+            stopMovement.Move(navMeshAgent, enemyTransform, animator);
         }
     }
 }

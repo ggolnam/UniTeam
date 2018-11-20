@@ -5,7 +5,7 @@ using SlimeEvolution.Character;
 using UnityEngine.AI;
 using SlimeEvolution.GlobalVariable;
 
-namespace SlimeEvolution.Character.LagacyEnemy
+namespace SlimeEvolution.Character.EnemyLagacy
 {
    
 
@@ -59,11 +59,11 @@ namespace SlimeEvolution.Character.LagacyEnemy
             {
                 if (enemyState != EnemyStateType.Combat)
                 {
-                    goblin.Chase(navMeshAgent, gameObject, other.gameObject, animator);
+                    goblin.Chase(navMeshAgent, gameObject.transform, other.gameObject.transform.position, animator);
                 }
                 if (Vector3.Distance(other.gameObject.transform.position, gameObject.transform.position) <= 3)
                 {
-                    goblin.Stop(navMeshAgent, gameObject, animator);
+                    goblin.Stop(navMeshAgent, gameObject.transform, animator);
                     Attack(other.gameObject);
                     enemyState = EnemyStateType.Combat;
                 }
@@ -84,7 +84,7 @@ namespace SlimeEvolution.Character.LagacyEnemy
         }
         void Attack(GameObject playerObject)
         {
-            goblin.Attack(playerObject, gameObject, animator, navMeshAgent);
+            goblin.Attack(playerObject.transform.position, gameObject.transform, animator, navMeshAgent);
             Debug.Log(navMeshAgent.speed);
             enemyState = EnemyStateType.Combat;
         }
@@ -92,10 +92,10 @@ namespace SlimeEvolution.Character.LagacyEnemy
         { 
             while(enemyState == EnemyStateType.Idle)
             {
-                goblin.Stop(navMeshAgent, gameObject, animator);
+                goblin.Stop(navMeshAgent, gameObject.transform, animator);
                 yield return new WaitForSeconds(2.0f);
 
-                goblin.Move(navMeshAgent, gameObject, animator);
+                goblin.Move(navMeshAgent, gameObject.transform, animator);
                 yield return new WaitForSeconds(2.0f);
             }
         }

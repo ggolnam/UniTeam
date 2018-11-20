@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using SlimeEvolution.GameSystem;
 using SlimeEvolution.GlobalVariable;
 
-namespace SlimeEvolution.Character.LagacyEnemy
+namespace SlimeEvolution.Character.EnemyLagacy
 {
     public class testSkeleton : Enemy
     {
@@ -62,15 +62,15 @@ namespace SlimeEvolution.Character.LagacyEnemy
        
         void patrol()
         {
-            enemy.Move(navMesh, gameObject, animator);
+            enemy.Move(navMesh, gameObject.transform, animator);
         }
         void chase()
         {
-            enemy.Chase(navMesh, gameObject, playerObject, animator);
+            enemy.Chase(navMesh, gameObject.transform, playerObject.transform.position, animator);
         }
         void attack()
         {
-            enemy.Attack(playerObject, gameObject, animator, navMesh);
+            enemy.Attack(playerObject.transform.position, gameObject.transform, animator, navMesh);
         }
         void useRecovering()
         {
@@ -79,11 +79,11 @@ namespace SlimeEvolution.Character.LagacyEnemy
         void useThrowing() 
         {
             //이부분은 장거리 공격이므로 추격 중에 일정 확률로 공격해야 한다.
-            enemy.Skill1(playerObject, gameObject, animator, navMesh);
+            enemy.Skill1(playerObject.transform.position, gameObject.transform, animator, navMesh);
         }
         void stop()
         {
-            enemy.Stop(navMesh, gameObject, animator);
+            enemy.Stop(navMesh, gameObject.transform, animator);
         }
 
         IEnumerator MonsterBehavior()

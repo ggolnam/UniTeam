@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using SlimeEvolution.GlobalVariable;
 
-namespace SlimeEvolution.Character.LagacyEnemy
+namespace SlimeEvolution.Character.EnemyLagacy
 {
     public class Goblin : Enemy
     {
@@ -32,17 +32,19 @@ namespace SlimeEvolution.Character.LagacyEnemy
             navMesh = gameObject.GetComponent<NavMeshAgent>();
             state = EnemyStateType.Idle;
             
+            
         }
 
         private void Update()
         {
+            
             Timer += Time.deltaTime;
             switch (state)
             {
                 case EnemyStateType.Idle:
                     if (Timer >= WaitingTime)
                     {
-                        enemy.Stop(navMesh, gameObject, animator);
+                        enemy.Stop(navMesh, gameObject.transform, animator);
                         Timer = 0f;
                         state = EnemyStateType.Patrol;
                     }
@@ -50,16 +52,16 @@ namespace SlimeEvolution.Character.LagacyEnemy
                 case EnemyStateType.Patrol:
                     if (Timer >= WaitingTime)
                     {
-                        enemy.Move(navMesh, gameObject, animator);
+                        enemy.Move(navMesh, gameObject.transform, animator);
                         Timer = 0f;
                         state = EnemyStateType.Idle;
                     }
                     break;
                 case EnemyStateType.Chase:
-                    enemy.Chase(navMesh, gameObject, playerObject, animator);
+                    enemy.Chase(navMesh, gameObject.transform, playerObject.transform.position, animator);
                     break;
                 case EnemyStateType.Combat:
-                    enemy.Attack(playerObject, gameObject, animator, navMesh);
+                    enemy.Attack(playerObject.transform.position, gameObject.transform, animator, navMesh);
                     break;
                 case EnemyStateType.Death:
                     Debug.Log("죽음");
