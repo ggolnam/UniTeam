@@ -6,7 +6,7 @@ using SlimeEvolution.GlobalVariable;
 
 namespace SlimeEvolution.Character.EnemyLagacy
 {
-    public class Human: Enemy
+    public class Knight: Enemy
     {
         private void Awake()
         {
@@ -16,7 +16,7 @@ namespace SlimeEvolution.Character.EnemyLagacy
             characterStat.MaxHP = 50;
             characterStat.CurrentHP = characterStat.MaxHP;
             recoveryAmount = 10;
-            characterStat.Speed = 1f;
+            characterStat.Speed = 5f;
             characterStat.Damage = 3;
             attackRange = 2.1f;
 

@@ -26,15 +26,13 @@ namespace SlimeEvolution.Character.EnemyLagacy
         {
             animator.SetBool("isRecovering", true);
             currentHP += recoveryAmount;
-            //회복 이펙트 호출
+            
             return currentHP;
         }
 
         public override void ActivateSkill(Vector3 playerPosition, Transform enemyTransform,
             Animator animator, NavMeshAgent navMeshAgent)
-        {
-            throw new System.NotImplementedException();
-        }
+        {  }
     }
     public class Throwing : EnemySkill
     {
@@ -48,12 +46,18 @@ namespace SlimeEvolution.Character.EnemyLagacy
             Animator animator, NavMeshAgent navMeshAgent)
         {
             GameObject throwingObject;
+<<<<<<< HEAD
             enemyTransform.transform.LookAt(playerPosition);
             throwingObject = ThrowingObjectPool.Instance.PopFromPool(enemyTransform.transform);
             throwingObject.transform.position = new Vector3(enemyTransform.transform.position.x, 0.5f, enemyTransform.transform.position.z);
+=======
+            
+            enemyTransform.transform.LookAt(playerPosition);
+            throwingObject = ThrowingObjectPool.Instance.PopFromPool(enemyTransform.transform);
+            throwingObject.transform.position = new Vector3(enemyTransform.position.x, 0.5f, enemyTransform.position.z);
+>>>>>>> 90ad0829ff8104e7225cedc39a1aa62f98352efb
             
             
-            //성능 f.....
             Rigidbody throwingRigid = throwingObject.GetComponent<Rigidbody>();
             throwingObject.transform.position = throwingObject.transform.position + enemyTransform.transform.forward * 2;
             throwingRigid.velocity = enemyTransform.transform.forward * 10;
@@ -72,11 +76,19 @@ namespace SlimeEvolution.Character.EnemyLagacy
         {
             magnification = 3;
         }
+<<<<<<< HEAD
         public override void ActivateSkill(Vector3 playerObject, Transform enemyTransform,
             Animator animator, NavMeshAgent navMeshAgent)
         {
             navMeshAgent.speed = 0f;
             enemyTransform.transform.LookAt(playerObject);
+=======
+        public override void ActivateSkill(Vector3 playerPosition, Transform enemyTransform,
+            Animator animator, NavMeshAgent navMeshAgent)
+        {
+            navMeshAgent.speed = 0f;
+            enemyTransform.LookAt(playerPosition);
+>>>>>>> 90ad0829ff8104e7225cedc39a1aa62f98352efb
             animator.SetBool("isSmeshAttacking", true);
             animator.SetFloat("speed", navMeshAgent.speed);
         }

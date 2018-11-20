@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using SlimeEvolution.GlobalVariable;
+using TestLee;
 
 namespace SlimeEvolution.Character.EnemyLagacy
 {
     public class Skeleton : Enemy
     {
+        
         private void Awake()
         {
             WaitingTime = 3f;
@@ -16,7 +18,7 @@ namespace SlimeEvolution.Character.EnemyLagacy
             characterStat.MaxHP = 30;
             characterStat.CurrentHP = characterStat.MaxHP;
             recoveryAmount = 5;
-            characterStat.Speed = 1f;
+            characterStat.Speed = 5f;
             characterStat.Damage = 1;
             attackRange = 2.1f;
             state = state = EnemyStateType.Idle;
@@ -24,6 +26,8 @@ namespace SlimeEvolution.Character.EnemyLagacy
                 new Throwing(characterStat.Damage), new Patrol(characterStat.Speed), new Chasing(characterStat.Speed),
                 new StopMovement()
                 );
+
+            //testmediator = new TestMediator();
         }
 
         private void Start()//OnEnable로 쓸지를 고려
@@ -33,6 +37,8 @@ namespace SlimeEvolution.Character.EnemyLagacy
 
         private void Update()
         {
+            //Vector3 test = testmediator.GetGoblinsPosition();
+            //Debug.Log(test);
             Timer += Time.deltaTime;
             switch (state)
             {
@@ -70,6 +76,11 @@ namespace SlimeEvolution.Character.EnemyLagacy
                     break;
                 case EnemyStateType.Death:
 
+                    //죽는모션
+                    //Death count저장(이건 상의 후 결정)
+                    //몇 초 후
+                    //해당 오브젝트풀에 집어넣기
+                    //Death 상태를 어떻게 지정해 줄 것인가.
                     break;
             }
         }

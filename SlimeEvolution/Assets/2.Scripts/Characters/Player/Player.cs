@@ -12,9 +12,8 @@ namespace SlimeEvolution.Character.Player
         Human,
     }
 
-    
 
-    public class Player : Character
+    public class Player : Character 
     {
         [SerializeField]
         GameObject[] formList;
@@ -22,6 +21,7 @@ namespace SlimeEvolution.Character.Player
         float checkradius;
         [SerializeField]
         LayerMask checkLayer;
+
 
         Skill playerSkill;
         Rigidbody rigidbody;
@@ -31,6 +31,7 @@ namespace SlimeEvolution.Character.Player
         Transform target;
         AttackAreaActivator attackAreaActivator;
         bool isDeath;
+        bool isUsingSkill;
 
         void Start()
         {          
@@ -38,16 +39,17 @@ namespace SlimeEvolution.Character.Player
             currentForm = PlayerForm.Slime;
             formState  = new SlimeForm(transform ,rigidbody, formList[(int)PlayerForm.Slime].GetComponent<Animator>(), ref characterStat);
             attackAreaActivator = formList[(int)PlayerForm.Slime].GetComponent<AttackAreaActivator>();
-            playerSkill =  new Skill(currentForm, transform);
+            playerSkill = new Skill(currentForm, transform);
+            
         }
 
-      
+
         void FixedUpdate()
         {
             if (!isDeath)
             {
                 float h = Input.GetAxisRaw("Horizontal"); //좌우 입력. -1이 왼쪽. 1이 오른쪽
-                float v = Input.GetAxisRaw("Vertical"); //상하 입력. -1이 아래, 1이 위
+                float v = Input.GetAxisRaw("Vertical"); //상하 입력. -1이 아래, 1이 위  
                 if (!(h == 0 && v == 0))
                 {
                     target = null;
@@ -55,26 +57,35 @@ namespace SlimeEvolution.Character.Player
                     formState.Move(movement);
                     attackAreaActivator.EndAttackHit();
                 }
-                else if (target != null)
-                {
-                    movement.Set(target.position.x - transform.position.x, 0, target.position.z - transform.position.z);
-                    if (Vector3.Distance(transform.position, target.position) > characterStat.AttackRange)
-                    {
-                        formState.Move(movement);
-                    }
-                    else
-                    {
-                        formState.LookAt(movement);
-                        formState.Attack();
-                    }
-                }
-                else
+                else 
                 {
                     formState.Stop();
-                    attackAreaActivator.EndAttackHit();
                 }
             }
         }
+        
+        IEnumerator AttackCoroutine()
+        {
+            while (true)
+            {
+                if (target == null && !isUsingSkill)
+                    break;
+                movement.Set(target.position.x - transform.position.x, 0, target.position.z - transform.position.z);
+                if (Vector3.Distance(transform.position, target.position) > characterStat.AttackRange)
+                {
+                    formState.Move(movement);
+                }
+                else
+                {
+                    formState.LookAt(movement);
+                    formState.Attack();
+                    break;
+                }
+                yield return null;
+            }
+            yield return null;
+        }
+
 
 
         public void OnClickedChangeButton(int form)
@@ -96,17 +107,38 @@ namespace SlimeEvolution.Character.Player
             }
         }
 
-        public void OnClickSkillButton()
+        public void OnClickAttackSkillButton()
         {
+
             FindTarget(checkradius);
-            if (target != null) 
+            if (target != null)
+            {
+                isUsingSkill = true;
+
+                formState.LookAt(movement);
                 playerSkill.UseAttackSkill(target);
+            }
         }
 
+        public void OnClickDefensSkillButton()
+        {
+            isUsingSkill = true;
+        }
+
+        public void OnClickBuffSkillButton()
+        {
+            isUsingSkill = true;
+        }
 
         public void OnClickedAttackButton()
         {
-            FindTarget(checkradius);                                  
+            if (isUsingSkill)
+                return; 
+            FindTarget(checkradius);
+            if (target != null)
+            {
+                StartCoroutine(AttackCoroutine());
+            }
         }
 
         void ChangeFormState(PlayerForm form)
@@ -170,6 +202,7 @@ namespace SlimeEvolution.Character.Player
                 formState.Hit();
         }
 
+        
     }
 }
 

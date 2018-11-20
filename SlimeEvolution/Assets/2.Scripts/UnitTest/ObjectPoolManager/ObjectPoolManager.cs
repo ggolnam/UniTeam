@@ -15,6 +15,7 @@ namespace SlimeEvolution.GameSystem
             singleton.name = typeof(TestPool).ToString();
             testPool = singleton.GetComponent<TestPool>();
             singleton.transform.parent = gameObject.transform;
+            testPool.CreateObject();
         }
 
     }

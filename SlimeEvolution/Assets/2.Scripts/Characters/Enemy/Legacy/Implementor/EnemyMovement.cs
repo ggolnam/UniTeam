@@ -29,7 +29,12 @@ namespace SlimeEvolution.Character.EnemyLagacy
 
         public override void Move(NavMeshAgent navMeshAgent, Transform enemyTransform, Animator animator)
         {
+            int randomValue = Random.Range(-20, 20);
+            
+            float xPosition = enemyTransform.position.x + randomValue;
+            float zPosition = enemyTransform.position.z + randomValue;
 
+<<<<<<< HEAD
             float myX = enemyTransform.position.x;
             float myZ = enemyTransform.position.z;
 
@@ -37,6 +42,8 @@ namespace SlimeEvolution.Character.EnemyLagacy
             float xPosition = myX + Random.Range(myX - 360, myX + 360);
             float zPosition = myZ + Random.Range(myZ - 360, myZ + 360);
 
+=======
+>>>>>>> 90ad0829ff8104e7225cedc39a1aa62f98352efb
             target = new Vector3(xPosition, enemyTransform.position.y, zPosition);
 
             navMeshAgent.speed = speed;
@@ -46,8 +53,11 @@ namespace SlimeEvolution.Character.EnemyLagacy
             animator.SetBool("isAttacking", false);
         }
 
+<<<<<<< HEAD
         
         
+=======
+>>>>>>> 90ad0829ff8104e7225cedc39a1aa62f98352efb
         public override void Chase(NavMeshAgent navMeshAgent, Transform enemyTransform,
             Vector3 playerPosition, Animator animator) { }
     }
@@ -55,7 +65,11 @@ namespace SlimeEvolution.Character.EnemyLagacy
     public class StopMovement: EnemyMovement
     {
         
+<<<<<<< HEAD
         public override void Move(NavMeshAgent navMeshAgent, Transform gameObject, Animator animator)
+=======
+        public override void Move(NavMeshAgent navMeshAgent, Transform enemyTransform, Animator animator)
+>>>>>>> 90ad0829ff8104e7225cedc39a1aa62f98352efb
         {
             navMeshAgent.speed = 0.0f;
             speed = navMeshAgent.speed;
@@ -64,7 +78,11 @@ namespace SlimeEvolution.Character.EnemyLagacy
         }
 
         public override void Chase(NavMeshAgent navMeshAgent, Transform enemyTransform,
+<<<<<<< HEAD
             Vector3 playerPosition, Animator animator) { }
+=======
+             Vector3 playerPosition, Animator animator) { }
+>>>>>>> 90ad0829ff8104e7225cedc39a1aa62f98352efb
     }
 
     public class Chasing : EnemyMovement
@@ -78,10 +96,14 @@ namespace SlimeEvolution.Character.EnemyLagacy
         public override void Chase(NavMeshAgent navMeshAgent, Transform enemyTransform,
             Vector3 playerPosition, Animator animator)
         {
+<<<<<<< HEAD
             float xPosition = playerPosition.x;
             float zPosition = playerPosition.z;
             
             target = new Vector3(xPosition, enemyTransform.transform.position.y, zPosition);
+=======
+            target = new Vector3(playerPosition.x, enemyTransform.transform.position.y, playerPosition.z);
+>>>>>>> 90ad0829ff8104e7225cedc39a1aa62f98352efb
 
             enemyTransform.transform.LookAt(playerPosition);
             navMeshAgent.speed = speed;

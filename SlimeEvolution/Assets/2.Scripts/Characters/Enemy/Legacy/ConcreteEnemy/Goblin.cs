@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using SlimeEvolution.GlobalVariable;
+using SlimeEvolution.GameSystem;
 
 namespace SlimeEvolution.Character.EnemyLagacy
 {
     public class Goblin : Enemy
     {
-        Coroutine nextBehavior;
-
         private void Awake()
         {
             WaitingTime = 2f;
@@ -17,7 +16,7 @@ namespace SlimeEvolution.Character.EnemyLagacy
             animator = gameObject.GetComponent<Animator>();
             characterStat.MaxHP = 20;
             characterStat.CurrentHP = characterStat.MaxHP;
-            characterStat.Speed = 1f;
+            characterStat.Speed = 5f;
             characterStat.Damage = 1;
             attackRange = 2.1f;
 
@@ -31,8 +30,11 @@ namespace SlimeEvolution.Character.EnemyLagacy
         {
             navMesh = gameObject.GetComponent<NavMeshAgent>();
             state = EnemyStateType.Idle;
+<<<<<<< HEAD
             
             
+=======
+>>>>>>> 90ad0829ff8104e7225cedc39a1aa62f98352efb
         }
 
         private void Update()
@@ -64,7 +66,10 @@ namespace SlimeEvolution.Character.EnemyLagacy
                     enemy.Attack(playerObject.transform.position, gameObject.transform, animator, navMesh);
                     break;
                 case EnemyStateType.Death:
-                    Debug.Log("죽음");
+                    //death카운트를 GameController역할을 하는 놈에게 보낸다. //mediator? callback?
+                    //
+                    
+                    EnemyObjectManager.Instance.goblinPool.PushToPool(this.gameObject);
                     break;
             }
 
@@ -88,6 +93,11 @@ namespace SlimeEvolution.Character.EnemyLagacy
                 {
                     state = EnemyStateType.Combat;
                 }
+                ////////////////
+                if(characterStat.CurrentHP <= 0)
+                {
+                    state = EnemyStateType.Death;
+                }
             }
         }
         
@@ -98,6 +108,6 @@ namespace SlimeEvolution.Character.EnemyLagacy
                 state = EnemyStateType.Idle;
             }
         }
-
+        
     }
 }

@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace SlimeEvolution.Character.EnemyLagacy
 {
+    /// <summary>
+    /// 이부분은 EnemyObjectPool을 완성 한 후 그것에 따라서 수정한다.
+    /// </summary>
     public class ThrowingObjectPool : Singleton<ThrowingObjectPool>
     {
         public GameObject itemObject;
