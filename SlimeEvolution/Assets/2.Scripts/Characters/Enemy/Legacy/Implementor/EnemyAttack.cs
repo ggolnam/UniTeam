@@ -23,15 +23,10 @@ namespace SlimeEvolution.Character.EnemyLagacy
         public override void Attack(Vector3 playerPosition, Transform enemyTransform,
             Animator animator, NavMeshAgent navMeshAgent)
         {
-<<<<<<< HEAD
-            //animator.SetBool("isSmeshAttacking", false); //wtf
-=======
->>>>>>> 90ad0829ff8104e7225cedc39a1aa62f98352efb
             playerPosition.y = enemyTransform.position.y;
             enemyTransform.LookAt(playerPosition);
                 animator.SetBool("isAttacking", true);
         }
-
     }
     
 }

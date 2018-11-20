@@ -30,11 +30,7 @@ namespace SlimeEvolution.Character.EnemyLagacy
         {
             navMesh = gameObject.GetComponent<NavMeshAgent>();
             state = EnemyStateType.Idle;
-<<<<<<< HEAD
-            
-            
-=======
->>>>>>> 90ad0829ff8104e7225cedc39a1aa62f98352efb
+
         }
 
         private void Update()
@@ -69,7 +65,7 @@ namespace SlimeEvolution.Character.EnemyLagacy
                     //death카운트를 GameController역할을 하는 놈에게 보낸다. //mediator? callback?
                     //
                     
-                    EnemyObjectManager.Instance.goblinPool.PushToPool(this.gameObject);
+                    EnemyObjectManager.Instance.goblinPool.PushToPool(gameObject);
                     break;
             }
 

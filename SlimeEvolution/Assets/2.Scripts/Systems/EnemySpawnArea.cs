@@ -23,17 +23,7 @@ namespace SlimeEvolution.GameSystem
         {
             if (countingEnemy < limitOfSpawnedEnemy)
             {
-<<<<<<< HEAD
-                toSpawnObject = EnemyObjectPool.Instance.PopFromPool(gameObject.transform.position);
-                toSpawnObject.transform.position = gameObject.transform.position;
-=======
-                countingTime += Time.deltaTime;
-                if (countingTime >= spawnningTime)
-                {
-                    Spawn();
-                    countingTime = 0f;
-                }
->>>>>>> 90ad0829ff8104e7225cedc39a1aa62f98352efb
+                
             }
         }
 
