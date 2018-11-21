@@ -30,10 +30,8 @@ namespace SlimeEvolution.GameSystem
 
         protected void Spawn()
         {
-            GameObject testSpawn;
-            //testSpawn = ObjectPool.Instance.PopFromPool(gameObject.transform);
-            //testSpawn.transform.position = gameObject.transform.position;
-            countingEnemy++;
+            
+           
             
         }
     }

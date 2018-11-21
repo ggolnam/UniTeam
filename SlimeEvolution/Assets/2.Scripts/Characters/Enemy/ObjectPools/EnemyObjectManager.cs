@@ -4,22 +4,14 @@ using UnityEngine;
 
 namespace SlimeEvolution.GameSystem
 {
-    public struct EnemyStruct
-    {
-        public int NumberOfEnemy;
-        public ObjectPool EnemyObjectPool;
-        public GameObject EnemyParent;
-        public Transform[] SpawnAreas;
-    }
     public class EnemyObjectManager : Singleton<EnemyObjectManager>
     {
-        EnemyStruct[] enemyStruct = new EnemyStruct[3];
-
+        
         //0:고블린  1:스켈레톤  2:나이트
         int[] enemyNumbers = new int[3] { 0, 0, 0 };
         
         [HideInInspector]
-        public GameObject GoblinObject;//List사용
+        public GameObject GoblinObject;
         [HideInInspector]
         public GameObject SkeletonObject;
         [HideInInspector]
@@ -29,7 +21,6 @@ namespace SlimeEvolution.GameSystem
         public ObjectPool skeletonPool;
         public ObjectPool KnightPool;
 
-        //배열로 설정해서 인덱스로 관리 고려하기
         public GameObject GoblinParent;
         public GameObject SkeletonParent;
         public GameObject KnightParent;
@@ -47,8 +38,6 @@ namespace SlimeEvolution.GameSystem
         float countingTime = 0f;
         const float spawnningTime = 3f;
         
-        //스폰 리미트 걸어놓기
-       
         void Start()
         {
             goblinPool = new ObjectPool(GoblinObject, GoblinParent);
@@ -62,7 +51,6 @@ namespace SlimeEvolution.GameSystem
 
         void Update()
         {
-            //timer 모듈화 필요
             countingTime += Time.deltaTime;
             if ((countingTime >= spawnningTime))
             {
@@ -84,9 +72,6 @@ namespace SlimeEvolution.GameSystem
             }
         }
 
-        //스폰지역을 랜덤으로 돌아가며 몬스터 1기씩 소환한다.
-        //현재 enemy count가 없음
-        //반환형식 게임오브젝트로 지정할 것
         void SpawnEnemy(Transform[] spawnAreas, ObjectPool toSpawnObjectPool, int randomValue, int countIndex)
         {
             toSpawnObjectPool.PopFromPool(spawnAreas[randomValue]);

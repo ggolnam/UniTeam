@@ -30,15 +30,10 @@ namespace SlimeEvolution.Character.EnemyLagacy
         public override void Move(NavMeshAgent navMeshAgent, Transform enemyTransform, Animator animator)
         {
             int randomValue = Random.Range(-20, 20);
-            
-            float myX = enemyTransform.position.x;
-            float myZ = enemyTransform.position.z;
 
-            //랜덤 방향 계산 개선요망
-            float xPosition = myX + Random.Range(myX - 360, myX + 360);
-            float zPosition = myZ + Random.Range(myZ - 360, myZ + 360);
-            
-            target = new Vector3(xPosition, enemyTransform.position.y, zPosition);
+            float xPosition = enemyTransform.position.x + randomValue;
+            float zPosiiton = enemyTransform.position.z + randomValue;
+            target = new Vector3(xPosition, enemyTransform.position.y, zPosiiton);
 
             navMeshAgent.speed = speed;
             navMeshAgent.SetDestination(target);

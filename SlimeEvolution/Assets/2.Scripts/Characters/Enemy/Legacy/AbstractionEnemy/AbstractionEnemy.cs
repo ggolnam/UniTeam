@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 namespace SlimeEvolution.Character.EnemyLagacy
 {
-    //메소드들을 인터페이스로 빼는 방안 모색
     public abstract class AbstractionEnemy
     {
         protected EnemySkill skill1;
@@ -29,7 +28,7 @@ namespace SlimeEvolution.Character.EnemyLagacy
 
         //Named Enemy
         public AbstractionEnemy(EnemyAttack attack, EnemySkill skill1, EnemySkill skill2,
-            EnemyMovement movement, EnemyMovement chase, EnemyMovement stopMovement)
+            EnemyMovement movement, EnemyMovement chase, EnemyMovement stopMovement):this(attack, movement, chase, stopMovement)
         {
             this.attack = attack;
             this.skill1 = skill1;

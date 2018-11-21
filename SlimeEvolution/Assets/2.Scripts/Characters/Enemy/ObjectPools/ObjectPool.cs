@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace SlimeEvolution.GameSystem
 {
-    public class ObjectPool//: Singleton<EnemyObjectPool>//: Singleton<EnemyObjectPool>
+    public class ObjectPool
     {
         public Queue<GameObject> enemyObjects = new Queue<GameObject>();
         public List<GameObject> PopedObjects = new List<GameObject>();
@@ -42,7 +39,6 @@ namespace SlimeEvolution.GameSystem
             }
             catch(InvalidOperationException)
             {
-                //catch부분에는 파일스트림으로 기록하거나 서버가 알수 있게 조치한다.
                 Debug.Log("ObjectPool의 object가 부족합니다.");
                 return null;
             }
